@@ -26,7 +26,6 @@ namespace LibraryAPI.Controllers
             _publisherRepository = publisherRepository;
         }
 
-        [Route("api/authors")]
         [HttpGet]
         [ProducesResponseType(200, Type = typeof(IEnumerable<AuthorDto>))]
         [ProducesResponseType(400)]
