@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace LibraryAPI.Controllers
 {
-    [Route("localhost:44332")]
+    [Route("api/[controller]")]
     [ApiController]
     public class AuthorsController : ControllerBase
     {
@@ -48,8 +48,7 @@ namespace LibraryAPI.Controllers
                     Id = author.Id,
                     AuthorFirstName = author.AuthorFirstName,
                     AuthorLastName = author.AuthorLastName,
-                    AuthorBiography = author.AuthorBiography,
-                    CreatedAt = author.CreatedAt
+                    AuthorBiography = author.AuthorBiography
                 });
             }
 
@@ -80,8 +79,7 @@ namespace LibraryAPI.Controllers
                 Id = author.Id,
                 AuthorFirstName = author.AuthorFirstName,
                 AuthorLastName = author.AuthorLastName,
-                AuthorBiography = author.AuthorBiography,
-                CreatedAt = author.CreatedAt
+                AuthorBiography = author.AuthorBiography
             };
 
             return Ok(authorDto);
@@ -114,8 +112,7 @@ namespace LibraryAPI.Controllers
                     Id = author.Id,
                     AuthorFirstName = author.AuthorFirstName,
                     AuthorLastName = author.AuthorLastName,
-                    AuthorBiography = author.AuthorBiography,
-                    CreatedAt = author.CreatedAt
+                    AuthorBiography = author.AuthorBiography
                 });
             }
 
@@ -154,8 +151,7 @@ namespace LibraryAPI.Controllers
                     BookEdition = book.BookEdition,
                     DatePublished = book.DatePublished,
                     BookPages = book.BookPages,
-                    BookAnnotation = book.BookAnnotation,
-                    CreatedAt = book.CreatedAt
+                    BookAnnotation = book.BookAnnotation
                 });
             }
 
@@ -189,8 +185,7 @@ namespace LibraryAPI.Controllers
                     Id = author.Id,
                     AuthorFirstName = author.AuthorFirstName,
                     AuthorLastName = author.AuthorLastName,
-                    AuthorBiography = author.AuthorBiography,
-                    CreatedAt = author.CreatedAt
+                    AuthorBiography = author.AuthorBiography
                 });
             }
 

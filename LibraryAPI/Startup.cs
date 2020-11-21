@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Data.DataConnection;
 using Data.DataConnection.Repositories.Implementations;
 using Data.DataConnection.Repositories.Interfaces;
 using Microsoft.AspNetCore.Builder;
@@ -28,10 +29,21 @@ namespace LibraryAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            services.AddScoped<ApplicationDbContext>();
             services.AddScoped<IAuthorRepository, AuthorRepository>();
+            services.AddScoped<IBookImageRepository, BookImageRepository>();
             services.AddScoped<IBookRepository, BookRepository>();
             services.AddScoped<ICountryRepository, CountryRepository>();
+            services.AddScoped<IFineRepository, FineRepository>();
+            services.AddScoped<IGenreRepository, GenreRepository>();
+            services.AddScoped<ILibrarianRepository, LibrarianRepository>();
+            services.AddScoped<ILibraryManagingDirectorRepository, LibraryManagingDirectorRepository>();
+            services.AddScoped<ILoanRepository, LoanRepository>();
             services.AddScoped<IPublisherRepository, PublisherRepository>();
+            services.AddScoped<IReaderRepository, ReaderRepository>();
+            services.AddScoped<IReviewRepository, ReviewRepository>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.AddSwaggerGen();
         }
@@ -56,7 +68,6 @@ namespace LibraryAPI
             app.UseRouting();
 
             app.UseAuthorization();
-            app.UseAuthentication();
 
             app.UseEndpoints(endpoints =>
             {
