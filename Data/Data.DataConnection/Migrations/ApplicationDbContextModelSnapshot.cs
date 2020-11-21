@@ -65,7 +65,7 @@ namespace Data.DataConnection.Migrations
                             AuthorBiography = "Born in the USA...",
                             AuthorFirstName = "Walter",
                             AuthorLastName = "Tevis",
-                            CreatedAt = new DateTime(2020, 11, 21, 18, 13, 56, 993, DateTimeKind.Local).AddTicks(6924)
+                            CreatedAt = new DateTime(2020, 11, 21, 20, 49, 24, 186, DateTimeKind.Local).AddTicks(8005)
                         },
                         new
                         {
@@ -73,7 +73,7 @@ namespace Data.DataConnection.Migrations
                             AuthorBiography = "Born in Prague, Czech Republic",
                             AuthorFirstName = "Franz",
                             AuthorLastName = "Kafka",
-                            CreatedAt = new DateTime(2020, 11, 21, 18, 13, 56, 995, DateTimeKind.Local).AddTicks(9891)
+                            CreatedAt = new DateTime(2020, 11, 21, 20, 49, 24, 189, DateTimeKind.Local).AddTicks(992)
                         },
                         new
                         {
@@ -81,7 +81,7 @@ namespace Data.DataConnection.Migrations
                             AuthorBiography = "Modern American author",
                             AuthorFirstName = "Michael",
                             AuthorLastName = "Chabon",
-                            CreatedAt = new DateTime(2020, 11, 21, 18, 13, 56, 995, DateTimeKind.Local).AddTicks(9928)
+                            CreatedAt = new DateTime(2020, 11, 21, 20, 49, 24, 189, DateTimeKind.Local).AddTicks(1028)
                         });
                 });
 
@@ -133,8 +133,8 @@ namespace Data.DataConnection.Migrations
 
                     b.Property<string>("ISBN")
                         .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<DateTime?>("ModifiedAt")
                         .HasColumnType("datetime2");
@@ -156,7 +156,7 @@ namespace Data.DataConnection.Migrations
                             BookEdition = "third",
                             BookPages = 243,
                             BookTitle = "The Queen's Gambit",
-                            CreatedAt = new DateTime(2020, 11, 21, 18, 13, 56, 996, DateTimeKind.Local).AddTicks(3132),
+                            CreatedAt = new DateTime(2020, 11, 21, 20, 49, 24, 189, DateTimeKind.Local).AddTicks(4231),
                             DatePublished = new DateTime(1983, 3, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ISBN = "978-3-16-148410-0"
                         },
@@ -167,7 +167,7 @@ namespace Data.DataConnection.Migrations
                             BookEdition = "first",
                             BookPages = 302,
                             BookTitle = "The Castle",
-                            CreatedAt = new DateTime(2020, 11, 21, 18, 13, 56, 996, DateTimeKind.Local).AddTicks(3229),
+                            CreatedAt = new DateTime(2020, 11, 21, 20, 49, 24, 189, DateTimeKind.Local).AddTicks(4323),
                             DatePublished = new DateTime(1926, 5, 9, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ISBN = "1004-3-16-148410-0"
                         },
@@ -178,7 +178,7 @@ namespace Data.DataConnection.Migrations
                             BookEdition = "second",
                             BookPages = 705,
                             BookTitle = "The Amazing Adventures of Kavalier and Clay",
-                            CreatedAt = new DateTime(2020, 11, 21, 18, 13, 56, 996, DateTimeKind.Local).AddTicks(3234),
+                            CreatedAt = new DateTime(2020, 11, 21, 20, 49, 24, 189, DateTimeKind.Local).AddTicks(4330),
                             DatePublished = new DateTime(2000, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ISBN = "834-3-16-148410-0"
                         });

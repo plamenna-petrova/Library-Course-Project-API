@@ -175,7 +175,7 @@ namespace Data.DataConnection
                    BookEdition = "third",
                    DatePublished = new DateTime(1983, 3, 10),
                    BookPages = 243,
-                   BookAnnotation = "A story about an young chess player Beth Harmon and her struggles with defining her self in the chess world",
+                   BookAnnotation = "A story about an young chess player Beth Harmon and her struggles with defining herself in the chess world",
                    CreatedAt = DateTime.Now
                },
                new Book()

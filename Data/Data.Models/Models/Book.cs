@@ -9,7 +9,7 @@ namespace Data.Models.Models
     public class Book : BaseModel
     {
         [Required]
-        [StringLength(10, MinimumLength = 3, ErrorMessage = "ISBN must be between 3 and characters long!")]
+        [StringLength(50, MinimumLength = 3, ErrorMessage = "ISBN must be between 3 and characters long!")]
         public string ISBN { get; set; }
         [Required]
         [MaxLength(100, ErrorMessage = "The book's title cannot be more than 100 characters long!")]
