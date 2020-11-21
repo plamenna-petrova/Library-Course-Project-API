@@ -26,7 +26,7 @@ namespace LibraryAPI.Controllers
             _publisherRepository = publisherRepository;
         }
 
-        [Route("api/authors")]
+        [Route("api/getauthors")]
         [HttpGet]
         [ProducesResponseType(200, Type = typeof(IEnumerable<AuthorDto>))]
         [ProducesResponseType(400)]
@@ -48,7 +48,8 @@ namespace LibraryAPI.Controllers
                     Id = author.Id,
                     AuthorFirstName = author.AuthorFirstName,
                     AuthorLastName = author.AuthorLastName,
-                    AuthorBiography = author.AuthorBiography
+                    AuthorBiography = author.AuthorBiography,
+                    CreatedAt = author.CreatedAt
                 });
             }
 
@@ -79,7 +80,8 @@ namespace LibraryAPI.Controllers
                 Id = author.Id,
                 AuthorFirstName = author.AuthorFirstName,
                 AuthorLastName = author.AuthorLastName,
-                AuthorBiography = author.AuthorBiography
+                AuthorBiography = author.AuthorBiography,
+                CreatedAt = author.CreatedAt
             };
 
             return Ok(authorDto);
@@ -112,7 +114,8 @@ namespace LibraryAPI.Controllers
                     Id = author.Id,
                     AuthorFirstName = author.AuthorFirstName,
                     AuthorLastName = author.AuthorLastName,
-                    AuthorBiography = author.AuthorBiography
+                    AuthorBiography = author.AuthorBiography,
+                    CreatedAt = author.CreatedAt
                 });
             }
 
@@ -120,7 +123,7 @@ namespace LibraryAPI.Controllers
         }
 
         [Route("api/authors/authorId/books")]
-        [HttpGet("{authorId/books}")]
+        [HttpGet("{authorId}/books")]
         [ProducesResponseType(200, Type = typeof(IEnumerable<BookDto>))]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
@@ -151,7 +154,8 @@ namespace LibraryAPI.Controllers
                     BookEdition = book.BookEdition,
                     DatePublished = book.DatePublished,
                     BookPages = book.BookPages,
-                    BookAnnotation = book.BookAnnotation
+                    BookAnnotation = book.BookAnnotation,
+                    CreatedAt = book.CreatedAt
                 });
             }
 
@@ -159,7 +163,7 @@ namespace LibraryAPI.Controllers
         }
 
         [Route("api/authors/publishers/publisherId")]
-        [HttpGet("books/{bookId}")]
+        [HttpGet("publishers/{publisherId}")]
         [ProducesResponseType(200, Type = typeof(IEnumerable<AuthorDto>))]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
@@ -193,7 +197,7 @@ namespace LibraryAPI.Controllers
         }
 
         [Route("api/authors/authorId/publishers")]
-        [HttpGet("{authorId/books}")]
+        [HttpGet("{authorId}/publishers")]
         [ProducesResponseType(200, Type = typeof(IEnumerable<PublisherDto>))]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
