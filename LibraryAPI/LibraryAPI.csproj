@@ -5,10 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Data\Data.DataConnection\Data.DataConnection.csproj" />
     <ProjectReference Include="..\Data\Data.Models\Data.Models.csproj" />
   </ItemGroup>
