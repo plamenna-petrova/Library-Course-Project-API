@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.DataConnection.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201121184924_AddedSampleData")]
-    partial class AddedSampleData
+    [Migration("20201122110023_changedForeignKey")]
+    partial class changedForeignKey
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -67,7 +67,8 @@ namespace Data.DataConnection.Migrations
                             AuthorBiography = "Born in the USA...",
                             AuthorFirstName = "Walter",
                             AuthorLastName = "Tevis",
-                            CreatedAt = new DateTime(2020, 11, 21, 20, 49, 24, 186, DateTimeKind.Local).AddTicks(8005)
+                            CountryId = 1,
+                            CreatedAt = new DateTime(2020, 11, 22, 13, 0, 22, 683, DateTimeKind.Local).AddTicks(1211)
                         },
                         new
                         {
@@ -75,7 +76,8 @@ namespace Data.DataConnection.Migrations
                             AuthorBiography = "Born in Prague, Czech Republic",
                             AuthorFirstName = "Franz",
                             AuthorLastName = "Kafka",
-                            CreatedAt = new DateTime(2020, 11, 21, 20, 49, 24, 189, DateTimeKind.Local).AddTicks(992)
+                            CountryId = 2,
+                            CreatedAt = new DateTime(2020, 11, 22, 13, 0, 22, 683, DateTimeKind.Local).AddTicks(1282)
                         },
                         new
                         {
@@ -83,7 +85,8 @@ namespace Data.DataConnection.Migrations
                             AuthorBiography = "Modern American author",
                             AuthorFirstName = "Michael",
                             AuthorLastName = "Chabon",
-                            CreatedAt = new DateTime(2020, 11, 21, 20, 49, 24, 189, DateTimeKind.Local).AddTicks(1028)
+                            CountryId = 1,
+                            CreatedAt = new DateTime(2020, 11, 22, 13, 0, 22, 683, DateTimeKind.Local).AddTicks(1287)
                         });
                 });
 
@@ -100,6 +103,23 @@ namespace Data.DataConnection.Migrations
                     b.HasIndex("PublisherId");
 
                     b.ToTable("AuthorsPublishers");
+
+                    b.HasData(
+                        new
+                        {
+                            AuthorId = 1,
+                            PublisherId = 1
+                        },
+                        new
+                        {
+                            AuthorId = 1,
+                            PublisherId = 2
+                        },
+                        new
+                        {
+                            AuthorId = 3,
+                            PublisherId = 1
+                        });
                 });
 
             modelBuilder.Entity("Data.Models.Models.Book", b =>
@@ -154,11 +174,11 @@ namespace Data.DataConnection.Migrations
                         new
                         {
                             Id = 1,
-                            BookAnnotation = "A story about an young chess player Beth Harmon and her struggles with defining her self in the chess world",
+                            BookAnnotation = "A story about an young chess player Beth Harmon and her struggles with defining herself in the chess world",
                             BookEdition = "third",
                             BookPages = 243,
                             BookTitle = "The Queen's Gambit",
-                            CreatedAt = new DateTime(2020, 11, 21, 20, 49, 24, 189, DateTimeKind.Local).AddTicks(4231),
+                            CreatedAt = new DateTime(2020, 11, 22, 13, 0, 22, 680, DateTimeKind.Local).AddTicks(3150),
                             DatePublished = new DateTime(1983, 3, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ISBN = "978-3-16-148410-0"
                         },
@@ -169,7 +189,7 @@ namespace Data.DataConnection.Migrations
                             BookEdition = "first",
                             BookPages = 302,
                             BookTitle = "The Castle",
-                            CreatedAt = new DateTime(2020, 11, 21, 20, 49, 24, 189, DateTimeKind.Local).AddTicks(4323),
+                            CreatedAt = new DateTime(2020, 11, 22, 13, 0, 22, 682, DateTimeKind.Local).AddTicks(6172),
                             DatePublished = new DateTime(1926, 5, 9, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ISBN = "1004-3-16-148410-0"
                         },
@@ -180,7 +200,7 @@ namespace Data.DataConnection.Migrations
                             BookEdition = "second",
                             BookPages = 705,
                             BookTitle = "The Amazing Adventures of Kavalier and Clay",
-                            CreatedAt = new DateTime(2020, 11, 21, 20, 49, 24, 189, DateTimeKind.Local).AddTicks(4330),
+                            CreatedAt = new DateTime(2020, 11, 22, 13, 0, 22, 682, DateTimeKind.Local).AddTicks(6207),
                             DatePublished = new DateTime(2000, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ISBN = "834-3-16-148410-0"
                         });
@@ -308,6 +328,26 @@ namespace Data.DataConnection.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Countries");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CountryName = "USA",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CountryName = "Czech Republic",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CountryName = "Germany",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        });
                 });
 
             modelBuilder.Entity("Data.Models.Models.Fine", b =>
@@ -538,6 +578,22 @@ namespace Data.DataConnection.Migrations
                     b.HasIndex("CountryId");
 
                     b.ToTable("Publishers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CountryId = 3,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            PublisherName = "Verlagsgruppe Random House"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CountryId = 3,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            PublisherName = "Joella Goldman"
+                        });
                 });
 
             modelBuilder.Entity("Data.Models.Models.Reader", b =>

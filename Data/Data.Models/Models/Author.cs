@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace Data.Models.Models
@@ -18,6 +19,8 @@ namespace Data.Models.Models
         public string AuthorBiography { get; set; }
         public virtual ICollection<BookAuthor> BooksAuthors { get; set; }
         public virtual ICollection<AuthorPublisher> AuthorsPublishers { get; set; }
+        [ForeignKey("Country")]
+        public virtual int? CountryId { get; set; }
         public virtual Country Country { get; set; }
     }
 }

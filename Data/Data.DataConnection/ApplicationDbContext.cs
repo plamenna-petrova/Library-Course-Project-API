@@ -135,35 +135,19 @@ namespace Data.DataConnection
                       .WithMany(rl => rl.ReadersLibrarians)
                       .HasForeignKey(l => l.LibrarianId);
 
+
+            modelBuilder.Entity<Author>()
+                       .HasOne<Country>(c => c.Country)
+                       .WithMany(a => a.Authors)
+                       .HasForeignKey(a => a.CountryId);
+
+            modelBuilder.Entity<Publisher>()
+                       .HasOne<Country>(c => c.Country)
+                       .WithMany(p => p.Publishers)
+                       .HasForeignKey(p => p.CountryId);
+
             //Data Seeds
 
-            List<Author> authors = new List<Author>()
-            {
-                new Author()
-                {
-                    Id = 1,
-                    AuthorFirstName = "Walter",
-                    AuthorLastName = "Tevis",
-                    AuthorBiography = "Born in the USA...",
-                    CreatedAt = DateTime.Now
-                },
-                new Author()
-                {
-                    Id = 2,
-                    AuthorFirstName = "Franz",
-                    AuthorLastName = "Kafka",
-                    AuthorBiography = "Born in Prague, Czech Republic",
-                    CreatedAt = DateTime.Now
-                },
-                new Author()
-                {
-                    Id = 3,
-                    AuthorFirstName = "Michael",
-                    AuthorLastName = "Chabon",
-                    AuthorBiography = "Modern American author",
-                    CreatedAt = DateTime.Now
-                }
-            };
 
             List<Book> books = new List<Book>()
             {
@@ -222,9 +206,98 @@ namespace Data.DataConnection
                 }
             };
 
+            List<Country> countries = new List<Country>()
+            {
+                new Country()
+                {
+                    Id = 1,
+                    CountryName = "USA"
+                },
+                new Country()
+                {
+                    Id = 2,
+                    CountryName = "Czech Republic"
+                },
+                new Country()
+                {
+                    Id = 3,
+                    CountryName = "Germany"
+                }
+            };
+
+
+            List<Author> authors = new List<Author>()
+            {
+                new Author()
+                {
+                    Id = 1,
+                    AuthorFirstName = "Walter",
+                    AuthorLastName = "Tevis",
+                    AuthorBiography = "Born in the USA...",
+                    CountryId = countries[0].Id,
+                    CreatedAt = DateTime.Now
+                },
+                new Author()
+                {
+                    Id = 2,
+                    AuthorFirstName = "Franz",
+                    AuthorLastName = "Kafka",
+                    AuthorBiography = "Born in Prague, Czech Republic",
+                    CountryId = countries[1].Id,
+                    CreatedAt = DateTime.Now
+                },
+                new Author()
+                {
+                    Id = 3,
+                    AuthorFirstName = "Michael",
+                    AuthorLastName = "Chabon",
+                    AuthorBiography = "Modern American author",
+                    CountryId = countries[0].Id,
+                    CreatedAt = DateTime.Now
+                }
+            };
+
+
+            List<Publisher> publishers = new List<Publisher>()
+            {
+                new Publisher()
+                {
+                    Id = 1,
+                    PublisherName = "Verlagsgruppe Random House",
+                    CountryId = countries[2].Id
+                },
+                new Publisher()
+                {
+                    Id = 2,
+                    PublisherName = "Joella Goldman",
+                    CountryId = countries[2].Id
+                },
+            };
+
+            List<AuthorPublisher> authorsPublishers = new List<AuthorPublisher>(){
+                new AuthorPublisher()
+                {
+                    AuthorId = 1,
+                    PublisherId = 1
+                },
+                new AuthorPublisher()
+                {
+                    AuthorId = 1,
+                    PublisherId = 2
+                },
+                new AuthorPublisher()
+                {
+                    AuthorId = 3,
+                    PublisherId = 1
+                }
+            };
+
             modelBuilder.Entity<Author>().HasData(authors);
             modelBuilder.Entity<Book>().HasData(books);
             modelBuilder.Entity<BookAuthor>().HasData(booksAuthors);
+            modelBuilder.Entity<Country>().HasData(countries);
+            modelBuilder.Entity<Publisher>().HasData(publishers);
+            modelBuilder.Entity<AuthorPublisher>().HasData(authorsPublishers);
             base.OnModelCreating(modelBuilder);
 
         }
