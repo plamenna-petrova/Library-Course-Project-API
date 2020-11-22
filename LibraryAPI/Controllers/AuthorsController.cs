@@ -229,7 +229,6 @@ namespace LibraryAPI.Controllers
             return Ok(publishersDto);
         }
 
-        [Route("api/authors")]
         [HttpPost]
         [ProducesResponseType(201, Type = typeof(Author))]
         [ProducesResponseType(400)]
@@ -242,14 +241,6 @@ namespace LibraryAPI.Controllers
             {
                 return BadRequest(ModelState);
             }
-
-            if (!_countryRepository.CountryExists(authorToCreate.Country.Id))
-            {
-                ModelState.AddModelError("", "Country doesn't exist!");
-                return StatusCode(404, ModelState);
-            }
-
-            authorToCreate.Country = _countryRepository.GetCountryById(authorToCreate.Country.Id);
 
             if (!ModelState.IsValid)
             {
@@ -288,21 +279,9 @@ namespace LibraryAPI.Controllers
                 ModelState.AddModelError("", "Author doesn't exist!");
             }
 
-            if (!_countryRepository.CountryExists(authorToUpdate.Country.Id))
-            {
-                ModelState.AddModelError("", "Country doesn't exist!");
-            }
-
             if (!ModelState.IsValid)
             {
                 return StatusCode(404, ModelState);
-            }
-
-            authorToUpdate.Country = _countryRepository.GetCountryById(authorToUpdate.Country.Id);
-
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
             }
 
             if (!_authorRepository.UpdateAuthor(authorToUpdate))

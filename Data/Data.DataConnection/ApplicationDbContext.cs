@@ -160,7 +160,7 @@ namespace Data.DataConnection
                    DatePublished = new DateTime(1983, 3, 10),
                    BookPages = 243,
                    BookAnnotation = "A story about an young chess player Beth Harmon and her struggles with defining herself in the chess world",
-                   CreatedAt = DateTime.Now
+                   CreatedAt = new DateTime(2020, 11, 22)
                },
                new Book()
                {
@@ -171,7 +171,7 @@ namespace Data.DataConnection
                    DatePublished = new DateTime(1926, 5, 9),
                    BookPages = 302,
                    BookAnnotation = "Kafka's unsurmounted masterpiece!",
-                   CreatedAt = DateTime.Now
+                   CreatedAt = new DateTime(2020, 11, 22)
                },
                new Book()
                {
@@ -182,7 +182,7 @@ namespace Data.DataConnection
                    DatePublished = new DateTime(2000, 4, 3),
                    BookPages = 705,
                    BookAnnotation = "Michael Chabon's Pulitzer winning work!",
-                   CreatedAt = DateTime.Now
+                   CreatedAt = new DateTime(2020, 11, 22)
                },
             };
 
@@ -211,17 +211,20 @@ namespace Data.DataConnection
                 new Country()
                 {
                     Id = 1,
-                    CountryName = "USA"
+                    CountryName = "USA",
+                    CreatedAt = new DateTime(2020, 11, 22)
                 },
                 new Country()
                 {
                     Id = 2,
-                    CountryName = "Czech Republic"
+                    CountryName = "Czech Republic",
+                    CreatedAt = new DateTime(2020, 11, 22)
                 },
                 new Country()
                 {
                     Id = 3,
-                    CountryName = "Germany"
+                    CountryName = "Germany",
+                    CreatedAt = new DateTime(2020, 11, 22)
                 }
             };
 
@@ -235,7 +238,7 @@ namespace Data.DataConnection
                     AuthorLastName = "Tevis",
                     AuthorBiography = "Born in the USA...",
                     CountryId = countries[0].Id,
-                    CreatedAt = DateTime.Now
+                    CreatedAt = new DateTime(2020, 11, 22)
                 },
                 new Author()
                 {
@@ -244,7 +247,7 @@ namespace Data.DataConnection
                     AuthorLastName = "Kafka",
                     AuthorBiography = "Born in Prague, Czech Republic",
                     CountryId = countries[1].Id,
-                    CreatedAt = DateTime.Now
+                    CreatedAt = new DateTime(2020, 11, 22)
                 },
                 new Author()
                 {
@@ -253,7 +256,7 @@ namespace Data.DataConnection
                     AuthorLastName = "Chabon",
                     AuthorBiography = "Modern American author",
                     CountryId = countries[0].Id,
-                    CreatedAt = DateTime.Now
+                    CreatedAt = new DateTime(2020, 11, 22)
                 }
             };
 
@@ -264,13 +267,15 @@ namespace Data.DataConnection
                 {
                     Id = 1,
                     PublisherName = "Verlagsgruppe Random House",
-                    CountryId = countries[2].Id
+                    CountryId = countries[2].Id,
+                    CreatedAt = new DateTime(2020, 11, 22)
                 },
                 new Publisher()
                 {
                     Id = 2,
                     PublisherName = "Joella Goldman",
-                    CountryId = countries[2].Id
+                    CountryId = countries[2].Id,
+                    CreatedAt = new DateTime(2020, 11, 22)
                 },
             };
 
@@ -282,7 +287,7 @@ namespace Data.DataConnection
                 },
                 new AuthorPublisher()
                 {
-                    AuthorId = 1,
+                    AuthorId = 2,
                     PublisherId = 2
                 },
                 new AuthorPublisher()

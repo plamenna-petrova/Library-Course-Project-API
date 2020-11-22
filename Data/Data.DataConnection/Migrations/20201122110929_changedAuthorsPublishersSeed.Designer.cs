@@ -4,14 +4,16 @@ using Data.DataConnection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Data.DataConnection.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201122110929_changedAuthorsPublishersSeed")]
+    partial class changedAuthorsPublishersSeed
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -66,7 +68,7 @@ namespace Data.DataConnection.Migrations
                             AuthorFirstName = "Walter",
                             AuthorLastName = "Tevis",
                             CountryId = 1,
-                            CreatedAt = new DateTime(2020, 11, 22, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            CreatedAt = new DateTime(2020, 11, 22, 13, 9, 28, 752, DateTimeKind.Local).AddTicks(731)
                         },
                         new
                         {
@@ -75,7 +77,7 @@ namespace Data.DataConnection.Migrations
                             AuthorFirstName = "Franz",
                             AuthorLastName = "Kafka",
                             CountryId = 2,
-                            CreatedAt = new DateTime(2020, 11, 22, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            CreatedAt = new DateTime(2020, 11, 22, 13, 9, 28, 752, DateTimeKind.Local).AddTicks(804)
                         },
                         new
                         {
@@ -84,7 +86,7 @@ namespace Data.DataConnection.Migrations
                             AuthorFirstName = "Michael",
                             AuthorLastName = "Chabon",
                             CountryId = 1,
-                            CreatedAt = new DateTime(2020, 11, 22, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            CreatedAt = new DateTime(2020, 11, 22, 13, 9, 28, 752, DateTimeKind.Local).AddTicks(809)
                         });
                 });
 
@@ -176,7 +178,7 @@ namespace Data.DataConnection.Migrations
                             BookEdition = "third",
                             BookPages = 243,
                             BookTitle = "The Queen's Gambit",
-                            CreatedAt = new DateTime(2020, 11, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(2020, 11, 22, 13, 9, 28, 749, DateTimeKind.Local).AddTicks(3051),
                             DatePublished = new DateTime(1983, 3, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ISBN = "978-3-16-148410-0"
                         },
@@ -187,7 +189,7 @@ namespace Data.DataConnection.Migrations
                             BookEdition = "first",
                             BookPages = 302,
                             BookTitle = "The Castle",
-                            CreatedAt = new DateTime(2020, 11, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(2020, 11, 22, 13, 9, 28, 751, DateTimeKind.Local).AddTicks(5621),
                             DatePublished = new DateTime(1926, 5, 9, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ISBN = "1004-3-16-148410-0"
                         },
@@ -198,7 +200,7 @@ namespace Data.DataConnection.Migrations
                             BookEdition = "second",
                             BookPages = 705,
                             BookTitle = "The Amazing Adventures of Kavalier and Clay",
-                            CreatedAt = new DateTime(2020, 11, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(2020, 11, 22, 13, 9, 28, 751, DateTimeKind.Local).AddTicks(5656),
                             DatePublished = new DateTime(2000, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ISBN = "834-3-16-148410-0"
                         });
@@ -332,19 +334,19 @@ namespace Data.DataConnection.Migrations
                         {
                             Id = 1,
                             CountryName = "USA",
-                            CreatedAt = new DateTime(2020, 11, 22, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 2,
                             CountryName = "Czech Republic",
-                            CreatedAt = new DateTime(2020, 11, 22, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 3,
                             CountryName = "Germany",
-                            CreatedAt = new DateTime(2020, 11, 22, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
                 });
 
@@ -582,14 +584,14 @@ namespace Data.DataConnection.Migrations
                         {
                             Id = 1,
                             CountryId = 3,
-                            CreatedAt = new DateTime(2020, 11, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PublisherName = "Verlagsgruppe Random House"
                         },
                         new
                         {
                             Id = 2,
                             CountryId = 3,
-                            CreatedAt = new DateTime(2020, 11, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PublisherName = "Joella Goldman"
                         });
                 });
