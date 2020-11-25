@@ -9,6 +9,7 @@ namespace Data.DataConnection.Repositories.Interfaces
     {
         ICollection<Author> GetAuthors();
         Author GetAuthorById(int authorId);
+        //AuthorDto
         ICollection<Author> GetAuthorsOfABook(int bookId);
         ICollection<Book> GetBooksByAuthor(int authorId);
         ICollection<Publisher> GetPublishersByAuthor(int authorId);

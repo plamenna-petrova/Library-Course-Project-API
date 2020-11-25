@@ -48,7 +48,6 @@ namespace LibraryAPI.Controllers
                     AuthorFirstName = author.AuthorFirstName,
                     AuthorLastName = author.AuthorLastName,
                     AuthorBiography = author.AuthorBiography,
-                    CreatedAt = author.CreatedAt
                 });
             }
 
@@ -80,8 +79,9 @@ namespace LibraryAPI.Controllers
                 AuthorFirstName = author.AuthorFirstName,
                 AuthorLastName = author.AuthorLastName,
                 AuthorBiography = author.AuthorBiography,
-                CreatedAt = author.CreatedAt
             };
+
+            //use AutoMapper
 
             return Ok(authorDto);
         }
@@ -97,6 +97,8 @@ namespace LibraryAPI.Controllers
             {
                 return NotFound();
             }
+
+            //Response - Headers, etc... - to do
 
             var authors = _authorRepository.GetAuthorsOfABook(bookId);
 
@@ -114,7 +116,6 @@ namespace LibraryAPI.Controllers
                     AuthorFirstName = author.AuthorFirstName,
                     AuthorLastName = author.AuthorLastName,
                     AuthorBiography = author.AuthorBiography,
-                    CreatedAt = author.CreatedAt
                 });
             }
 
@@ -154,7 +155,6 @@ namespace LibraryAPI.Controllers
                     DatePublished = book.DatePublished,
                     BookPages = book.BookPages,
                     BookAnnotation = book.BookAnnotation,
-                    CreatedAt = book.CreatedAt
                 });
             }
 
@@ -188,7 +188,7 @@ namespace LibraryAPI.Controllers
                     Id = author.Id,
                     AuthorFirstName = author.AuthorFirstName,
                     AuthorLastName = author.AuthorLastName,
-                    AuthorBiography = author.AuthorBiography
+                    AuthorBiography = author.AuthorBiography,
                 });
             }
 
@@ -222,7 +222,7 @@ namespace LibraryAPI.Controllers
                 publishersDto.Add(new PublisherDto
                 {
                     Id = publisher.Id,
-                    PublisherName = publisher.PublisherName
+                    PublisherName = publisher.PublisherName,
                 });
             }
 

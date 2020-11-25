@@ -43,6 +43,8 @@ namespace Data.DataConnection.Repositories.Implementations
             return ((decimal)reviews.Sum(r => r.Rating) / reviews.Count());
         }
 
+        //return BookTitle, Author, group by BookTitle and Review Count - to do, Dtos
+
         public bool BookExistsById(int bookId)
         {
             return _bookContext.Books.Any(b => b.Id == bookId);

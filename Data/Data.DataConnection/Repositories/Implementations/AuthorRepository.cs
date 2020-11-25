@@ -19,6 +19,16 @@ namespace Data.DataConnection.Repositories.Implementations
         public Author GetAuthorById(int authorId)
         {
             return _authorContext.Authors.Where(a => a.Id == authorId).FirstOrDefault();
+            //var authorDto = new AuthorDto()
+            //{
+            //    Id = author.Id,
+            //    AuthorFirstName = author.AuthorFirstName,
+            //    AuthorLastName = author.AuthorLastName,
+            //    AuthorBiography = author.AuthorBiography,
+            //    CreatedAt = author.CreatedAt
+            //};
+            //return authorDto;
+            //AutoMapper
         }
 
         public ICollection<Author> GetAuthors()
@@ -35,6 +45,7 @@ namespace Data.DataConnection.Repositories.Implementations
         {
             return _authorContext.BooksAuthors.Where(a => a.AuthorId == authorId).Select(b => b.Book).ToList();
         }
+
         public ICollection<Publisher> GetPublishersByAuthor(int authorId)
         {
             return _authorContext.AuthorsPublishers.Where(a => a.AuthorId == authorId).Select(p => p.Publisher).ToList();

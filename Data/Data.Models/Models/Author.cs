@@ -19,8 +19,8 @@ namespace Data.Models.Models
         public string AuthorBiography { get; set; }
         public virtual ICollection<BookAuthor> BooksAuthors { get; set; }
         public virtual ICollection<AuthorPublisher> AuthorsPublishers { get; set; }
-        [ForeignKey("Country")]
-        public virtual int? CountryId { get; set; }
-        public virtual Country Country { get; set; }
+        //[ForeignKey("Country")]
+        public int CountryId { get; set; }
+        public Country Country { get; set; }
     }
 }
