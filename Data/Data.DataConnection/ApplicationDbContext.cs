@@ -142,10 +142,10 @@ namespace Data.DataConnection
             //           .WithMany(a => a.Authors)
             //           .HasForeignKey(a => a.CountryId);
 
-            modelBuilder.Entity<Publisher>()
-                       .HasOne<Country>(c => c.Country)
-                       .WithMany(p => p.Publishers)
-                       .HasForeignKey(p => p.CountryId);
+            //modelBuilder.Entity<Publisher>()
+            //           .HasOne<Country>(c => c.Country)
+            //           .WithMany(p => p.Publishers)
+            //           .HasForeignKey(p => p.CountryId);
 
             //seed OnModelCreating parameter
 
@@ -239,8 +239,8 @@ namespace Data.DataConnection
                     AuthorFirstName = "Walter",
                     AuthorLastName = "Tevis",
                     AuthorBiography = "Born in the USA...",
-                    //CountryId = countries[0].Id,
-                    CountryId = 1,
+                    CountryId = countries[0].Id,
+                    //CountryId = 1,
                     CreatedAt = new DateTime(2020, 11, 22)
                 },
                 new Author()
@@ -249,8 +249,8 @@ namespace Data.DataConnection
                     AuthorFirstName = "Franz",
                     AuthorLastName = "Kafka",
                     AuthorBiography = "Born in Prague, Czech Republic",
-                    //CountryId = countries[1].Id,
-                    CountryId = 2,
+                    CountryId = countries[1].Id,
+                    //CountryId = 2,
                     CreatedAt = new DateTime(2020, 11, 22)
                 },
                 new Author()
@@ -259,8 +259,8 @@ namespace Data.DataConnection
                     AuthorFirstName = "Michael",
                     AuthorLastName = "Chabon",
                     AuthorBiography = "Modern American author",
-                    //CountryId = countries[0].Id,
-                    CountryId = 1,
+                    CountryId = countries[0].Id,
+                    //CountryId = 1,
                     CreatedAt = new DateTime(2020, 11, 22)
                 }
             };
