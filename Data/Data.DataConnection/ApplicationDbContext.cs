@@ -37,6 +37,7 @@ namespace Data.DataConnection
         public virtual DbSet<LibrarianBook> LibrariansBooks { get; set; }
         public virtual DbSet<ReaderBook> ReadersBooks { get; set; }
         public virtual DbSet<ReaderLibrarian> ReadersLibrarians { get; set; }
+        public virtual DbSet<User> Users { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder dbContextOptionsBuilder)
         {
