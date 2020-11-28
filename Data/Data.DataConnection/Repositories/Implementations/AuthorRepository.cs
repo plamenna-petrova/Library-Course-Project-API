@@ -66,6 +66,12 @@ namespace Data.DataConnection.Repositories.Implementations
             return _authorContext.Authors.Any(a => a.Id == authorId);
         }
 
+        public bool AuthorExistsByLastName(string authorLastName)
+        {
+            bool value = _authorContext.Authors.Any(a => a.AuthorLastName.ToLower().Trim() == authorLastName.ToLower().Trim());
+            return value;
+        }
+
         public bool CreateAuthor(Author author)
         {
             _authorContext.Add(author);

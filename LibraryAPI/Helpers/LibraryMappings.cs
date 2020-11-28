@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using Data.DataConnection.DtoModels.CreateDtos;
 using Data.DataConnection.DtoModels.Dtos;
+using Data.DataConnection.DtoModels.UpdateDtos;
 using Data.Models.Models;
 using System;
 using System.Collections.Generic;
@@ -12,10 +14,15 @@ namespace LibraryAPI.Helpers
     {
         public LibraryMappings()
         {
+            //model to dto
             CreateMap<Author, AuthorDto>().ReverseMap();
             CreateMap<Book, BookDto>().ReverseMap();
             CreateMap<Publisher, PublisherDto>().ReverseMap();
             CreateMap<Country, CountryDto>().ReverseMap();
+            //model to create dto
+            CreateMap<Author, AuthorCreateDto>().ReverseMap();
+            //model to update dto
+            CreateMap<Author, AuthorUpdateDto>().ReverseMap();
         }
     }
 }

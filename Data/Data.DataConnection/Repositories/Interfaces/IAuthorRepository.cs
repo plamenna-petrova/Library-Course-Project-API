@@ -16,6 +16,7 @@ namespace Data.DataConnection.Repositories.Interfaces
         ICollection<Author> GetAuthorsByPublisher(int publisherId);
         Country GetCountryOfAnAuthor(int authorId);
         bool AuthorExists(int authorId);
+        bool AuthorExistsByLastName(string authorLastName);
         bool CreateAuthor(Author author);
         bool UpdateAuthor(Author author);
         bool DeleteAuthor(Author author);

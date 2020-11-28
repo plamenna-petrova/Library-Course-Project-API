@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Data.DataConnection.DtoModels.CreateDtos;
 using Data.DataConnection.DtoModels.Dtos;
+using Data.DataConnection.DtoModels.UpdateDtos;
 using Data.DataConnection.Repositories.Interfaces;
 using Data.Models.Models;
 using Microsoft.AspNetCore.Http;
@@ -168,20 +170,20 @@ namespace LibraryAPI.Controllers
         [ProducesResponseType(500)]
 
         //Author authorToCreate
-        public IActionResult CreateAuthor([FromBody] AuthorDto authorDto)
+        public IActionResult CreateAuthor([FromBody] AuthorCreateDto authorCreateDto)
         {
-            if (authorDto == null)
+            if (authorCreateDto == null)
             {
                 return BadRequest(ModelState);
             }
 
-            if (_unitOfWork.AuthorRepository.AuthorExists(authorDto.Id))
+            if (_unitOfWork.AuthorRepository.AuthorExistsByLastName(authorCreateDto.AuthorLastName))
             {
                 ModelState.AddModelError("", "Such author Exists!");
                 return StatusCode(404, ModelState);
             }
 
-            var authorToCreate = _mapper.Map<Author>(authorDto);
+            var authorToCreate = _mapper.Map<Author>(authorCreateDto);
 
             if (!_unitOfWork.AuthorRepository.CreateAuthor(authorToCreate))
             {
@@ -202,14 +204,14 @@ namespace LibraryAPI.Controllers
         [ProducesResponseType(500)]
 
         //Update Author (int authorId, [FromBody] Author authorToUpdate) - no automapper
-        public IActionResult UpdateAuthor(int authorId, [FromBody] AuthorDto authorDto)
+        public IActionResult UpdateAuthor(int authorId, [FromBody] AuthorUpdateDto authorUpdateDto)
         {
-            if (authorDto == null)
+            if (authorUpdateDto == null)
             {
                 return BadRequest(ModelState);
             }
 
-            if (authorId != authorDto.Id)
+            if (authorId != authorUpdateDto.Id)
             {
                 return BadRequest(ModelState);
             }
@@ -224,7 +226,7 @@ namespace LibraryAPI.Controllers
                 return StatusCode(404, ModelState);
             }
 
-            var authorToUpdate = _mapper.Map<Author>(authorDto);
+            var authorToUpdate = _mapper.Map<Author>(authorUpdateDto);
 
             if (!_unitOfWork.AuthorRepository.UpdateAuthor(authorToUpdate))
             {
@@ -253,12 +255,12 @@ namespace LibraryAPI.Controllers
 
             var authorToDelete = _unitOfWork.AuthorRepository.GetAuthorById(authorId);
 
-            if (_unitOfWork.AuthorRepository.GetBooksByAuthor(authorId).Count() > 0)
-            {
-                ModelState.AddModelError("", $"Author {authorToDelete.AuthorFirstName} {authorToDelete.AuthorLastName}" +
-                    "cannot be deleted because it is associated with at least one book");
-                return StatusCode(409, ModelState);
-            }
+            //if (_unitOfWork.AuthorRepository.GetBooksByAuthor(authorId).Count() > 0)
+            //{
+            //    ModelState.AddModelError("", $"Author {authorToDelete.AuthorFirstName} {authorToDelete.AuthorLastName}" +
+            //        "cannot be deleted because it is associated with at least one book");
+            //    return StatusCode(409, ModelState);
+            //}
 
             if (!_unitOfWork.AuthorRepository.DeleteAuthor(authorToDelete))
             {
