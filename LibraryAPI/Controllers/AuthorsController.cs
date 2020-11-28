@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Data.DataConnection.DtoModels.Dtos;
 using Data.DataConnection.Repositories.Interfaces;
 using Data.Models.Models;
@@ -15,9 +16,12 @@ namespace LibraryAPI.Controllers
     public class AuthorsController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
-        public AuthorsController(IUnitOfWork unitOfWork)
+        private readonly IMapper _mapper;
+
+        public AuthorsController(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -27,20 +31,21 @@ namespace LibraryAPI.Controllers
         {
             var authors = _unitOfWork.AuthorRepository.GetAuthors();
 
-            var authorsDto = new List<AuthorDto>();
+            var authorDto = new List<AuthorDto>();
 
             foreach (var author in authors)
             {
-                authorsDto.Add(new AuthorDto
-                {
-                    Id = author.Id,
-                    AuthorFirstName = author.AuthorFirstName,
-                    AuthorLastName = author.AuthorLastName,
-                    AuthorBiography = author.AuthorBiography,
-                });
+                //authorsDto.Add(new AuthorDto
+                //{
+                //    Id = author.Id,
+                //    AuthorFirstName = author.AuthorFirstName,
+                //    AuthorLastName = author.AuthorLastName,
+                //    AuthorBiography = author.AuthorBiography,
+                //});
+                authorDto.Add(_mapper.Map<AuthorDto>(author));
             }
 
-            return Ok(authorsDto);
+            return Ok(authorDto);
         }
 
         [Route("api/authors/authorId")]
@@ -57,13 +62,14 @@ namespace LibraryAPI.Controllers
 
             var author = _unitOfWork.AuthorRepository.GetAuthorById(authorId);
 
-            var authorDto = new AuthorDto()
-            {
-                Id = author.Id,
-                AuthorFirstName = author.AuthorFirstName,
-                AuthorLastName = author.AuthorLastName,
-                AuthorBiography = author.AuthorBiography,
-            };
+            //var authorDto = new AuthorDto()
+            //{
+            //    Id = author.Id,
+            //    AuthorFirstName = author.AuthorFirstName,
+            //    AuthorLastName = author.AuthorLastName,
+            //    AuthorBiography = author.AuthorBiography,
+            //};
+            var authorDto = _mapper.Map<AuthorDto>(author);
 
             //use AutoMapper
 
@@ -89,13 +95,14 @@ namespace LibraryAPI.Controllers
             var authorsDto = new List<AuthorDto>();
             foreach (var author in authors)
             {
-                authorsDto.Add(new AuthorDto
-                {
-                    Id = author.Id,
-                    AuthorFirstName = author.AuthorFirstName,
-                    AuthorLastName = author.AuthorLastName,
-                    AuthorBiography = author.AuthorBiography,
-                });
+                //authorsDto.Add(new AuthorDto
+                //{
+                //    Id = author.Id,
+                //    AuthorFirstName = author.AuthorFirstName,
+                //    AuthorLastName = author.AuthorLastName,
+                //    AuthorBiography = author.AuthorBiography,
+                //});
+                authorsDto.Add(_mapper.Map<AuthorDto>(author));
             }
 
             return Ok(authorsDto);
@@ -120,16 +127,17 @@ namespace LibraryAPI.Controllers
 
             foreach (var book in books)
             {
-                booksDto.Add(new BookDto
-                {
-                    Id = book.Id,
-                    ISBN = book.ISBN,
-                    BookTitle = book.BookTitle,
-                    BookEdition = book.BookEdition,
-                    DatePublished = book.DatePublished,
-                    BookPages = book.BookPages,
-                    BookAnnotation = book.BookAnnotation,
-                });
+                //booksDto.Add(new BookDto
+                //{
+                //    Id = book.Id,
+                //    ISBN = book.ISBN,
+                //    BookTitle = book.BookTitle,
+                //    BookEdition = book.BookEdition,
+                //    DatePublished = book.DatePublished,
+                //    BookPages = book.BookPages,
+                //    BookAnnotation = book.BookAnnotation,
+                //});
+                booksDto.Add(_mapper.Map<BookDto>(book));
             }
 
             return Ok(booksDto);
@@ -152,13 +160,14 @@ namespace LibraryAPI.Controllers
             var authorsDto = new List<AuthorDto>();
             foreach (var author in authors)
             {
-                authorsDto.Add(new AuthorDto
-                {
-                    Id = author.Id,
-                    AuthorFirstName = author.AuthorFirstName,
-                    AuthorLastName = author.AuthorLastName,
-                    AuthorBiography = author.AuthorBiography,
-                });
+                //authorsDto.Add(new AuthorDto
+                //{
+                //    Id = author.Id,
+                //    AuthorFirstName = author.AuthorFirstName,
+                //    AuthorLastName = author.AuthorLastName,
+                //    AuthorBiography = author.AuthorBiography,
+                //});
+                authorsDto.Add(_mapper.Map<AuthorDto>(author));
             }
 
             return Ok(authorsDto);
@@ -183,11 +192,12 @@ namespace LibraryAPI.Controllers
 
             foreach (var publisher in publishers)
             {
-                publishersDto.Add(new PublisherDto
-                {
-                    Id = publisher.Id,
-                    PublisherName = publisher.PublisherName,
-                });
+                //publishersDto.Add(new PublisherDto
+                //{
+                //    Id = publisher.Id,
+                //    PublisherName = publisher.PublisherName,
+                //});
+                publishersDto.Add(_mapper.Map<PublisherDto>(publisher));
             }
 
             return Ok(publishersDto);
@@ -211,6 +221,8 @@ namespace LibraryAPI.Controllers
                 ModelState.AddModelError("", $"Something went wrong saving the author " + $"{authorToCreate.AuthorFirstName} {authorToCreate.AuthorLastName}");
                 return StatusCode(500, ModelState);
             }
+
+            _unitOfWork.Commit();
 
             return CreatedAtRoute("GetAuthorById", new { authorId = authorToCreate.Id }, authorToCreate);
         }
@@ -249,6 +261,8 @@ namespace LibraryAPI.Controllers
                 return StatusCode(500, ModelState);
             }
 
+            _unitOfWork.Commit();
+
             return NoContent();
         }
 
@@ -281,6 +295,8 @@ namespace LibraryAPI.Controllers
                     $"{authorToDelete.AuthorFirstName} {authorToDelete.AuthorLastName}");
                 return StatusCode(500, ModelState);
             }
+
+            _unitOfWork.Commit();
 
             return NoContent();
         }
