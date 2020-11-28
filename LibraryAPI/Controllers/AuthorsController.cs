@@ -14,16 +14,10 @@ namespace LibraryAPI.Controllers
     [ApiController]
     public class AuthorsController : ControllerBase
     {
-        private IAuthorRepository _authorRepository;
-        private IBookRepository _bookRepository;
-        private IPublisherRepository _publisherRepository;
-        private ICountryRepository _countryRepository;
-        public AuthorsController(IAuthorRepository authorRepository, IBookRepository bookRepository, ICountryRepository countryRepository, IPublisherRepository publisherRepository)
+        private readonly IUnitOfWork _unitOfWork;
+        public AuthorsController(IUnitOfWork unitOfWork)
         {
-            _authorRepository = authorRepository;
-            _bookRepository = bookRepository;
-            _countryRepository = countryRepository;
-            _publisherRepository = publisherRepository;
+            _unitOfWork = unitOfWork;
         }
 
         [HttpGet]
@@ -31,12 +25,7 @@ namespace LibraryAPI.Controllers
         [ProducesResponseType(400)]
         public IActionResult GetAuthors()
         {
-            var authors = _authorRepository.GetAuthors();
-
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            var authors = _unitOfWork.AuthorRepository.GetAuthors();
 
             var authorsDto = new List<AuthorDto>();
 
@@ -61,17 +50,12 @@ namespace LibraryAPI.Controllers
         [ProducesResponseType(404)]
         public IActionResult GetAuthorById(int authorId)
         {
-            if (!_authorRepository.AuthorExists(authorId))
+            if (!_unitOfWork.AuthorRepository.AuthorExists(authorId))
             {
                 return NotFound();
             }
 
-            var author = _authorRepository.GetAuthorById(authorId);
-
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            var author = _unitOfWork.AuthorRepository.GetAuthorById(authorId);
 
             var authorDto = new AuthorDto()
             {
@@ -93,19 +77,14 @@ namespace LibraryAPI.Controllers
         [ProducesResponseType(404)]
         public IActionResult GetAuthorsOfABook(int bookId)
         {
-            if (!_bookRepository.BookExistsById(bookId))
+            if (!_unitOfWork.BookRepository.BookExistsById(bookId))
             {
                 return NotFound();
             }
 
             //Response - Headers, etc... - to do
 
-            var authors = _authorRepository.GetAuthorsOfABook(bookId);
-
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            var authors = _unitOfWork.AuthorRepository.GetAuthorsOfABook(bookId);
 
             var authorsDto = new List<AuthorDto>();
             foreach (var author in authors)
@@ -130,17 +109,12 @@ namespace LibraryAPI.Controllers
 
         public IActionResult GetBooksByAuthor(int authorId)
         {
-            if (!_authorRepository.AuthorExists(authorId))
+            if (!_unitOfWork.AuthorRepository.AuthorExists(authorId))
             {
                 return NotFound();
             }
 
-            var books = _authorRepository.GetBooksByAuthor(authorId);
-
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            var books = _unitOfWork.AuthorRepository.GetBooksByAuthor(authorId);
 
             var booksDto = new List<BookDto>();
 
@@ -168,17 +142,12 @@ namespace LibraryAPI.Controllers
         [ProducesResponseType(404)]
         public IActionResult GetAuthorsByPublisher(int publisherId)
         {
-            if (!_publisherRepository.PublisherExists(publisherId))
+            if (!_unitOfWork.PublisherRepository.PublisherExists(publisherId))
             {
                 return NotFound();
             }
 
-            var authors = _authorRepository.GetAuthorsByPublisher(publisherId);
-
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            var authors = _unitOfWork.AuthorRepository.GetAuthorsByPublisher(publisherId);
 
             var authorsDto = new List<AuthorDto>();
             foreach (var author in authors)
@@ -203,17 +172,12 @@ namespace LibraryAPI.Controllers
 
         public IActionResult GetPublishersByAuthor(int authorId)
         {
-            if (!_authorRepository.AuthorExists(authorId))
+            if (!_unitOfWork.AuthorRepository.AuthorExists(authorId))
             {
                 return NotFound();
             }
 
-            var publishers = _authorRepository.GetPublishersByAuthor(authorId);
-
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            var publishers = _unitOfWork.AuthorRepository.GetPublishersByAuthor(authorId);
 
             var publishersDto = new List<PublisherDto>();
 
@@ -242,12 +206,7 @@ namespace LibraryAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (!_authorRepository.CreateAuthor(authorToCreate))
+            if (!_unitOfWork.AuthorRepository.CreateAuthor(authorToCreate))
             {
                 ModelState.AddModelError("", $"Something went wrong saving the author " + $"{authorToCreate.AuthorFirstName} {authorToCreate.AuthorLastName}");
                 return StatusCode(500, ModelState);
@@ -274,7 +233,7 @@ namespace LibraryAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            if (!_authorRepository.AuthorExists(authorId))
+            if (!_unitOfWork.AuthorRepository.AuthorExists(authorId))
             {
                 ModelState.AddModelError("", "Author doesn't exist!");
             }
@@ -284,7 +243,7 @@ namespace LibraryAPI.Controllers
                 return StatusCode(404, ModelState);
             }
 
-            if (!_authorRepository.UpdateAuthor(authorToUpdate))
+            if (!_unitOfWork.AuthorRepository.UpdateAuthor(authorToUpdate))
             {
                 ModelState.AddModelError("", $"Something went wrong updating the author " + $"{authorToUpdate.AuthorFirstName} {authorToUpdate.AuthorLastName}");
                 return StatusCode(500, ModelState);
@@ -302,26 +261,21 @@ namespace LibraryAPI.Controllers
         [ProducesResponseType(500)]
         public IActionResult DeleteAuthor(int authorId)
         {
-            if (!_authorRepository.AuthorExists(authorId))
+            if (!_unitOfWork.AuthorRepository.AuthorExists(authorId))
             {
                 return NotFound();
             }
 
-            var authorToDelete = _authorRepository.GetAuthorById(authorId);
+            var authorToDelete = _unitOfWork.AuthorRepository.GetAuthorById(authorId);
 
-            if (_authorRepository.GetBooksByAuthor(authorId).Count() > 0)
+            if (_unitOfWork.AuthorRepository.GetBooksByAuthor(authorId).Count() > 0)
             {
                 ModelState.AddModelError("", $"Author {authorToDelete.AuthorFirstName} {authorToDelete.AuthorLastName}" +
                     "cannot be deleted because it is associated with at least one book");
                 return StatusCode(409, ModelState);
             }
 
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (!_authorRepository.DeleteAuthor(authorToDelete))
+            if (!_unitOfWork.AuthorRepository.DeleteAuthor(authorToDelete))
             {
                 ModelState.AddModelError("", $"Something went wrong deleting " +
                     $"{authorToDelete.AuthorFirstName} {authorToDelete.AuthorLastName}");
