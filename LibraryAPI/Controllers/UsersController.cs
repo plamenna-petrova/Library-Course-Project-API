@@ -19,7 +19,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace LibraryAPI.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
@@ -100,7 +100,7 @@ namespace LibraryAPI.Controllers
             return Ok(userDto);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{userId}")]
         public IActionResult GetUserById(int userId)
         {
             var user = _userRepository.GetUserById(userId);
@@ -108,7 +108,7 @@ namespace LibraryAPI.Controllers
             return Ok(userDto);
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("{userId}")]
         public IActionResult Update(int userId, [FromBody]UpdateUserDto updateUserDto)
         {
             // map dto to model and set id
@@ -128,7 +128,7 @@ namespace LibraryAPI.Controllers
             }
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("{userId}")]
         public IActionResult Delete(int userId)
         {
             _userRepository.Delete(userId);
