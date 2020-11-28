@@ -7,8 +7,9 @@ using System.Text;
 
 namespace Data.DataConnection.DtoModels.Dtos
 {
-    public class AuthorDto : BaseDtoModel
+    public class AuthorDto
     {
+        public int Id { get; set; }
         [Required]
         public string AuthorFirstName { get; set; }
         [Required]
