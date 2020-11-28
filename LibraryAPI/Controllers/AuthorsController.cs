@@ -43,25 +43,59 @@ namespace LibraryAPI.Controllers
             return Ok(authorDto);
         }
 
+        [HttpGet("getallauthors")]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<AuthorDto>))]
+        [ProducesResponseType(400)]
+        public IActionResult GetAllAuthors()
+        {
+            var authors = _unitOfWork.AuthorRepository.GetAllAuthors();
+
+            var authorDto = new List<AuthorDto>();
+
+            foreach (var author in authors)
+            {
+                authorDto.Add(_mapper.Map<AuthorDto>(author));
+            }
+
+            return Ok(authorDto);
+        }
+
+        //[Route("api/authors/authorId")]
+        //[HttpGet("{authorId}", Name = "GetAuthorById")]
+        //[ProducesResponseType(200, Type = typeof(AuthorDto))]
+        //[ProducesResponseType(400)]
+        //[ProducesResponseType(404)]
+        //public IActionResult GetAuthorById(int authorId)
+        //{
+        //    if (!_unitOfWork.AuthorRepository.AuthorExists(authorId))
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    var author = _unitOfWork.AuthorRepository.GetAuthorById(authorId);
+
+        //    var authorDto = _mapper.Map<AuthorDto>(author);
+
+        //    //use AutoMapper
+
+        //    return Ok(authorDto);
+        //}
+
         [Route("api/authors/authorId")]
-        [HttpGet("{authorId}", Name = "GetAuthorById")]
-        [ProducesResponseType(200, Type = typeof(AuthorDto))]
+        [HttpGet("{authorId}")]
+        [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
-        public IActionResult GetAuthorById(int authorId)
+        public IActionResult GetAuthorByIdMapped(int authorId)
         {
             if (!_unitOfWork.AuthorRepository.AuthorExists(authorId))
             {
                 return NotFound();
             }
 
-            var author = _unitOfWork.AuthorRepository.GetAuthorById(authorId);
+            var singleAuthor = _unitOfWork.AuthorRepository.GetAuthorByIdMapped(authorId);
 
-            var authorDto = _mapper.Map<AuthorDto>(author);
-
-            //use AutoMapper
-
-            return Ok(authorDto);
+            return Ok(singleAuthor);
         }
 
         [Route("api/authors/books/bookId")]
@@ -81,6 +115,7 @@ namespace LibraryAPI.Controllers
             var authors = _unitOfWork.AuthorRepository.GetAuthorsOfABook(bookId);
 
             var authorsDto = new List<AuthorDto>();
+
             foreach (var author in authors)
             {
                 authorsDto.Add(_mapper.Map<AuthorDto>(author));

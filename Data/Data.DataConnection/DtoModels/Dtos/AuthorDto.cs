@@ -15,6 +15,7 @@ namespace Data.DataConnection.DtoModels.Dtos
         [Required]
         public string AuthorLastName { get; set; }
         public string AuthorBiography { get; set; }
+        public DateTime CreatedAt { get; set; }
         [Required]
         public int CountryId { get; set; }
         public Country Country { get; set; }

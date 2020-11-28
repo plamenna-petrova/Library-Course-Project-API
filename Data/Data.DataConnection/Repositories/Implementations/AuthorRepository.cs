@@ -1,8 +1,11 @@
-﻿using Data.DataConnection.Repositories.Interfaces;
+﻿using AutoMapper;
+using Data.DataConnection.DtoModels.Dtos;
+using Data.DataConnection.Repositories.Interfaces;
 using Data.Models.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 
 namespace Data.DataConnection.Repositories.Implementations
@@ -10,7 +13,7 @@ namespace Data.DataConnection.Repositories.Implementations
     public class AuthorRepository : IAuthorRepository
     {
         private readonly ApplicationDbContext _authorContext;
-
+        private readonly IMapper _mapper;
         public AuthorRepository(ApplicationDbContext authorContext)
         {
             _authorContext = authorContext;
@@ -31,9 +34,28 @@ namespace Data.DataConnection.Repositories.Implementations
             //AutoMapper
         }
 
+        public AuthorDto GetAuthorByIdMapped(int authorId)
+        {
+            var singleAuthor = _authorContext.Authors.Where(a => a.Id == authorId).FirstOrDefault();
+            var mappedAuthor = _mapper.Map<AuthorDto>(singleAuthor);
+            return mappedAuthor;
+        }
+
         public ICollection<Author> GetAuthors()
         {
             return _authorContext.Authors.OrderBy(a => a.AuthorLastName).ToList();
+        }
+
+        public IQueryable<Author> GetAllAuthors(Func<Author, bool> func = null)
+        {
+            if (func == null)
+            {
+                return _authorContext.Authors.AsQueryable<Author>();
+            }
+            else
+            {
+                return _authorContext.Authors.Where(func).AsQueryable<Author>();
+            }
         }
 
         public ICollection<Author> GetAuthorsOfABook(int bookId)

@@ -1,4 +1,5 @@
-﻿using Data.DataConnection.Repositories.Interfaces;
+﻿using AutoMapper;
+using Data.DataConnection.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
