@@ -204,17 +204,27 @@ namespace LibraryAPI.Controllers
         }
 
         [HttpPost]
-        [ProducesResponseType(201, Type = typeof(Author))]
+        //[ProducesResponseType(201, Type = typeof(Author))]
+        [ProducesResponseType(201, Type = typeof(AuthorDto))]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
         [ProducesResponseType(500)]
 
-        public IActionResult CreateAuthor([FromBody] Author authorToCreate)
+        //Author authorToCreate
+        public IActionResult CreateAuthor([FromBody] AuthorDto authorDto)
         {
-            if (authorToCreate == null)
+            if (authorDto == null)
             {
                 return BadRequest(ModelState);
             }
+
+            if (_unitOfWork.AuthorRepository.AuthorExists(authorDto.Id))
+            {
+                ModelState.AddModelError("", "Such author Exists!");
+                return StatusCode(404, ModelState);
+            }
+
+            var authorToCreate = _mapper.Map<Author>(authorDto);
 
             if (!_unitOfWork.AuthorRepository.CreateAuthor(authorToCreate))
             {
@@ -233,14 +243,16 @@ namespace LibraryAPI.Controllers
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
         [ProducesResponseType(500)]
-        public IActionResult UpdateAuthor(int authorId, [FromBody] Author authorToUpdate)
+
+        //Update Author (int authorId, [FromBody] Author authorToUpdate)
+        public IActionResult UpdateAuthor(int authorId, [FromBody] AuthorDto authorDto)
         {
-            if (authorToUpdate == null)
+            if (authorDto == null)
             {
                 return BadRequest(ModelState);
             }
 
-            if (authorId != authorToUpdate.Id)
+            if (authorId != authorDto.Id)
             {
                 return BadRequest(ModelState);
             }
@@ -254,6 +266,8 @@ namespace LibraryAPI.Controllers
             {
                 return StatusCode(404, ModelState);
             }
+
+            var authorToUpdate = _mapper.Map<Author>(authorDto);
 
             if (!_unitOfWork.AuthorRepository.UpdateAuthor(authorToUpdate))
             {
