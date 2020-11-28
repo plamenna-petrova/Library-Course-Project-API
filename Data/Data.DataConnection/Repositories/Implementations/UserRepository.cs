@@ -1,9 +1,9 @@
-﻿using Data.DataConnection.Repositories.Interfaces;
+﻿using Data.DataConnection.Exceptions;
+using Data.DataConnection.Repositories.Interfaces;
 using Data.Models.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Data.DataConnection.Repositories.Implementations
 {
@@ -31,35 +31,105 @@ namespace Data.DataConnection.Repositories.Implementations
                 return null;
             }
 
-            //check if password is correct
-            //if (!VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt))
+            // check if password is correct
+            if (!VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt))
+            {
+                return null;
+            }
 
+            //authentication successful
             return user;
         }
 
         public User Create(User user, string password)
         {
-            throw new NotImplementedException();
+           // validation
+           if (string.IsNullOrWhiteSpace(password))
+           {
+                throw new AppException("Password is required");
+           }
+
+           if (_userContext.Users.Any(x => x.Username == user.Username))
+           {
+                throw new AppException("Username \"" + user.Username + "\" is already taken");     
+           }
+
+            byte[] passwordHash, passwordSalt;
+            CreatePasswordHash(password, out passwordHash, out passwordSalt);
+
+            user.PasswordHash = passwordHash;
+            user.PasswordSalt = passwordSalt;
+
+            _userContext.Users.Add(user);
+            _userContext.SaveChanges();
+
+            return user;
         }
 
         public void Delete(int userId)
         {
-            throw new NotImplementedException();
+            var user = _userContext.Users.Find(userId);
+            if (user != null)
+            {
+                _userContext.Users.Remove(user);
+                _userContext.SaveChanges();
+            }
         }
 
         public IEnumerable<User> GetAllUsers()
         {
-            throw new NotImplementedException();
+            return _userContext.Users;
         }
 
         public User GetUserById(int userId)
         {
-            throw new NotImplementedException();
+            return _userContext.Users.Find(userId);
         }
 
-        public void Update(User user, string password = null)
+        public void Update(User userParam, string password = null)
         {
-            throw new NotImplementedException();
+            var user = _userContext.Users.Find(userParam.Id);
+
+            if (user == null)
+            {
+                throw new AppException("User not found");
+            }
+
+            // update username if it has changed
+            if (!string.IsNullOrWhiteSpace(userParam.Username) && userParam.Username != user.Username)
+            {
+                // throw error if the new username is already taken
+                if (_userContext.Users.Any(x => x.Username == userParam.Username))
+                {
+                    throw new AppException("Username " + userParam.Username + " is already taken");
+                }
+
+                user.Username = userParam.Username;
+            }
+
+            // update user properties if provided
+            if (!string.IsNullOrWhiteSpace(userParam.FirstName))
+            {
+                user.FirstName = userParam.FirstName;
+            }
+
+            if (!string.IsNullOrWhiteSpace(userParam.LastName))
+            {
+                user.LastName = userParam.LastName;
+            }
+
+            // update password if provided
+            if (!string.IsNullOrWhiteSpace(password))
+            {
+                byte[] passwordHash, passwordSalt;
+                CreatePasswordHash(password, out passwordHash, out passwordSalt);
+
+                user.PasswordHash = passwordHash;
+                user.PasswordSalt = passwordSalt;
+            }
+
+            _userContext.Users.Update(user);
+            _userContext.SaveChanges();
         }
 
         // private helper methods

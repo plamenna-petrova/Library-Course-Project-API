@@ -11,7 +11,7 @@ namespace Data.DataConnection.Repositories.Interfaces
         IEnumerable<User> GetAllUsers();
         User GetUserById(int userId);
         User Create(User user, string password);
-        void Update(User user, string password = null);
+        void Update(User userParam, string password = null);
         void Delete(int userId);
     }
 }

@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Text;
 
-namespace LibraryAPI.Helpers
+namespace Data.DataConnection.Exceptions
 {
     public class AppException : Exception
     {
