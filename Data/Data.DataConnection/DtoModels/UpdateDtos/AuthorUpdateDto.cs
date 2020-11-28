@@ -1,13 +1,12 @@
 ﻿using Data.DataConnection.DtoModels.Abstraction;
-using Data.Models.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace Data.DataConnection.DtoModels.Dtos
+namespace Data.DataConnection.DtoModels.UpdateDtos
 {
-    public class AuthorDto : BaseDtoModel
+    public class AuthorUpdateDto : BaseDtoModel
     {
         [Required]
         public string AuthorFirstName { get; set; }
@@ -16,7 +15,5 @@ namespace Data.DataConnection.DtoModels.Dtos
         public string AuthorBiography { get; set; }
         [Required]
         public int CountryId { get; set; }
-        public Country Country { get; set; }
     }
 }
-

@@ -8,6 +8,6 @@ namespace Data.DataConnection.DtoModels.Abstraction
     public abstract class BaseDtoModel : IBaseDtoModel
     {
         public int Id { get; set; }
-        public DateTime CreatedAt { get; set; }
+        //public DateTime CreatedAt { get; set; }
     }
 }
