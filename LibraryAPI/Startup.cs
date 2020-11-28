@@ -44,6 +44,7 @@ namespace LibraryAPI
             services.AddScoped<IPublisherRepository, PublisherRepository>();
             services.AddScoped<IReaderRepository, ReaderRepository>();
             services.AddScoped<IReviewRepository, ReviewRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
         }
