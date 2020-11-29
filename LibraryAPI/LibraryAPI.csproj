@@ -14,6 +14,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Data\Data.DataConnection\Data.DataConnection.csproj" />
     <ProjectReference Include="..\Data\Data.Models\Data.Models.csproj" />
+    <ProjectReference Include="..\Data\Data.Services\Data.Services.csproj" />
   </ItemGroup>
 
 
