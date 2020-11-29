@@ -1,12 +1,8 @@
 ﻿using AutoMapper;
 using Data.Models.Models;
 using Data.Services.DtoModels.Dtos;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace LibraryAPI.Helpers
+namespace Data.Services.Helpers
 {
     public class AutoMapperProfile : Profile
     {

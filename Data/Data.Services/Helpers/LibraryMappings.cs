@@ -3,12 +3,8 @@ using Data.Models.Models;
 using Data.Services.DtoModels.CreateDtos;
 using Data.Services.DtoModels.Dtos;
 using Data.Services.DtoModels.UpdateDtos;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace LibraryAPI.Helpers
+namespace LData.Services.Helpers
 {
     public class LibraryMappings : Profile
     {

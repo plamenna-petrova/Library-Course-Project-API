@@ -7,7 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data.Models", "Data\Data.Mo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data.DataConnection", "Data\Data.DataConnection\Data.DataConnection.csproj", "{01E5B0B8-9FF3-477C-9138-300DEB03AEDD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraryAPI", "LibraryAPI\LibraryAPI.csproj", "{B70455CD-E111-48DA-A8D2-9455C3EF7A33}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibraryAPI", "LibraryAPI\LibraryAPI.csproj", "{B70455CD-E111-48DA-A8D2-9455C3EF7A33}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data.Services", "Data\Data.Services\Data.Services.csproj", "{832AA46E-2EEF-45DA-BD46-97A76FFC5B1D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{B70455CD-E111-48DA-A8D2-9455C3EF7A33}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B70455CD-E111-48DA-A8D2-9455C3EF7A33}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B70455CD-E111-48DA-A8D2-9455C3EF7A33}.Release|Any CPU.Build.0 = Release|Any CPU
+		{832AA46E-2EEF-45DA-BD46-97A76FFC5B1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{832AA46E-2EEF-45DA-BD46-97A76FFC5B1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{832AA46E-2EEF-45DA-BD46-97A76FFC5B1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{832AA46E-2EEF-45DA-BD46-97A76FFC5B1D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -41,8 +41,8 @@ namespace Data.DataConnection
 
         protected override void OnConfiguring(DbContextOptionsBuilder dbContextOptionsBuilder)
         {
-            configurationRoot = new ConfigurationBuilder().SetBasePath(Path.Combine(@"C:\Users\Plamenna Petrova\AppData\Roaming\Microsoft\UserSecrets\a43cfe22-e250-4be4-98a5-662b66e4b74b")).AddJsonFile("secrets.json").Build();
-            dbContextOptionsBuilder.UseSqlServer(configurationRoot.GetSection("DefaultConnection:ConnectionString").Value);
+            //configurationRoot = new ConfigurationBuilder().SetBasePath(Path.Combine(@"C:\Users\Plamenna Petrova\AppData\Roaming\Microsoft\UserSecrets\a43cfe22-e250-4be4-98a5-662b66e4b74b")).AddJsonFile("secrets.json").Build();
+            dbContextOptionsBuilder.UseSqlServer("Server=AIRFAN\\SQLEXPRESS;Database=Library;Trusted_Connection=true");
 
             //dbContextOptionsBuilder.UseSqlServer("Server=.;Database=Library;Trusted_Connection=true");
         }

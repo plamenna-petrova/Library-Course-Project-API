@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using Data.DataConnection.DtoModels.CreateDtos;
-using Data.DataConnection.DtoModels.Dtos;
-using Data.DataConnection.DtoModels.UpdateDtos;
-using Data.DataConnection.Repositories.Interfaces;
 using Data.Models.Models;
+using Data.Services.DtoModels.CreateDtos;
+using Data.Services.DtoModels.Dtos;
+using Data.Services.DtoModels.UpdateDtos;
+using Data.Services.Repositories.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
