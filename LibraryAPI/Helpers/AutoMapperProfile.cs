@@ -12,6 +12,7 @@ namespace LibraryAPI.Helpers
     {
         public AutoMapperProfile()
         {
+            //mapper
             CreateMap<User, UserDto>();
             CreateMap<RegisterDto, User>();
             CreateMap<UpdateUserDto, User>();
