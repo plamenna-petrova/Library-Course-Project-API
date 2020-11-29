@@ -92,7 +92,7 @@ namespace LibraryAPI.Controllers
             {
                 return NotFound();
             }
-
+            //
             var singleAuthor = _unitOfWork.AuthorRepository.GetAuthorByIdMapped(authorId);
 
             return Ok(singleAuthor);
