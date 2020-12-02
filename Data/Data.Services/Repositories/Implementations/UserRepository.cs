@@ -86,10 +86,12 @@ namespace Data.Services.Repositories.Implementations
         public User GetUserById(int userId)
         {
             return _userContext.Users.Find(userId);
+            //mapping
         }
 
         public void Update(User userParam, string password = null)
         {
+            //no password
             var user = _userContext.Users.Find(userParam.Id);
 
             if (user == null)
