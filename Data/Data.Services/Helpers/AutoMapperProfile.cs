@@ -11,6 +11,7 @@ namespace Data.Services.Helpers
     {
         public AutoMapperProfile()
         {
+            //mapper
             CreateMap<User, UserDto>();
             CreateMap<RegisterDto, User>();
             CreateMap<UpdateUserDto, User>();
