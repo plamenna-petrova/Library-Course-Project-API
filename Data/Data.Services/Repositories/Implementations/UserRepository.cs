@@ -18,6 +18,7 @@ namespace Data.Services.Repositories.Implementations
             _userContext = userContext;
         }
         //comment
+        //another comment
 
         public User Authenticate(string username, string password)
         {
