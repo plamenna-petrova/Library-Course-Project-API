@@ -27,33 +27,9 @@ namespace LibraryAPI.Controllers
         [ProducesResponseType(400)]
         public IActionResult GetAuthors()
         {
-            var authors = _unitOfWork.AuthorRepository.GetAuthors();
+            var authorsToGet = _unitOfWork.AuthorRepository.GetAuthors();
 
-            var authorDto = new List<AuthorDto>();
-
-            foreach (var author in authors)
-            {
-                authorDto.Add(_mapper.Map<AuthorDto>(author));
-            }
-
-            return Ok(authorDto);
-        }
-
-        [HttpGet("getallauthors")]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<AuthorDto>))]
-        [ProducesResponseType(400)]
-        public IActionResult GetAllAuthors()
-        {
-            var authors = _unitOfWork.AuthorRepository.GetAllAuthors();
-
-            var authorDto = new List<AuthorDto>();
-
-            foreach (var author in authors)
-            {
-                authorDto.Add(_mapper.Map<AuthorDto>(author));
-            }
-
-            return Ok(authorDto);
+            return Ok(authorsToGet);
         }
 
         [Route("api/authors/authorId")]
@@ -68,28 +44,7 @@ namespace LibraryAPI.Controllers
                 return NotFound();
             }
 
-            var author = _unitOfWork.AuthorRepository.GetAuthorById(authorId);
-
-            var authorDto = _mapper.Map<AuthorDto>(author);
-
-            //use AutoMapper
-
-            return Ok(authorDto);
-        }
-
-        [Route("api/author/getall/authorId")]
-        [HttpGet("getall/{authorId}")]
-        [ProducesResponseType(200, Type = typeof(AuthorDto))]
-        [ProducesResponseType(400)]
-        [ProducesResponseType(404)]
-        public IActionResult GetAuthorByIdMapped(int authorId)
-        {
-            if (!_unitOfWork.AuthorRepository.AuthorExists(authorId))
-            {
-                return NotFound();
-            }
-
-            var singleAuthor = _unitOfWork.AuthorRepository.GetAuthorByIdMapped(authorId);
+            var singleAuthor = _unitOfWork.AuthorRepository.GetAuthorById(authorId);
 
             return Ok(singleAuthor);
         }
@@ -106,18 +61,9 @@ namespace LibraryAPI.Controllers
                 return NotFound();
             }
 
-            //Response - Headers, etc... - to do
+            var authorsOfABook = _unitOfWork.AuthorRepository.GetAuthorsOfABook(bookId);
 
-            var authors = _unitOfWork.AuthorRepository.GetAuthorsOfABook(bookId);
-
-            var authorsDto = new List<AuthorDto>();
-
-            foreach (var author in authors)
-            {
-                authorsDto.Add(_mapper.Map<AuthorDto>(author));
-            }
-
-            return Ok(authorsDto);
+            return Ok(authorsOfABook);
         }
 
         [Route("api/authors/authorId/books")]
@@ -133,39 +79,9 @@ namespace LibraryAPI.Controllers
                 return NotFound();
             }
 
-            var books = _unitOfWork.AuthorRepository.GetBooksByAuthor(authorId);
+            var booksByAuthor = _unitOfWork.AuthorRepository.GetBooksByAuthor(authorId);
 
-            var booksDto = new List<BookDto>();
-
-            foreach (var book in books)
-            {
-                booksDto.Add(_mapper.Map<BookDto>(book));
-            }
-
-            return Ok(booksDto);
-        }
-
-        [Route("api/authors/publishers/publisherId")]
-        [HttpGet("publishers/{publisherId}")]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<AuthorDto>))]
-        [ProducesResponseType(400)]
-        [ProducesResponseType(404)]
-        public IActionResult GetAuthorsByPublisher(int publisherId)
-        {
-            if (!_unitOfWork.PublisherRepository.PublisherExists(publisherId))
-            {
-                return NotFound();
-            }
-
-            var authors = _unitOfWork.AuthorRepository.GetAuthorsByPublisher(publisherId);
-
-            var authorsDto = new List<AuthorDto>();
-            foreach (var author in authors)
-            {
-                authorsDto.Add(_mapper.Map<AuthorDto>(author));
-            }
-
-            return Ok(authorsDto);
+            return Ok(booksByAuthor);
         }
 
         [Route("api/authors/authorId/publishers")]
@@ -181,20 +97,29 @@ namespace LibraryAPI.Controllers
                 return NotFound();
             }
 
-            var publishers = _unitOfWork.AuthorRepository.GetPublishersByAuthor(authorId);
+            var publishersByAuthor = _unitOfWork.AuthorRepository.GetPublishersByAuthor(authorId);
 
-            var publishersDto = new List<PublisherDto>();
+            return Ok(publishersByAuthor);
+        }
 
-            foreach (var publisher in publishers)
+        [Route("api/authors/publishers/publisherId")]
+        [HttpGet("publishers/{publisherId}")]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<AuthorDto>))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        public IActionResult GetAuthorsByPublisher(int publisherId)
+        {
+            if (!_unitOfWork.PublisherRepository.PublisherExists(publisherId))
             {
-                publishersDto.Add(_mapper.Map<PublisherDto>(publisher));
+                return NotFound();
             }
 
-            return Ok(publishersDto);
+            var authorsByPublisher = _unitOfWork.AuthorRepository.GetAuthorsByPublisher(publisherId);
+
+            return Ok(authorsByPublisher);
         }
 
         [HttpPost]
-        //[ProducesResponseType(201, Type = typeof(Author))] - no automapper
         [ProducesResponseType(201, Type = typeof(AuthorDto))]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
@@ -223,8 +148,8 @@ namespace LibraryAPI.Controllers
             }
 
             _unitOfWork.Commit();
-
-            return CreatedAtRoute("GetAuthorById", new { authorId = authorToCreate.Id }, authorToCreate);
+            
+            return CreatedAtRoute("GetAuthorById", new { authorId = authorToCreate.Id }, authorCreateDto);
         }
 
         [Route("api/authors/authorId")]

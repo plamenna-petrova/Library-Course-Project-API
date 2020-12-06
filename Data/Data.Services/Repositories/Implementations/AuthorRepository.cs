@@ -6,6 +6,7 @@ using Data.Services.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 
 namespace Data.Services.Repositories.Implementations
@@ -18,68 +19,66 @@ namespace Data.Services.Repositories.Implementations
             _authorContext = authorContext;
         }
 
-        public Author GetAuthorById(int authorId)
-        {
-            return _authorContext.Authors.Where(a => a.Id == authorId).FirstOrDefault();
-            //var authorDto = new AuthorDto()
-            //{
-            //    Id = author.Id,
-            //    AuthorFirstName = author.AuthorFirstName,
-            //    AuthorLastName = author.AuthorLastName,
-            //    AuthorBiography = author.AuthorBiography,
-            //    CreatedAt = author.CreatedAt
-            //};
-            //return authorDto;
-            //AutoMapper
-        }
-
-        public AuthorDto GetAuthorByIdMapped(int authorId)
+        public AuthorDto GetAuthorById(int authorId)
         {
             var singleAuthor = _authorContext.Authors.Where(a => a.Id == authorId).FirstOrDefault();
             var mappedAuthor = MapConfig.Mapper.Map<AuthorDto>(singleAuthor);
             return mappedAuthor;
         }
 
-        public ICollection<Author> GetAuthors()
+        public ICollection<AuthorDto> GetAuthors()
         {
-            return _authorContext.Authors.OrderBy(a => a.AuthorLastName).ToList();
+            var authors = _authorContext.Authors.OrderBy(a => a.AuthorLastName).ToList();
+            var mappedAuthors =  MapConfig.Mapper.Map<ICollection<AuthorDto>>(authors);
+            return mappedAuthors;
         }
 
-        public IQueryable<Author> GetAllAuthors(Func<Author, bool> func = null)
+        //public IQueryable<AuthorDto> GetAuthors(Func<Author, bool> func = null)
+        //{
+        //    var mappedFunc = MapConfig.Mapper.Map<IQueryable<AuthorDto>>(func);
+        //    if (mappedFunc == null)
+        //    {
+        //        return _authorContext.Authors.AsQueryable<AuthorDto>();
+        //    }
+        //    else
+        //    {
+        //        return _authorContext.Authors.Where(mappedFunc).AsQueryable<AuthorDto>();
+        //    }
+        //}
+
+        public ICollection<AuthorDto> GetAuthorsOfABook(int bookId)
         {
-            if (func == null)
-            {
-                return _authorContext.Authors.AsQueryable<Author>();
-            }
-            else
-            {
-                return _authorContext.Authors.Where(func).AsQueryable<Author>();
-            }
+            var authorsOfABook = _authorContext.BooksAuthors.Where(b => b.BookId == bookId).Select(a => a.Author).ToList();
+            var authorsOfABookMapped = MapConfig.Mapper.Map<ICollection<AuthorDto>>(authorsOfABook);
+            return authorsOfABookMapped;
         }
 
-        public ICollection<Author> GetAuthorsOfABook(int bookId)
+        public ICollection<BookDto> GetBooksByAuthor(int authorId)
         {
-            return _authorContext.BooksAuthors.Where(b => b.BookId == bookId).Select(a => a.Author).ToList();
+            var booksByAuthor =  _authorContext.BooksAuthors.Where(a => a.AuthorId == authorId).Select(b => b.Book).ToList();
+            var booksByAuthorMapped = MapConfig.Mapper.Map<ICollection<BookDto>>(booksByAuthor);
+            return booksByAuthorMapped;
         }
 
-        public ICollection<Book> GetBooksByAuthor(int authorId)
+        public ICollection<PublisherDto> GetPublishersByAuthor(int authorId)
         {
-            return _authorContext.BooksAuthors.Where(a => a.AuthorId == authorId).Select(b => b.Book).ToList();
+            var publishersByAuthor = _authorContext.AuthorsPublishers.Where(a => a.AuthorId == authorId).Select(p => p.Publisher).ToList();
+            var publishersByAuthorMapped = MapConfig.Mapper.Map<ICollection<PublisherDto>>(publishersByAuthor);
+            return publishersByAuthorMapped;
         }
 
-        public ICollection<Publisher> GetPublishersByAuthor(int authorId)
+        public ICollection<AuthorDto> GetAuthorsByPublisher(int publisherId)
         {
-            return _authorContext.AuthorsPublishers.Where(a => a.AuthorId == authorId).Select(p => p.Publisher).ToList();
+            var authorsByPublisher = _authorContext.AuthorsPublishers.Where(p => p.PublisherId == publisherId).Select(a => a.Author).ToList();
+            var authorsByPublisherMapped = MapConfig.Mapper.Map<ICollection<AuthorDto>>(authorsByPublisher);
+            return authorsByPublisherMapped;
         }
 
-        public ICollection<Author> GetAuthorsByPublisher(int publisherId)
+        public CountryDto GetCountryOfAnAuthor(int authorId)
         {
-            return _authorContext.AuthorsPublishers.Where(p => p.PublisherId == publisherId).Select(a => a.Author).ToList();
-        }
-
-        public Country GetCountryOfAnAuthor(int authorId)
-        {
-            return _authorContext.Authors.Where(a => a.Id == authorId).Select(c => c.Country).FirstOrDefault();
+            var country = _authorContext.Authors.Where(a => a.Id == authorId).Select(c => c.Country).FirstOrDefault();
+            var mappedCountry = MapConfig.Mapper.Map<CountryDto>(country);
+            return mappedCountry;
         }
 
         public bool AuthorExists(int authorId)
@@ -105,7 +104,7 @@ namespace Data.Services.Repositories.Implementations
             return Save();
         }
 
-        public bool DeleteAuthor(Author author)
+        public bool DeleteAuthor(AuthorDto author)
         {
             _authorContext.Remove(author);
             return Save();
