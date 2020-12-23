@@ -1,6 +1,8 @@
 ﻿using Data.DataConnection;
 using Data.Models.Models;
+using Data.Services.DtoModels.CreateDtos;
 using Data.Services.DtoModels.Dtos;
+using Data.Services.DtoModels.UpdateDtos;
 using Data.Services.Helpers;
 using Data.Services.Repositories.Interfaces;
 using System;
@@ -92,21 +94,24 @@ namespace Data.Services.Repositories.Implementations
             return value;
         }
 
-        public bool CreateAuthor(Author author)
+        public bool CreateAuthor(AuthorCreateDto authorToCreateDto)
         {
-            _authorContext.Add(author);
+            var authorToCreate = MapConfig.Mapper.Map<Author>(authorToCreateDto);
+            _authorContext.Add(authorToCreate);
             return Save();
         }
 
-        public bool UpdateAuthor(Author author)
+        public bool UpdateAuthor(AuthorUpdateDto authorToUpdateDto)
         {
-            _authorContext.Update(author);
+            var authorToUpdate = MapConfig.Mapper.Map<Author>(authorToUpdateDto);
+            _authorContext.Update(authorToUpdate);
             return Save();
         }
 
-        public bool DeleteAuthor(AuthorDto author)
+        public bool DeleteAuthor(AuthorDto authorDto)
         {
-            _authorContext.Remove(author);
+            var authorToDelete = MapConfig.Mapper.Map<Author>(authorDto);
+            _authorContext.Remove(authorToDelete);
             return Save();
         }
 

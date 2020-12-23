@@ -1,5 +1,7 @@
 ﻿using Data.Models.Models;
+using Data.Services.DtoModels.CreateDtos;
 using Data.Services.DtoModels.Dtos;
+using Data.Services.DtoModels.UpdateDtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,9 +23,9 @@ namespace Data.Services.Repositories.Interfaces
         CountryDto GetCountryOfAnAuthor(int authorId);
         bool AuthorExists(int authorId);
         bool AuthorExistsByLastName(string authorLastName);
-        bool CreateAuthor(Author author);
-        bool UpdateAuthor(Author author);
-        bool DeleteAuthor(AuthorDto author);
+        bool CreateAuthor(AuthorCreateDto authorToCreateDto);
+        bool UpdateAuthor(AuthorUpdateDto authorToUpdateDto);
+        bool DeleteAuthor(AuthorDto authorDto);
         bool Save();
     }
 }

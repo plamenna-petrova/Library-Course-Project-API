@@ -125,21 +125,18 @@ namespace LibraryAPI.Controllers
         [ProducesResponseType(404)]
         [ProducesResponseType(500)]
 
-        //Author authorToCreate
-        public IActionResult CreateAuthor([FromBody] AuthorCreateDto authorCreateDto)
+        public IActionResult CreateAuthor([FromBody] AuthorCreateDto authorToCreate)
         {
-            if (authorCreateDto == null)
+            if (authorToCreate == null)
             {
                 return BadRequest(ModelState);
             }
 
-            if (_unitOfWork.AuthorRepository.AuthorExistsByLastName(authorCreateDto.AuthorLastName))
+            if (_unitOfWork.AuthorRepository.AuthorExistsByLastName(authorToCreate.AuthorLastName))
             {
                 ModelState.AddModelError("", "Such author Exists!");
                 return StatusCode(404, ModelState);
             }
-
-            var authorToCreate = _mapper.Map<Author>(authorCreateDto);
 
             if (!_unitOfWork.AuthorRepository.CreateAuthor(authorToCreate))
             {
@@ -148,8 +145,8 @@ namespace LibraryAPI.Controllers
             }
 
             _unitOfWork.Commit();
-            
-            return CreatedAtRoute("GetAuthorById", new { authorId = authorToCreate.Id }, authorCreateDto);
+
+            return CreatedAtRoute("GetAuthorById", new { authorId = authorToCreate.Id }, authorToCreate);
         }
 
         [Route("api/authors/authorId")]
@@ -159,15 +156,14 @@ namespace LibraryAPI.Controllers
         [ProducesResponseType(404)]
         [ProducesResponseType(500)]
 
-        //Update Author (int authorId, [FromBody] Author authorToUpdate) - no automapper
-        public IActionResult UpdateAuthor(int authorId, [FromBody] AuthorUpdateDto authorUpdateDto)
+        public IActionResult UpdateAuthor(int authorId, [FromBody] AuthorUpdateDto authorToUpdate)
         {
-            if (authorUpdateDto == null)
+            if (authorToUpdate == null)
             {
                 return BadRequest(ModelState);
             }
 
-            if (authorId != authorUpdateDto.Id)
+            if (authorId != authorToUpdate.Id)
             {
                 return BadRequest(ModelState);
             }
@@ -181,8 +177,6 @@ namespace LibraryAPI.Controllers
             {
                 return StatusCode(404, ModelState);
             }
-
-            var authorToUpdate = _mapper.Map<Author>(authorUpdateDto);
 
             if (!_unitOfWork.AuthorRepository.UpdateAuthor(authorToUpdate))
             {
