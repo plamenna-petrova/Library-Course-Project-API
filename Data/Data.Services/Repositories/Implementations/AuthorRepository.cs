@@ -5,11 +5,8 @@ using Data.Services.DtoModels.Dtos;
 using Data.Services.DtoModels.UpdateDtos;
 using Data.Services.Helpers;
 using Data.Services.Repositories.Interfaces;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
 
 namespace Data.Services.Repositories.Implementations
 {
@@ -23,9 +20,16 @@ namespace Data.Services.Repositories.Implementations
 
         public AuthorDto GetAuthorById(int authorId)
         {
-            var singleAuthor = _authorContext.Authors.Where(a => a.Id == authorId).FirstOrDefault();
+            //var singleAuthor = _authorContext.Authors.Where(a => a.Id == authorId).FirstOrDefault();
+            var singleAuthor = _authorContext.Authors.FirstOrDefault(a => a.Id == authorId);
             var mappedAuthor = MapConfig.Mapper.Map<AuthorDto>(singleAuthor);
             return mappedAuthor;
+        }
+
+        public Author GetAuthorByIdNotMapped(int authorId)
+        {
+            var author = _authorContext.Authors.Where(a => a.Id == authorId).FirstOrDefault();
+            return author;
         }
 
         public ICollection<AuthorDto> GetAuthors()
@@ -108,9 +112,8 @@ namespace Data.Services.Repositories.Implementations
             return Save();
         }
 
-        public bool DeleteAuthor(AuthorDto authorDto)
+        public bool DeleteAuthor(Author authorToDelete)
         {
-            var authorToDelete = MapConfig.Mapper.Map<Author>(authorDto);
             _authorContext.Remove(authorToDelete);
             return Save();
         }

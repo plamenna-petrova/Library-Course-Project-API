@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using AutoMapper;
-using Data.Models.Models;
 using Data.Services.DtoModels.CreateDtos;
 using Data.Services.DtoModels.Dtos;
 using Data.Services.DtoModels.UpdateDtos;
@@ -14,12 +13,10 @@ namespace LibraryAPI.Controllers
     public class AuthorsController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IMapper _mapper;
 
-        public AuthorsController(IUnitOfWork unitOfWork, IMapper mapper)
+        public AuthorsController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
-            _mapper = mapper;
         }
 
         [HttpGet]
@@ -125,28 +122,28 @@ namespace LibraryAPI.Controllers
         [ProducesResponseType(404)]
         [ProducesResponseType(500)]
 
-        public IActionResult CreateAuthor([FromBody] AuthorCreateDto authorToCreate)
+        public IActionResult CreateAuthor([FromBody] AuthorCreateDto newAuthor)
         {
-            if (authorToCreate == null)
+            if (newAuthor == null)
             {
                 return BadRequest(ModelState);
             }
 
-            if (_unitOfWork.AuthorRepository.AuthorExistsByLastName(authorToCreate.AuthorLastName))
+            if (_unitOfWork.AuthorRepository.AuthorExists(newAuthor.Id))
             {
                 ModelState.AddModelError("", "Such author Exists!");
                 return StatusCode(404, ModelState);
             }
 
-            if (!_unitOfWork.AuthorRepository.CreateAuthor(authorToCreate))
+            if (!_unitOfWork.AuthorRepository.CreateAuthor(newAuthor))
             {
-                ModelState.AddModelError("", $"Something went wrong saving the author " + $"{authorToCreate.AuthorFirstName} {authorToCreate.AuthorLastName}");
+                ModelState.AddModelError("", $"Something went wrong saving the author " + $"{newAuthor.AuthorFirstName} {newAuthor.AuthorLastName}");
                 return StatusCode(500, ModelState);
             }
 
             _unitOfWork.Commit();
 
-            return CreatedAtRoute("GetAuthorById", new { authorId = authorToCreate.Id }, authorToCreate);
+            return CreatedAtRoute("GetAuthorById", new { authorId = newAuthor.Id }, newAuthor);
         }
 
         [Route("api/authors/authorId")]
@@ -156,14 +153,14 @@ namespace LibraryAPI.Controllers
         [ProducesResponseType(404)]
         [ProducesResponseType(500)]
 
-        public IActionResult UpdateAuthor(int authorId, [FromBody] AuthorUpdateDto authorToUpdate)
+        public IActionResult UpdateAuthor(int authorId, [FromBody] AuthorUpdateDto updatedAuthor)
         {
-            if (authorToUpdate == null)
+            if (updatedAuthor == null)
             {
                 return BadRequest(ModelState);
             }
 
-            if (authorId != authorToUpdate.Id)
+            if (authorId != updatedAuthor.Id)
             {
                 return BadRequest(ModelState);
             }
@@ -178,9 +175,9 @@ namespace LibraryAPI.Controllers
                 return StatusCode(404, ModelState);
             }
 
-            if (!_unitOfWork.AuthorRepository.UpdateAuthor(authorToUpdate))
+            if (!_unitOfWork.AuthorRepository.UpdateAuthor(updatedAuthor))
             {
-                ModelState.AddModelError("", $"Something went wrong updating the author " + $"{authorToUpdate.AuthorFirstName} {authorToUpdate.AuthorLastName}");
+                ModelState.AddModelError("", $"Something went wrong updating the author " + $"{updatedAuthor.AuthorFirstName} {updatedAuthor.AuthorLastName}");
                 return StatusCode(500, ModelState);
             }
 
@@ -203,7 +200,7 @@ namespace LibraryAPI.Controllers
                 return NotFound();
             }
 
-            var authorToDelete = _unitOfWork.AuthorRepository.GetAuthorById(authorId);
+            var authorToDelete = _unitOfWork.AuthorRepository.GetAuthorByIdNotMapped(authorId);
 
             //if (_unitOfWork.AuthorRepository.GetBooksByAuthor(authorId).Count() > 0)
             //{
