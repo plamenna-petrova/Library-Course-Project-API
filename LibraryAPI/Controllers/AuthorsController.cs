@@ -1,8 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using AutoMapper;
+using Data.Models.Models;
 using Data.Services.DtoModels.CreateDtos;
 using Data.Services.DtoModels.Dtos;
 using Data.Services.DtoModels.UpdateDtos;
+using Data.Services.Helpers;
 using Data.Services.Repositories.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -145,6 +148,7 @@ namespace LibraryAPI.Controllers
 
             return CreatedAtRoute("GetAuthorById", new { authorId = newAuthor.Id }, newAuthor);
         }
+
 
         [Route("api/authors/authorId")]
         [HttpPut("{authorId}")]

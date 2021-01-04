@@ -20,8 +20,7 @@ namespace Data.Services.Repositories.Implementations
 
         public AuthorDto GetAuthorById(int authorId)
         {
-            //var singleAuthor = _authorContext.Authors.Where(a => a.Id == authorId).FirstOrDefault();
-            var singleAuthor = _authorContext.Authors.FirstOrDefault(a => a.Id == authorId);
+            var singleAuthor = _authorContext.Authors.Where(a => a.Id == authorId).FirstOrDefault();
             var mappedAuthor = MapConfig.Mapper.Map<AuthorDto>(singleAuthor);
             return mappedAuthor;
         }

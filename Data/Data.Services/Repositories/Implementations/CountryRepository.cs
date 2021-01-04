@@ -1,5 +1,9 @@
 ﻿using Data.DataConnection;
 using Data.Models.Models;
+using Data.Services.DtoModels.CreateDtos;
+using Data.Services.DtoModels.Dtos;
+using Data.Services.DtoModels.UpdateDtos;
+using Data.Services.Helpers;
 using Data.Services.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -17,12 +21,21 @@ namespace Data.Services.Repositories.Implementations
             _countryContext = countryRepository;
         }
 
-        public ICollection<Country> GetCountries()
+        public ICollection<CountryDto> GetCountries()
         {
-            return _countryContext.Countries.OrderBy(c => c.CountryName).ToList();
+            var countries = _countryContext.Countries.OrderBy(c => c.CountryName).ToList();
+            var mappedCountries = MapConfig.Mapper.Map<ICollection<CountryDto>>(countries);
+            return mappedCountries;
         }
 
-        public Country GetCountryById(int countryId)
+        public CountryDto GetCountryById(int countryId)
+        {
+            var singleCountry = _countryContext.Countries.Where(c => c.Id == countryId).FirstOrDefault();
+            var mappedCountry = MapConfig.Mapper.Map<CountryDto>(singleCountry);
+            return mappedCountry;
+        }
+
+        public Country GetCountryByIdNotMapped(int countryId)
         {
             return _countryContext.Countries.Where(c => c.Id == countryId).FirstOrDefault();
         }
@@ -69,15 +82,17 @@ namespace Data.Services.Repositories.Implementations
             return country == null ? false : true;
         }
 
-        public bool CreateCountry(Country country)
+        public bool CreateCountry(CountryCreateDto countryToCreateDto)
         {
-            _countryContext.Add(country);
+            var countryToCreate = MapConfig.Mapper.Map<Country>(countryToCreateDto);
+            _countryContext.Add(countryToCreate);
             return Save();
         }
 
-        public bool UpdateCountry(Country country)
+        public bool UpdateCountry(CountryUpdateDto countryToUpdateDto)
         {
-            _countryContext.Update(country);
+            var countryToUpdate = MapConfig.Mapper.Map<Country>(countryToUpdateDto);
+            _countryContext.Update(countryToUpdate);
             return Save();
         }
 

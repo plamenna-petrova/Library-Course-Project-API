@@ -19,6 +19,16 @@ namespace Data.Services.Helpers
             CreateMap<Author, AuthorCreateDto>().ReverseMap();
             //model to update dto
             CreateMap<Author, AuthorUpdateDto>().ReverseMap();
+            //dto to create dto
+            CreateMap<AuthorDto, AuthorCreateDto>().ReverseMap();
+            CreateMap<BookImage, BookImageDto>().ReverseMap();
+            CreateMap<BookImage, BookImageCreateDto>().ReverseMap();
+            CreateMap<BookImage, BookImageUpdateDto>().ReverseMap();
+            CreateMap<Book, BookCreateDto>().ReverseMap();
+            CreateMap<Book, BookUpdateDto>().ReverseMap();
+            CreateMap<Country, CountryDto>().ReverseMap();
+            CreateMap<Country, CountryCreateDto>().ReverseMap();
+            CreateMap<Country, CountryUpdateDto>().ReverseMap();
         }
     }
 }

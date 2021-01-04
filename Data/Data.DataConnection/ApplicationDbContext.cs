@@ -285,7 +285,8 @@ namespace Data.DataConnection
                 },
             };
 
-            List<AuthorPublisher> authorsPublishers = new List<AuthorPublisher>(){
+            List<AuthorPublisher> authorsPublishers = new List<AuthorPublisher>()
+            {
                 new AuthorPublisher()
                 {
                     AuthorId = 1,
@@ -303,9 +304,41 @@ namespace Data.DataConnection
                 }
             };
 
+            List<BookImage> bookImages = new List<BookImage>()
+            {
+                new BookImage()
+                {
+                    Id = 1,
+                    BookImageUrl = "/images/bookImage1.jpg",
+                    BookImageShortDecsription = "Queen's Gambit image",
+                    //BookId = books[0].Id,
+                    BookId = 1,
+                    CreatedAt = new DateTime(2021, 1, 4)
+                },
+                new BookImage()
+                {
+                    Id = 2,
+                    BookImageUrl = "/images/bookImage2.jpg",
+                    BookImageShortDecsription = "The Castle image",
+                    //BookId = books[1].Id,
+                    BookId = 2,
+                    CreatedAt = new DateTime(2021, 1, 4)
+                },
+                new BookImage()
+                {
+                    Id = 3,
+                    BookImageUrl = "/images/bookImage3.jpg",
+                    BookImageShortDecsription = "The Amazing Adventures of Kavalier and Clay image",
+                    //BookId = books[2].Id,
+                    BookId = 3,
+                    CreatedAt = new DateTime(2021, 1, 4)
+                }
+            };
+
             modelBuilder.Entity<Country>().HasData(countries);
             modelBuilder.Entity<Author>().HasData(authors);
             modelBuilder.Entity<Book>().HasData(books);
+            modelBuilder.Entity<BookImage>().HasData(bookImages);
             modelBuilder.Entity<BookAuthor>().HasData(booksAuthors);
             modelBuilder.Entity<Publisher>().HasData(publishers);
             modelBuilder.Entity<AuthorPublisher>().HasData(authorsPublishers);

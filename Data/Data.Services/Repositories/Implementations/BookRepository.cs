@@ -1,5 +1,9 @@
 ﻿using Data.DataConnection;
 using Data.Models.Models;
+using Data.Services.DtoModels.CreateDtos;
+using Data.Services.DtoModels.Dtos;
+using Data.Services.DtoModels.UpdateDtos;
+using Data.Services.Helpers;
 using Data.Services.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -17,19 +21,30 @@ namespace Data.Services.Repositories.Implementations
             _bookContext = bookDbContext;
         }
 
-        public ICollection<Book> GetBooks()
+        public ICollection<BookDto> GetBooks()
         {
-            return _bookContext.Books.OrderBy(b => b.BookTitle).ToList();
+            var books = _bookContext.Books.OrderBy(b => b.BookTitle).ToList();
+            var mappedBooks = MapConfig.Mapper.Map<ICollection<BookDto>>(books);
+            return mappedBooks;
         }
 
-        public Book GetBookById(int bookId)
+        public BookDto GetBookById(int bookId)
+        {
+            var singleBook = _bookContext.Books.Where(b => b.Id == bookId).FirstOrDefault();
+            var mappedBook = MapConfig.Mapper.Map<BookDto>(singleBook);
+            return mappedBook;
+        }
+
+        public Book GetBookByIdNotMapped(int bookId)
         {
             return _bookContext.Books.Where(b => b.Id == bookId).FirstOrDefault();
         }
 
-        public Book GetBookByISBN(string bookISBN)
+        public BookDto GetBookByISBN(string bookISBN)
         {
-            return _bookContext.Books.Where(b => b.ISBN == bookISBN).FirstOrDefault();
+            var bookByISBN = _bookContext.Books.Where(b => b.ISBN == bookISBN).FirstOrDefault();
+            var bookByISBNMapped = MapConfig.Mapper.Map<BookDto>(bookByISBN);
+            return bookByISBNMapped;
         }
 
         public decimal GetBookRating(int bookId)
@@ -135,141 +150,155 @@ namespace Data.Services.Repositories.Implementations
             return _bookContext.BookImages.Where(bi => bi.Id == bookImageId).FirstOrDefault();
         }
 
-        public bool CreateBook(List<int> authorsId, List<int> genresId, List<int> reviewersId, List<int> librariansId, List<int> readersId, Book book)
+        //public bool CreateBook(List<int> authorsId, List<int> genresId, List<int> reviewersId, List<int> librariansId, List<int> readersId, Book book)
+        //{
+        //    var authors = _bookContext.Authors.Where(a => authorsId.Contains(a.Id)).ToList();
+        //    var genres = _bookContext.Genres.Where(g => genresId.Contains(g.Id)).ToList();
+        //    var reviewers = _bookContext.Reviewers.Where(rev => reviewersId.Contains(rev.Id)).ToList();
+        //    var librarians = _bookContext.Librarians.Where(l => librariansId.Contains(l.Id)).ToList();
+        //    var readers = _bookContext.Readers.Where(r => readersId.Contains(r.Id)).ToList();
+
+        //    foreach (var author in authors)
+        //    {
+        //        var bookAuthor = new BookAuthor()
+        //        {
+        //            Author = author,
+        //            Book = book
+        //        };
+        //        _bookContext.Add(bookAuthor);
+        //    }
+
+        //    foreach (var genre in genres)
+        //    {
+        //        var bookGenre = new BookGenre()
+        //        {
+        //            Genre = genre,
+        //            Book = book
+        //        };
+        //        _bookContext.Add(bookGenre);
+        //    }
+
+        //    foreach (var reviewer in reviewers)
+        //    {
+        //        var bookReviewer = new BookReviewer()
+        //        {
+        //            Reviewer = reviewer,
+        //            Book = book
+        //        };
+        //        _bookContext.Add(bookReviewer);
+        //    }
+
+        //    foreach (var librarian in librarians)
+        //    {
+        //        var librarianBook = new LibrarianBook()
+        //        {
+        //            Book = book,
+        //            Librarian = librarian
+        //        };
+        //        _bookContext.Add(librarianBook);
+        //    }
+
+        //    foreach (var reader in readers)
+        //    {
+        //        var readerBook = new ReaderBook()
+        //        {
+        //            Book = book,
+        //            Reader = reader
+        //        };
+        //        _bookContext.Add(readerBook);
+        //    }
+
+        //    _bookContext.Add(book);
+
+        //    return Save();
+        //}
+
+        public bool CreateBook(BookCreateDto bookToCreateDto)
         {
-            var authors = _bookContext.Authors.Where(a => authorsId.Contains(a.Id)).ToList();
-            var genres = _bookContext.Genres.Where(g => genresId.Contains(g.Id)).ToList();
-            var reviewers = _bookContext.Reviewers.Where(rev => reviewersId.Contains(rev.Id)).ToList();
-            var librarians = _bookContext.Librarians.Where(l => librariansId.Contains(l.Id)).ToList();
-            var readers = _bookContext.Readers.Where(r => readersId.Contains(r.Id)).ToList();
-
-            foreach (var author in authors)
-            {
-                var bookAuthor = new BookAuthor()
-                {
-                    Author = author,
-                    Book = book
-                };
-                _bookContext.Add(bookAuthor);
-            }
-
-            foreach (var genre in genres)
-            {
-                var bookGenre = new BookGenre()
-                {
-                    Genre = genre,
-                    Book = book
-                };
-                _bookContext.Add(bookGenre);
-            }
-
-            foreach (var reviewer in reviewers)
-            {
-                var bookReviewer = new BookReviewer()
-                {
-                    Reviewer = reviewer,
-                    Book = book
-                };
-                _bookContext.Add(bookReviewer);
-            }
-
-            foreach (var librarian in librarians)
-            {
-                var librarianBook = new LibrarianBook()
-                {
-                    Book = book,
-                    Librarian = librarian
-                };
-                _bookContext.Add(librarianBook);
-            }
-
-            foreach (var reader in readers)
-            {
-                var readerBook = new ReaderBook()
-                {
-                    Book = book,
-                    Reader = reader
-                };
-                _bookContext.Add(readerBook);
-            }
-
-            _bookContext.Add(book);
-
+            var bookToCreate = MapConfig.Mapper.Map<Book>(bookToCreateDto);
+            _bookContext.Add(bookToCreate);
             return Save();
         }
 
-        public bool UpdateBook(List<int> authorsId, List<int> genresId, List<int> reviewersId, List<int> librariansId, List<int> readersId, Book book)
+        //public bool UpdateBook(List<int> authorsId, List<int> genresId, List<int> reviewersId, List<int> librariansId, List<int> readersId, Book book)
+        //{
+        //    var authors = _bookContext.Authors.Where(a => authorsId.Contains(a.Id)).ToList();
+        //    var genres = _bookContext.Genres.Where(g => genresId.Contains(g.Id)).ToList();
+        //    var reviewers = _bookContext.Reviewers.Where(rev => reviewersId.Contains(rev.Id)).ToList();
+        //    var librarians = _bookContext.Librarians.Where(l => librariansId.Contains(l.Id)).ToList();
+        //    var readers = _bookContext.Readers.Where(r => readersId.Contains(r.Id)).ToList();
+
+        //    var bookAuthorsToDelete = _bookContext.BooksAuthors.Where(b => b.BookId == book.Id);
+        //    var bookGenresToDelete = _bookContext.BooksGenres.Where(b => b.BookId == book.Id);
+        //    var bookReviewersToDelete = _bookContext.BooksReviewers.Where(b => b.BookId == book.Id);
+        //    var bookLibrariansToDelete = _bookContext.LibrariansBooks.Where(b => b.BookId == book.Id);
+        //    var bookReadersToDelete = _bookContext.ReadersBooks.Where(b => b.BookId == book.Id);
+
+        //    _bookContext.RemoveRange(bookAuthorsToDelete);
+        //    _bookContext.RemoveRange(bookGenresToDelete);
+        //    _bookContext.RemoveRange(bookReviewersToDelete);
+        //    _bookContext.RemoveRange(bookLibrariansToDelete);
+        //    _bookContext.RemoveRange(bookReadersToDelete);
+
+        //    foreach (var author in authors)
+        //    {
+        //        var bookAuthor = new BookAuthor()
+        //        {
+        //            Author = author,
+        //            Book = book
+        //        };
+        //        _bookContext.Add(bookAuthor);
+        //    }
+
+        //    foreach (var genre in genres)
+        //    {
+        //        var bookGenre = new BookGenre()
+        //        {
+        //            Genre = genre,
+        //            Book = book
+        //        };
+        //        _bookContext.Add(bookGenre);
+        //    }
+
+        //    foreach (var reviewer in reviewers)
+        //    {
+        //        var bookReviewer = new BookReviewer()
+        //        {
+        //            Reviewer = reviewer,
+        //            Book = book
+        //        };
+        //        _bookContext.Add(bookReviewer);
+        //    }
+
+        //    foreach (var librarian in librarians)
+        //    {
+        //        var librarianBook = new LibrarianBook()
+        //        {
+        //            Book = book,
+        //            Librarian = librarian
+        //        };
+        //        _bookContext.Add(librarianBook);
+        //    }
+
+        //    foreach (var reader in readers)
+        //    {
+        //        var readerBook = new ReaderBook()
+        //        {
+        //            Book = book,
+        //            Reader = reader
+        //        };
+        //        _bookContext.Add(readerBook);
+        //    }
+
+        //    _bookContext.Add(book);
+
+        //    return Save();
+        //}
+
+        public bool UpdateBook(BookUpdateDto bookToUpdateDto)
         {
-            var authors = _bookContext.Authors.Where(a => authorsId.Contains(a.Id)).ToList();
-            var genres = _bookContext.Genres.Where(g => genresId.Contains(g.Id)).ToList();
-            var reviewers = _bookContext.Reviewers.Where(rev => reviewersId.Contains(rev.Id)).ToList();
-            var librarians = _bookContext.Librarians.Where(l => librariansId.Contains(l.Id)).ToList();
-            var readers = _bookContext.Readers.Where(r => readersId.Contains(r.Id)).ToList();
-
-            var bookAuthorsToDelete = _bookContext.BooksAuthors.Where(b => b.BookId == book.Id);
-            var bookGenresToDelete = _bookContext.BooksGenres.Where(b => b.BookId == book.Id);
-            var bookReviewersToDelete = _bookContext.BooksReviewers.Where(b => b.BookId == book.Id);
-            var bookLibrariansToDelete = _bookContext.LibrariansBooks.Where(b => b.BookId == book.Id);
-            var bookReadersToDelete = _bookContext.ReadersBooks.Where(b => b.BookId == book.Id);
-
-            _bookContext.RemoveRange(bookAuthorsToDelete);
-            _bookContext.RemoveRange(bookGenresToDelete);
-            _bookContext.RemoveRange(bookReviewersToDelete);
-            _bookContext.RemoveRange(bookLibrariansToDelete);
-            _bookContext.RemoveRange(bookReadersToDelete);
-
-            foreach (var author in authors)
-            {
-                var bookAuthor = new BookAuthor()
-                {
-                    Author = author,
-                    Book = book
-                };
-                _bookContext.Add(bookAuthor);
-            }
-
-            foreach (var genre in genres)
-            {
-                var bookGenre = new BookGenre()
-                {
-                    Genre = genre,
-                    Book = book
-                };
-                _bookContext.Add(bookGenre);
-            }
-
-            foreach (var reviewer in reviewers)
-            {
-                var bookReviewer = new BookReviewer()
-                {
-                    Reviewer = reviewer,
-                    Book = book
-                };
-                _bookContext.Add(bookReviewer);
-            }
-
-            foreach (var librarian in librarians)
-            {
-                var librarianBook = new LibrarianBook()
-                {
-                    Book = book,
-                    Librarian = librarian
-                };
-                _bookContext.Add(librarianBook);
-            }
-
-            foreach (var reader in readers)
-            {
-                var readerBook = new ReaderBook()
-                {
-                    Book = book,
-                    Reader = reader
-                };
-                _bookContext.Add(readerBook);
-            }
-
-            _bookContext.Add(book);
-
+            var bookToUpdate = MapConfig.Mapper.Map<Book>(bookToUpdateDto);
+            _bookContext.Update(bookToUpdate);
             return Save();
         }
 

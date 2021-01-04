@@ -15,7 +15,7 @@ namespace Data.Models.Models
         [MaxLength(50, ErrorMessage = "There must be a small description of the image of the book with maximum length of 50 characters!")]
         public string BookImageShortDecsription { get; set; }
         [ForeignKey("Book")]
-        public int BookId { get; set; }
+        public virtual int BookId { get; set; }
         public virtual Book Book { get; set; }
     }
 }
