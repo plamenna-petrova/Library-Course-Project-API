@@ -119,6 +119,23 @@ namespace LibraryAPI.Controllers
             return Ok(authorsByPublisher);
         }
 
+        [Route("api/authors/countries/authorId")]
+        [HttpGet("countries/{authorId}")]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(200, Type = typeof(CountryDto))]
+        public IActionResult GetCountryOfAnAuthor(int authorId)
+        {
+            if (!_unitOfWork.AuthorRepository.AuthorExists(authorId))
+            {
+                return NotFound();
+            }
+
+            var country = _unitOfWork.AuthorRepository.GetCountryOfAnAuthor(authorId);
+
+            return Ok(country);
+        }
+
         [HttpPost]
         [ProducesResponseType(201, Type = typeof(AuthorDto))]
         [ProducesResponseType(400)]

@@ -20,7 +20,6 @@ namespace Data.Services.Repositories.Interfaces
         CountryDto GetCountryOfAnAuthor(int authorId);
         bool AuthorExists(int authorId);
         bool AuthorExistsByLastName(string authorLastName);
-        //bool CreateAuthor(AuthorCreateDto authortoCreateDto);
         bool CreateAuthor(AuthorCreateDto authorToCreateDto);
         bool UpdateAuthor(AuthorUpdateDto authorToUpdateDto);
         bool DeleteAuthor(Author authorToDelete);
