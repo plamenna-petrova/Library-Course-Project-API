@@ -1,5 +1,9 @@
 ﻿using Data.DataConnection;
 using Data.Models.Models;
+using Data.Services.DtoModels.CreateDtos;
+using Data.Services.DtoModels.Dtos;
+using Data.Services.DtoModels.UpdateDtos;
+using Data.Services.Helpers;
 using Data.Services.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -17,14 +21,24 @@ namespace Data.Services.Repositories.Implementations
             _fineContext = fineContext;
         }
 
-        public ICollection<Fine> GetFines()
+        public ICollection<FineDto> GetFines()
         {
-            return _fineContext.Fines.ToList();
+            var fines = _fineContext.Fines.ToList();
+            var mappedFines = MapConfig.Mapper.Map<ICollection<FineDto>>(fines);
+            return mappedFines;
         }
 
-        public Fine GetFineById(int fineId)
+        public FineDto GetFineById(int fineId)
         {
-            return _fineContext.Fines.Where(f => f.Id == fineId).FirstOrDefault();
+            var singleFine = _fineContext.Fines.Where(f => f.Id == fineId).FirstOrDefault();
+            var mappedFine = MapConfig.Mapper.Map<FineDto>(singleFine);
+            return mappedFine;
+        }
+
+        public Fine GetFineByIdNotMapped(int fineId)
+        {
+            var fine = _fineContext.Fines.Where(f => f.Id == fineId).FirstOrDefault();
+            return fine;
         }
 
         public Reader GetReaderWhoWasFined(int fineId)
@@ -44,15 +58,17 @@ namespace Data.Services.Repositories.Implementations
             return _fineContext.Fines.Any(f => f.Id == fineId);
         }
 
-        public bool CreateFine(Fine fine)
+        public bool CreateFine(FineCreateDto fineToCreateDto)
         {
-            _fineContext.Add(fine);
+            var fineToCreate = MapConfig.Mapper.Map<Fine>(fineToCreateDto);
+            _fineContext.Add(fineToCreate);
             return Save();
         }
 
-        public bool UpdateFine(Fine fine)
+        public bool UpdateFine(FineUpdateDto fineToUpdateDto)
         {
-            _fineContext.Update(fine);
+            var fineToUpdate = MapConfig.Mapper.Map<Fine>(fineToUpdateDto);
+            _fineContext.Update(fineToUpdate);
             return Save();
         }
 

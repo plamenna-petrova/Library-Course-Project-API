@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace Data.Models.Models
@@ -23,10 +24,13 @@ namespace Data.Models.Models
         public virtual ICollection<BookGenre> BooksGenres { get; set; }
         public virtual ICollection<Review> Reviews { get; set; }
         public virtual ICollection<BookReviewer> BooksReviewers { get; set; }
+        public virtual int? PublisherId { get; set; }
         public virtual Publisher Publisher { get; set; }
         public virtual ICollection<LibrarianBook> LibrariansBooks { get; set; }
         public virtual ICollection<Loan> Loans { get; set; }
         public virtual ICollection<ReaderBook> ReadersBooks { get; set; }
+        [ForeignKey("BookImage")]
+        public virtual int? BookImageId { get; set; }
         public virtual BookImage BookImage { get; set; }
     }
 }

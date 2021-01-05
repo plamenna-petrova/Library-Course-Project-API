@@ -4,14 +4,16 @@ using Data.DataConnection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Data.DataConnection.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210104172456_newBooksSeed")]
+    partial class newBooksSeed
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -134,9 +136,6 @@ namespace Data.DataConnection.Migrations
                     b.Property<string>("BookEdition")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("BookImageId")
-                        .HasColumnType("int");
-
                     b.Property<int>("BookPages")
                         .HasColumnType("int");
 
@@ -177,7 +176,6 @@ namespace Data.DataConnection.Migrations
                             Id = 1,
                             BookAnnotation = "A story about an young chess player Beth Harmon and her struggles with defining herself in the chess world",
                             BookEdition = "third",
-                            BookImageId = 1,
                             BookPages = 243,
                             BookTitle = "The Queen's Gambit",
                             CreatedAt = new DateTime(2020, 11, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -190,7 +188,6 @@ namespace Data.DataConnection.Migrations
                             Id = 2,
                             BookAnnotation = "Kafka's unsurmounted masterpiece!",
                             BookEdition = "first",
-                            BookImageId = 2,
                             BookPages = 302,
                             BookTitle = "The Castle",
                             CreatedAt = new DateTime(2020, 11, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -203,7 +200,6 @@ namespace Data.DataConnection.Migrations
                             Id = 3,
                             BookAnnotation = "Michael Chabon's Pulitzer winning work!",
                             BookEdition = "second",
-                            BookImageId = 3,
                             BookPages = 705,
                             BookTitle = "The Amazing Adventures of Kavalier and Clay",
                             CreatedAt = new DateTime(2020, 11, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -216,26 +212,12 @@ namespace Data.DataConnection.Migrations
                             Id = 4,
                             BookAnnotation = "Test Book",
                             BookEdition = "third",
-                            BookImageId = 4,
                             BookPages = 345,
                             BookTitle = "Test Book",
                             CreatedAt = new DateTime(2021, 1, 4, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DatePublished = new DateTime(2001, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ISBN = "456-2-17-351289-0",
                             PublisherId = 1
-                        },
-                        new
-                        {
-                            Id = 5,
-                            BookAnnotation = "Another Test Book",
-                            BookEdition = "first",
-                            BookImageId = 5,
-                            BookPages = 124,
-                            BookTitle = "Another Test Book",
-                            CreatedAt = new DateTime(2021, 1, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DatePublished = new DateTime(2002, 5, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ISBN = "123-6-18-9786120-0",
-                            PublisherId = 2
                         });
                 });
 
@@ -345,22 +327,6 @@ namespace Data.DataConnection.Migrations
                             BookImageShortDecsription = "The Amazing Adventures of Kavalier and Clay image",
                             BookImageUrl = "/images/bookImage3.jpg",
                             CreatedAt = new DateTime(2021, 1, 4, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 4,
-                            BookId = 4,
-                            BookImageShortDecsription = "Test Image 4",
-                            BookImageUrl = "/images/bookImage4.jpg",
-                            CreatedAt = new DateTime(2021, 1, 5, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 5,
-                            BookId = 5,
-                            BookImageShortDecsription = "Test Image 5",
-                            BookImageUrl = "/images/bookImage5.jpg",
-                            CreatedAt = new DateTime(2021, 1, 5, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
                 });
 
@@ -462,29 +428,6 @@ namespace Data.DataConnection.Migrations
                     b.HasIndex("ReaderId");
 
                     b.ToTable("Fines");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FineDescription = "Prolonged return of the book",
-                            FineFee = 5.00m
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FineDescription = "Not payed library fee",
-                            FineFee = 5.25m
-                        },
-                        new
-                        {
-                            Id = 3,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FineDescription = "Stolen book from library",
-                            FineFee = 10.50m
-                        });
                 });
 
             modelBuilder.Entity("Data.Models.Models.Genre", b =>

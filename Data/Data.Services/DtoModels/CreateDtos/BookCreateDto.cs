@@ -15,5 +15,7 @@ namespace Data.Services.DtoModels.CreateDtos
         public DateTime? DatePublished { get; set; }
         public int BookPages { get; set; }
         public string BookAnnotation { get; set; }
+        public int PublisherId { get; set; }
+        public int BookImageId { get; set; }
     }
 }

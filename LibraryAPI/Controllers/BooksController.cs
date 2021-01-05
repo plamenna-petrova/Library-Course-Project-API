@@ -49,6 +49,91 @@ namespace LibraryAPI.Controllers
             return Ok(singleBook);
         }
 
+        [Route("api/books/isbn/bookISBN")]
+        [HttpGet("isbn/{bookISBN}")]
+        [ProducesResponseType(200, Type = typeof(BookDto))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        public IActionResult GetBookByISBN(string bookISBN)
+        {
+            if (!_unitOfWork.BookRepository.BookExistsByISBN(bookISBN))
+            {
+                NotFound();
+            }
+
+            var bookByISBN = _unitOfWork.BookRepository.GetBookByISBN(bookISBN);
+
+            return Ok(bookByISBN);
+        }
+
+        [Route("api/books/authors/bookId")]
+        [HttpGet("authors/{bookId}")]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<AuthorDto>))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        public IActionResult GetAuthorsOfABook(int bookId)
+        {
+            if (!_unitOfWork.BookRepository.BookExistsById(bookId))
+            {
+                return NotFound();
+            }
+
+            var authorsOfABook = _unitOfWork.BookRepository.GetAuthorsOfABook(bookId);
+
+            return Ok(authorsOfABook);
+        }
+
+        [Route("api/books/authorId/authors")]
+        [HttpGet("{authorId}/authors")]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<BookDto>))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        public IActionResult GetBooksByAuthor(int authorId)
+        {
+            if (!_unitOfWork.AuthorRepository.AuthorExists(authorId))
+            {
+                return NotFound();
+            }
+
+            var booksByAuthor = _unitOfWork.BookRepository.GetBooksByAuthor(authorId);
+
+            return Ok(booksByAuthor);
+        }
+
+        [Route("api/books/publishers/bookId")]
+        [HttpGet("publishers/{bookId}")]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(200, Type = typeof(PublisherDto))]
+        public IActionResult GetPublisherOfABook(int bookId)
+        {
+            if (!_unitOfWork.BookRepository.BookExistsById(bookId))
+            {
+                return NotFound();
+            }
+
+            var publisher = _unitOfWork.BookRepository.GetPublisherOfABook(bookId);
+
+            return Ok(publisher);
+        }
+
+        [Route("api/books/bookimages/bookId")]
+        [HttpGet("bookimages/{bookId}")]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(200, Type = typeof(BookImageDto))]
+        public IActionResult GetImageOfABook(int bookId)
+        {
+            if (!_unitOfWork.BookRepository.BookExistsById(bookId))
+            {
+                return NotFound();
+            }
+
+            var bookImage = _unitOfWork.BookRepository.GetImageOfABook(bookId);
+
+            return Ok(bookImage);
+        }
+
         [HttpPost]
         [ProducesResponseType(201, Type = typeof(BookDto))]
         [ProducesResponseType(400)]

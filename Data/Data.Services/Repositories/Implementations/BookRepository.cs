@@ -78,14 +78,18 @@ namespace Data.Services.Repositories.Implementations
             return book == null ? false : true;
         }
 
-        public ICollection<Author> GetAuthorsOfABook(int bookId)
+        public ICollection<AuthorDto> GetAuthorsOfABook(int bookId)
         {
-            return _bookContext.BooksAuthors.Where(b => b.BookId == bookId).Select(a => a.Author).ToList();
+            var authorsOfABook = _bookContext.BooksAuthors.Where(b => b.BookId == bookId).Select(a => a.Author).ToList();
+            var authorsOfABookMapped = MapConfig.Mapper.Map<ICollection<AuthorDto>>(authorsOfABook);
+            return authorsOfABookMapped;
         }
 
-        public ICollection<Book> GetBooksByAuthor(int authorId)
+        public ICollection<BookDto> GetBooksByAuthor(int authorId)
         {
-            return _bookContext.BooksAuthors.Where(a => a.AuthorId == authorId).Select(b => b.Book).ToList();
+            var booksByAuthor = _bookContext.BooksAuthors.Where(a => a.AuthorId == authorId).Select(b => b.Book).ToList();
+            var booksByAuthorMapped = MapConfig.Mapper.Map<ICollection<BookDto>>(booksByAuthor);
+            return booksByAuthorMapped;
         }
 
         public ICollection<Book> GetAllBooksForGenre(int genreId)
@@ -113,10 +117,13 @@ namespace Data.Services.Repositories.Implementations
             return _bookContext.BooksReviewers.Where(rev => rev.ReviewerId == reviewerId).Select(b => b.Book).ToList();
         }
 
-        public Publisher GetPublisherOfABook(int bookId)
+        public PublisherDto GetPublisherOfABook(int bookId)
         {
-            var publisherId = _bookContext.Books.Where(b => b.Id == bookId).Select(p => p.Publisher.Id).FirstOrDefault();
-            return _bookContext.Publishers.Where(p => p.Id == publisherId).FirstOrDefault();
+            //var publisherId = _bookContext.Books.Where(b => b.Id == bookId).Select(p => p.Publisher.Id).FirstOrDefault();
+            //var publisher = _bookContext.Publishers.Where(p => p.Id == publisherId).FirstOrDefault();
+            var publisher = _bookContext.Books.Where(b => b.Id == bookId).Select(p => p.Publisher).FirstOrDefault();
+            var mappedPublisher = MapConfig.Mapper.Map<PublisherDto>(publisher);
+            return mappedPublisher;
         }
 
         public ICollection<Book> GetBooksOfALibrarian(int librarianId)
@@ -144,10 +151,13 @@ namespace Data.Services.Repositories.Implementations
             return _bookContext.ReadersBooks.Where(b => b.BookId == bookId).Select(read => read.Reader).ToList();
         }
 
-        public BookImage GetImageOfABook(int bookId)
+        public BookImageDto GetImageOfABook(int bookId)
         {
-            var bookImageId = _bookContext.Books.Where(b => b.Id == bookId).Select(bi => bi.BookImage.Id).FirstOrDefault();
-            return _bookContext.BookImages.Where(bi => bi.Id == bookImageId).FirstOrDefault();
+            //var bookImageId = _bookContext.Books.Where(b => b.Id == bookId).Select(bi => bi.BookImage.Id).FirstOrDefault();
+            //return _bookContext.BookImages.Where(bi => bi.Id == bookImageId).FirstOrDefault();
+            var bookImage = _bookContext.Books.Where(b => b.Id == bookId).Select(bi => bi.BookImage).FirstOrDefault();
+            var mappedBookImage = MapConfig.Mapper.Map<BookImageDto>(bookImage);
+            return mappedBookImage;
         }
 
         //public bool CreateBook(List<int> authorsId, List<int> genresId, List<int> reviewersId, List<int> librariansId, List<int> readersId, Book book)

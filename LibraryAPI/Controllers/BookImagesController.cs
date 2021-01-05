@@ -49,6 +49,23 @@ namespace LibraryAPI.Controllers
             return Ok(singleBookImage);
         }
 
+        [Route("api/bookimages/books/bookImageId")]
+        [HttpGet("books/{bookImageId}")]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(200, Type = typeof(BookDto))]
+        public IActionResult GetBookOfAnBookImage(int bookImageId)
+        {
+            if (!_unitOfWork.BookImageRepository.BookImageExists(bookImageId))
+            {
+                return NotFound();
+            }
+
+            var book = _unitOfWork.BookImageRepository.GetBookOfAnBookImage(bookImageId);
+
+            return Ok(book);
+        }
+
         [HttpPost]
         [ProducesResponseType(201, Type = typeof(BookImageDto))]
         [ProducesResponseType(400)]
@@ -61,12 +78,6 @@ namespace LibraryAPI.Controllers
             {
                 return BadRequest(ModelState);
             }
-
-            //if (!_unitOfWork.BookImageRepository.BookImageExists(newBookImage.Id))
-            //{
-            //    ModelState.AddModelError("", "Such book image Exists!");
-            //    return StatusCode(404, ModelState);
-            //}
 
             if (!_unitOfWork.BookImageRepository.CreateBookImage(newBookImage))
             {

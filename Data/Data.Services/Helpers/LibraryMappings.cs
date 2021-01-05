@@ -29,6 +29,9 @@ namespace Data.Services.Helpers
             CreateMap<Country, CountryDto>().ReverseMap();
             CreateMap<Country, CountryCreateDto>().ReverseMap();
             CreateMap<Country, CountryUpdateDto>().ReverseMap();
+            CreateMap<Fine, FineDto>().ReverseMap();
+            CreateMap<Fine, FineCreateDto>().ReverseMap();
+            CreateMap<Fine, FineUpdateDto>().ReverseMap();
         }
     }
 }

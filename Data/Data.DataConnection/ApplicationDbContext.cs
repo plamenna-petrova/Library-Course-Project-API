@@ -152,63 +152,6 @@ namespace Data.DataConnection
 
             //Data Seeds
 
-            List<Book> books = new List<Book>()
-            {
-               new Book()
-               {
-                   Id = 1,
-                   ISBN = "978-3-16-148410-0",
-                   BookTitle = "The Queen's Gambit",
-                   BookEdition = "third",
-                   DatePublished = new DateTime(1983, 3, 10),
-                   BookPages = 243,
-                   BookAnnotation = "A story about an young chess player Beth Harmon and her struggles with defining herself in the chess world",
-                   CreatedAt = new DateTime(2020, 11, 22)
-               },
-               new Book()
-               {
-                   Id = 2,
-                   ISBN = "1004-3-16-148410-0",
-                   BookTitle = "The Castle",
-                   BookEdition = "first",
-                   DatePublished = new DateTime(1926, 5, 9),
-                   BookPages = 302,
-                   BookAnnotation = "Kafka's unsurmounted masterpiece!",
-                   CreatedAt = new DateTime(2020, 11, 22)
-               },
-               new Book()
-               {
-                   Id = 3,
-                   ISBN = "834-3-16-148410-0",
-                   BookTitle = "The Amazing Adventures of Kavalier and Clay",
-                   BookEdition = "second",
-                   DatePublished = new DateTime(2000, 4, 3),
-                   BookPages = 705,
-                   BookAnnotation = "Michael Chabon's Pulitzer winning work!",
-                   CreatedAt = new DateTime(2020, 11, 22)
-               },
-            };
-
-
-            List<BookAuthor> booksAuthors = new List<BookAuthor>()
-            {
-                new BookAuthor()
-                {
-                    BookId = 1,
-                    AuthorId = 1,
-                },
-                new BookAuthor()
-                {
-                    BookId = 2,
-                    AuthorId = 2,
-                },
-                new BookAuthor()
-                {
-                    BookId = 3,
-                    AuthorId = 3,
-                }
-            };
-
             List<Country> countries = new List<Country>()
             {
                 new Country()
@@ -266,7 +209,6 @@ namespace Data.DataConnection
                 }
             };
 
-
             List<Publisher> publishers = new List<Publisher>()
             {
                 new Publisher()
@@ -283,6 +225,95 @@ namespace Data.DataConnection
                     CountryId = countries[2].Id,
                     CreatedAt = new DateTime(2020, 11, 22)
                 },
+            };
+
+            List<Book> books = new List<Book>()
+            {
+               new Book()
+               {
+                   Id = 1,
+                   ISBN = "978-3-16-148410-0",
+                   BookTitle = "The Queen's Gambit",
+                   BookEdition = "third",
+                   DatePublished = new DateTime(1983, 3, 10),
+                   BookPages = 243,
+                   BookAnnotation = "A story about an young chess player Beth Harmon and her struggles with defining herself in the chess world",
+                   CreatedAt = new DateTime(2020, 11, 22),
+                   PublisherId = 1,
+                   BookImageId = 1
+               },
+               new Book()
+               {
+                   Id = 2,
+                   ISBN = "1004-3-16-148410-0",
+                   BookTitle = "The Castle",
+                   BookEdition = "first",
+                   DatePublished = new DateTime(1926, 5, 9),
+                   BookPages = 302,
+                   BookAnnotation = "Kafka's unsurmounted masterpiece!",
+                   CreatedAt = new DateTime(2020, 11, 22),
+                   PublisherId = 2,
+                   BookImageId = 2
+               },
+               new Book()
+               {
+                   Id = 3,
+                   ISBN = "834-3-16-148410-0",
+                   BookTitle = "The Amazing Adventures of Kavalier and Clay",
+                   BookEdition = "second",
+                   DatePublished = new DateTime(2000, 4, 3),
+                   BookPages = 705,
+                   BookAnnotation = "Michael Chabon's Pulitzer winning work!",
+                   CreatedAt = new DateTime(2020, 11, 22),
+                   PublisherId = 1,
+                   BookImageId = 3
+               },
+               new Book()
+               {
+                   Id = 4,
+                   ISBN = "456-2-17-351289-0",
+                   BookTitle = "Test Book",
+                   BookEdition = "third",
+                   DatePublished = new DateTime(2001, 3, 4),
+                   BookPages = 345,
+                   BookAnnotation = "Test Book",
+                   CreatedAt = new DateTime(2021, 1, 4),
+                   PublisherId = 1,
+                   BookImageId = 4
+               },
+               new Book()
+               {
+                   Id = 5,
+                   ISBN = "123-6-18-9786120-0",
+                   BookTitle = "Another Test Book",
+                   BookEdition = "first",
+                   DatePublished = new DateTime(2002, 5, 6),
+                   BookPages = 124,
+                   BookAnnotation = "Another Test Book",
+                   CreatedAt = new DateTime(2021, 1, 5),
+                   PublisherId = 2,
+                   BookImageId = 5
+               }
+            };
+
+
+            List<BookAuthor> booksAuthors = new List<BookAuthor>()
+            {
+                new BookAuthor()
+                {
+                    BookId = 1,
+                    AuthorId = 1,
+                },
+                new BookAuthor()
+                {
+                    BookId = 2,
+                    AuthorId = 2,
+                },
+                new BookAuthor()
+                {
+                    BookId = 3,
+                    AuthorId = 3,
+                }
             };
 
             List<AuthorPublisher> authorsPublishers = new List<AuthorPublisher>()
@@ -332,6 +363,44 @@ namespace Data.DataConnection
                     //BookId = books[2].Id,
                     BookId = 3,
                     CreatedAt = new DateTime(2021, 1, 4)
+                },
+                new BookImage()
+                {
+                    Id = 4,
+                    BookImageUrl = "/images/bookImage4.jpg",
+                    BookImageShortDecsription = "Test Image 4",
+                    BookId = 4,
+                    CreatedAt = new DateTime(2021, 1, 5)
+                },
+                new BookImage()
+                {
+                    Id = 5,
+                    BookImageUrl = "/images/bookImage5.jpg",
+                    BookImageShortDecsription = "Test Image 5",
+                    BookId = 5,
+                    CreatedAt = new DateTime(2021, 1, 5)
+                }
+            };
+
+            List<Fine> fines = new List<Fine>()
+            {
+                new Fine()
+                {
+                    Id = 1,
+                    FineDescription = "Prolonged return of the book",
+                    FineFee = 5.00M
+                },
+                new Fine()
+                {
+                    Id = 2,
+                    FineDescription = "Not payed library fee",
+                    FineFee = 5.25M
+                },
+                new Fine()
+                {
+                    Id = 3,
+                    FineDescription = "Stolen book from library",
+                    FineFee = 10.50M
                 }
             };
 
@@ -342,6 +411,7 @@ namespace Data.DataConnection
             modelBuilder.Entity<BookAuthor>().HasData(booksAuthors);
             modelBuilder.Entity<Publisher>().HasData(publishers);
             modelBuilder.Entity<AuthorPublisher>().HasData(authorsPublishers);
+            modelBuilder.Entity<Fine>().HasData(fines);
             base.OnModelCreating(modelBuilder);
 
         }

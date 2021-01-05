@@ -50,6 +50,40 @@ namespace LibraryAPI.Controllers
             return Ok(singleCountry);
         }
 
+        [Route("api/countries/authors/authorId")]
+        [HttpGet("authors/{authorId}")]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(200, Type = typeof(CountryDto))]
+        public IActionResult GetCountryOfAnAuthor(int authorId)
+        {
+            if (!_unitOfWork.AuthorRepository.AuthorExists(authorId))
+            {
+                return NotFound();
+            }
+
+            var country = _unitOfWork.CountryRepository.GetCountryOfAnAuthor(authorId);
+
+            return Ok(country);
+        }
+
+        [Route("api/countries/countryId/authors")]
+        [HttpGet("{countryId}/authors")]
+        [ProducesResponseType(200, Type = typeof (IEnumerable<AuthorDto>))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(400)]
+        public IActionResult GetAuthorsFromACountry(int countryId)
+        {
+            if (!_unitOfWork.CountryRepository.CountryExists(countryId))
+            {
+                return NotFound();
+            }
+
+            var authors = _unitOfWork.CountryRepository.GetAuthorsFromACountry(countryId);
+
+            return Ok(authors);
+        }
+
         [HttpPost]
         [ProducesResponseType(201, Type = typeof(CountryDto))]
         [ProducesResponseType(400)]

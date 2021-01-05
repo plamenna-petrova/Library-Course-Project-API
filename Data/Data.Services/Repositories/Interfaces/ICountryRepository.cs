@@ -13,10 +13,10 @@ namespace Data.Services.Repositories.Interfaces
         ICollection<CountryDto> GetCountries();
         CountryDto GetCountryById(int countryId);
         Country GetCountryByIdNotMapped(int countryId);
-        Country GetCountryOfAnAuthor(int authorId);
+        CountryDto GetCountryOfAnAuthor(int authorId);
         Country GetCountryOfAReviewer(int reviewerId);
         Country GetCountryOfAPublisher(int publisherId);
-        ICollection<Author> GetAuthorsFromACountry(int countryId);
+        ICollection<AuthorDto> GetAuthorsFromACountry(int countryId);
         ICollection<Reviewer> GetReviewersFromACountry(int countryId);
         ICollection<Publisher> GetPublishersFromACountry(int countryId);
         bool CountryExists(int countryId);

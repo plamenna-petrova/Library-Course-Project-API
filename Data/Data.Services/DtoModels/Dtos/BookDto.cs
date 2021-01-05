@@ -1,6 +1,8 @@
-﻿using Data.Services.DtoModels.Abstraction;
+﻿using Data.Models.Models;
+using Data.Services.DtoModels.Abstraction;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace Data.Services.DtoModels.Dtos
@@ -13,5 +15,9 @@ namespace Data.Services.DtoModels.Dtos
         public DateTime? DatePublished { get; set; }
         public int BookPages { get; set; }
         public string BookAnnotation { get; set; }
+        public int PublisherId { get; set; }
+        public Publisher Publisher { get; set; }
+        public int BookImageId { get; set; }
+        public BookImage BookImage { get; set; }
     }
 }
