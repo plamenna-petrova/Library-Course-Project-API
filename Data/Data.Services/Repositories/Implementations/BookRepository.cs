@@ -92,14 +92,18 @@ namespace Data.Services.Repositories.Implementations
             return booksByAuthorMapped;
         }
 
-        public ICollection<Book> GetAllBooksForGenre(int genreId)
+        public ICollection<BookDto> GetAllBooksForGenre(int genreId)
         {
-            return _bookContext.BooksGenres.Where(g => g.GenreId == genreId).Select(b => b.Book).ToList();
+            var booksForGenre = _bookContext.BooksGenres.Where(g => g.GenreId == genreId).Select(b => b.Book).ToList();
+            var booksForGenreMapped = MapConfig.Mapper.Map<ICollection<BookDto>>(booksForGenre);
+            return booksForGenreMapped;
         }
 
-        public ICollection<Genre> GetAllGenresForABook(int bookId)
+        public ICollection<GenreDto> GetAllGenresForABook(int bookId)
         {
-            return _bookContext.BooksGenres.Where(b => b.BookId == bookId).Select(g => g.Genre).ToList();
+            var genresForABook = _bookContext.BooksGenres.Where(b => b.BookId == bookId).Select(g => g.Genre).ToList();
+            var genresForABookMapped = MapConfig.Mapper.Map<ICollection<GenreDto>>(genresForABook);
+            return genresForABookMapped;
         }
 
         public ICollection<Review> GetReviewsOfABook(int bookId)

@@ -404,6 +404,47 @@ namespace Data.DataConnection
                 }
             };
 
+            List<Genre> genres = new List<Genre>()
+            {
+                new Genre()
+                {
+                    Id = 1,
+                    GenreName = "Drama",
+                    GenreDescription = "Suitable for older audiences"
+                },
+                new Genre()
+                {
+                    Id = 2,
+                    GenreName = "Philosophical Novel",
+                    GenreDescription = "Suitable for deep thinkers and ponderers"
+                },
+                new Genre()
+                {
+                    Id = 3,
+                    GenreName = "Historical Fiction",
+                    GenreDescription = "Suitable for those, willing to enrich their knowledge about history"
+                }
+            };
+
+            List<BookGenre> bookGenres = new List<BookGenre>()
+            {
+                new BookGenre()
+                {
+                    BookId = 1,
+                    GenreId = 1
+                },
+                new BookGenre()
+                {
+                    BookId = 2,
+                    GenreId = 2
+                },
+                new BookGenre()
+                {
+                    BookId = 3,
+                    GenreId = 3
+                }
+            };
+
             modelBuilder.Entity<Country>().HasData(countries);
             modelBuilder.Entity<Author>().HasData(authors);
             modelBuilder.Entity<Book>().HasData(books);
@@ -412,6 +453,8 @@ namespace Data.DataConnection
             modelBuilder.Entity<Publisher>().HasData(publishers);
             modelBuilder.Entity<AuthorPublisher>().HasData(authorsPublishers);
             modelBuilder.Entity<Fine>().HasData(fines);
+            modelBuilder.Entity<Genre>().HasData(genres);
+            modelBuilder.Entity<BookGenre>().HasData(bookGenres);
             base.OnModelCreating(modelBuilder);
 
         }

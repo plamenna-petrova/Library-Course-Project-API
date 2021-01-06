@@ -32,6 +32,9 @@ namespace Data.Services.Helpers
             CreateMap<Fine, FineDto>().ReverseMap();
             CreateMap<Fine, FineCreateDto>().ReverseMap();
             CreateMap<Fine, FineUpdateDto>().ReverseMap();
+            CreateMap<Genre, GenreDto>().ReverseMap();
+            CreateMap<Genre, GenreCreateDto>().ReverseMap();
+            CreateMap<Genre, GenreUpdateDto>().ReverseMap();
         }
     }
 }

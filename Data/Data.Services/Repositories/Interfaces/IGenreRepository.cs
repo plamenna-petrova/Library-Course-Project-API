@@ -13,8 +13,8 @@ namespace Data.Services.Repositories.Interfaces
         ICollection<GenreDto> GetGenres();
         GenreDto GetGenreById(int genreId);
         Genre GetGenreByIdNotMapped(int genreId);
-        ICollection<Genre> GetAllGenresForABook(int bookId);
-        ICollection<Book> GetAllBooksForGenre(int genreId);
+        ICollection<GenreDto> GetAllGenresForABook(int bookId);
+        ICollection<BookDto> GetAllBooksForGenre(int genreId);
         bool GenreExists(int genreId);
         bool IsDuplicateGenreName(int genreId, string genreName);
         bool CreateGenre(GenreCreateDto genreToCreateDto);

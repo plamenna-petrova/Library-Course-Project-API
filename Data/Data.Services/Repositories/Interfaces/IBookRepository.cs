@@ -20,8 +20,8 @@ namespace Data.Services.Repositories.Interfaces
         bool IsDuplicateISBN(int bookId, string bookISBN);
         ICollection<AuthorDto> GetAuthorsOfABook(int bookId);
         ICollection<BookDto> GetBooksByAuthor(int authorId);
-        ICollection<Genre> GetAllGenresForABook(int bookId);
-        ICollection<Book> GetAllBooksForGenre(int genreId);
+        ICollection<GenreDto> GetAllGenresForABook(int bookId);
+        ICollection<BookDto> GetAllBooksForGenre(int genreId);
         ICollection<Review> GetReviewsOfABook(int bookId);
         ICollection<Reviewer> GetReviewersOfABook(int bookId);
         ICollection<Book> GetBooksOfAReviewer(int reviewerId);
