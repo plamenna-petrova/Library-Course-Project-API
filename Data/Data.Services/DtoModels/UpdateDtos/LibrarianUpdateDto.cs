@@ -12,5 +12,6 @@ namespace Data.Services.DtoModels.UpdateDtos
         public string LibrarianFirstName { get; set; }
         [Required]
         public string LibrarianLastName { get; set; }
+        public int LibraryManagingDirectorId { get; set; }
     }
 }

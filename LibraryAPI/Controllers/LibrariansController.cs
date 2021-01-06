@@ -99,6 +99,23 @@ namespace LibraryAPI.Controllers
             return Ok(fines);
         }
 
+        [Route("api/librarians/librarymanagingdirectors/librarianId")]
+        [HttpGet("librarymanagingdirectors/{librarianId}")]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(200, Type = typeof(LibraryManagingDirectorDto))]
+        public IActionResult GetLibraryManagingDirectorOfLibrarian(int librarianId)
+        {
+            if (!_unitOfWork.LibrarianRepository.LibrarianExists(librarianId))
+            {
+                return NotFound();
+            }
+
+            var libraryManagingDirector = _unitOfWork.LibrarianRepository.GetLibraryManagingDirectorOfLibrarian(librarianId);
+
+            return Ok(libraryManagingDirector);
+        }
+
         [HttpPost]
         [ProducesResponseType(201, Type = typeof(LibrarianDto))]
         [ProducesResponseType(400)]

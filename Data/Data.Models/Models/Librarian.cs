@@ -17,6 +17,7 @@ namespace Data.Models.Models
         public virtual ICollection<LibrarianBook> LibrariansBooks { get; set; }
         public virtual ICollection<Loan> Loans { get; set; }
         public virtual ICollection<ReaderLibrarian> ReadersLibrarians { get; set; }
+        public virtual int? LibraryManagingDirectorId { get; set; }
         public virtual LibraryManagingDirector LibraryManagingDirector { get; set; }
     }
 }

@@ -1,4 +1,7 @@
 ﻿using Data.Models.Models;
+using Data.Services.DtoModels.CreateDtos;
+using Data.Services.DtoModels.Dtos;
+using Data.Services.DtoModels.UpdateDtos;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,14 +10,15 @@ namespace Data.Services.Repositories.Interfaces
 {
     public interface ILoanRepository
     {
-        ICollection<Loan> GetLoans();
-        Loan GetLoanById(int loanId);
+        ICollection<LoanDto> GetLoans();
+        LoanDto GetLoanById(int loanId);
+        Loan GetLoanByIdNotMapped(int loanId);
         Book GetBookOfALoan(int loanId);
         Librarian GetLibrarianWhoProcessedLoan(int loanId);
         Reader GetReaderOfALoan(int loanId);
         bool LoanExists(int loanId);
-        bool CreateLoan(Loan loan);
-        bool UpdateLoan(Loan loan);
+        bool CreateLoan(LoanCreateDto loanToCreateDto);
+        bool UpdateLoan(LoanUpdateDto loanToUpdateDto);
         bool DeleteLoan(Loan loan);
         bool Save();
     }

@@ -77,10 +77,11 @@ namespace Data.Services.Repositories.Implementations
             return _librarianContext.ReadersLibrarians.Where(l => l.LibrarianId == librarianId).Select(read => read.Reader).ToList();
         }
 
-        public LibraryManagingDirector GetLibraryManagingDirectorOfLibrarian(int librarianId)
+        public LibraryManagingDirectorDto GetLibraryManagingDirectorOfLibrarian(int librarianId)
         {
-            var libraryManagingDirectorId = _librarianContext.Librarians.Where(l => l.Id == librarianId).Select(lmd => lmd.LibraryManagingDirector.Id).FirstOrDefault();
-            return _librarianContext.LibraryManagingDirectors.Where(lmd => lmd.Id == libraryManagingDirectorId).FirstOrDefault();
+            var libraryManagingDirectorOfLibrarian = _librarianContext.Librarians.Where(l => l.Id == librarianId).Select(lmd => lmd.LibraryManagingDirector).FirstOrDefault();
+            var libraryManagingDirectorOfLibrarianMapped = MapConfig.Mapper.Map<LibraryManagingDirectorDto>(libraryManagingDirectorOfLibrarian);
+            return libraryManagingDirectorOfLibrarianMapped;
         }
 
         public bool LibrarianExists(int librarianId)

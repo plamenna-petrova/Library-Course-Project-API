@@ -1,5 +1,9 @@
 ﻿using Data.DataConnection;
 using Data.Models.Models;
+using Data.Services.DtoModels.CreateDtos;
+using Data.Services.DtoModels.Dtos;
+using Data.Services.DtoModels.UpdateDtos;
+using Data.Services.Helpers;
 using Data.Services.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -17,14 +21,24 @@ namespace Data.Services.Repositories.Implementations
             _loanContext = loanContext;
         }
 
-        public ICollection<Loan> GetLoans()
+        public ICollection<LoanDto> GetLoans()
         {
-            return _loanContext.Loans.OrderBy(lo => lo.DateToReturn).ToList();
+            var loans = _loanContext.Loans.OrderBy(lo => lo.DateToReturn).ToList();
+            var mappedLoans = MapConfig.Mapper.Map<ICollection<LoanDto>>(loans);
+            return mappedLoans;
         }
 
-        public Loan GetLoanById(int loanId)
+        public LoanDto GetLoanById(int loanId)
         {
-            return _loanContext.Loans.Where(lo => lo.Id == loanId).FirstOrDefault();
+            var singleLoan = _loanContext.Loans.Where(lo => lo.Id == loanId).FirstOrDefault();
+            var mappedLoan = MapConfig.Mapper.Map<LoanDto>(singleLoan);
+            return mappedLoan;
+        }
+
+        public Loan GetLoanByIdNotMapped(int loanId)
+        {
+            var loan = _loanContext.Loans.Where(lo => lo.Id == loanId).FirstOrDefault();
+            return loan;
         }
 
         public Book GetBookOfALoan(int loanId)
@@ -50,15 +64,17 @@ namespace Data.Services.Repositories.Implementations
             return _loanContext.Loans.Any(lo => lo.Id == loanId);
         }
 
-        public bool CreateLoan(Loan loan)
+        public bool CreateLoan(LoanCreateDto loanToCreateDto)
         {
-            _loanContext.Add(loan);
+            var loanToCreate = MapConfig.Mapper.Map<Loan>(loanToCreateDto);
+            _loanContext.Add(loanToCreate);
             return Save();
         }
 
-        public bool UpdateLoan(Loan loan)
+        public bool UpdateLoan(LoanUpdateDto loanToUpdateDto)
         {
-            _loanContext.Update(loan);
+            var loanToUpdate = MapConfig.Mapper.Map<Loan>(loanToUpdateDto);
+            _loanContext.Update(loanToUpdate);
             return Save();
         }
 

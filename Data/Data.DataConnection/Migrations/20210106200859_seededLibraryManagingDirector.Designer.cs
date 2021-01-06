@@ -4,14 +4,16 @@ using Data.DataConnection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Data.DataConnection.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210106200859_seededLibraryManagingDirector")]
+    partial class seededLibraryManagingDirector
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -601,24 +603,21 @@ namespace Data.DataConnection.Migrations
                             Id = 1,
                             CreatedAt = new DateTime(2021, 1, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LibrarianFirstName = "Mark",
-                            LibrarianLastName = "Watson",
-                            LibraryManagingDirectorId = 1
+                            LibrarianLastName = "Watson"
                         },
                         new
                         {
                             Id = 2,
                             CreatedAt = new DateTime(2021, 1, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LibrarianFirstName = "Jake",
-                            LibrarianLastName = "Miller",
-                            LibraryManagingDirectorId = 1
+                            LibrarianLastName = "Miller"
                         },
                         new
                         {
                             Id = 3,
                             CreatedAt = new DateTime(2021, 1, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LibrarianFirstName = "David",
-                            LibrarianLastName = "Bradford",
-                            LibraryManagingDirectorId = 2
+                            LibrarianLastName = "Bradford"
                         });
                 });
 

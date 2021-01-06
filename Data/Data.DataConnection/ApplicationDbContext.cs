@@ -382,6 +382,26 @@ namespace Data.DataConnection
                 }
             };
 
+            List<LibraryManagingDirector> libraryManagingDirectors = new List<LibraryManagingDirector>()
+            {
+                new LibraryManagingDirector()
+                {
+                    Id = 1,
+                    LibraryManagingDirectorFirstName = "Caleb",
+                    LibraryManagingDirectorLastName = "Owen",
+                    WorkingExperienceInYears = 4,
+                    CreatedAt = new DateTime(2021, 1, 6)
+                },
+                new LibraryManagingDirector()
+                {
+                    Id = 2,
+                    LibraryManagingDirectorFirstName = "Anne",
+                    LibraryManagingDirectorLastName = "Griffin",
+                    WorkingExperienceInYears = 9,
+                    CreatedAt = new DateTime(2021, 1, 6)
+                }
+            };
+
             List<Librarian> librarians = new List<Librarian>()
             {
                 new Librarian()
@@ -389,21 +409,24 @@ namespace Data.DataConnection
                     Id = 1,
                     LibrarianFirstName = "Mark",
                     LibrarianLastName = "Watson",
-                    CreatedAt = new DateTime(2021, 1, 6)
+                    CreatedAt = new DateTime(2021, 1, 6),
+                    LibraryManagingDirectorId = 1
                 },
                 new Librarian()
                 {
                     Id = 2,
                     LibrarianFirstName = "Jake",
                     LibrarianLastName = "Miller",
-                    CreatedAt = new DateTime(2021, 1, 6)
+                    CreatedAt = new DateTime(2021, 1, 6),
+                    LibraryManagingDirectorId = 1
                 },
                 new Librarian()
                 {
                     Id = 3,
                     LibrarianFirstName = "David",
                     LibrarianLastName = "Bradford",
-                    CreatedAt = new DateTime(2021, 1, 6)
+                    CreatedAt = new DateTime(2021, 1, 6),
+                    LibraryManagingDirectorId = 2
                 }
             };
 
@@ -508,6 +531,7 @@ namespace Data.DataConnection
                 }
             };
 
+           
             modelBuilder.Entity<Country>().HasData(countries);
             modelBuilder.Entity<Author>().HasData(authors);
             modelBuilder.Entity<Book>().HasData(books);
@@ -520,6 +544,7 @@ namespace Data.DataConnection
             modelBuilder.Entity<BookGenre>().HasData(bookGenres);
             modelBuilder.Entity<Librarian>().HasData(librarians);
             modelBuilder.Entity<LibrarianBook>().HasData(librarianBooks);
+            modelBuilder.Entity<LibraryManagingDirector>().HasData(libraryManagingDirectors);
             base.OnModelCreating(modelBuilder);
 
         }

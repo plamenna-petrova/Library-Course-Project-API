@@ -38,6 +38,9 @@ namespace Data.Services.Helpers
             CreateMap<Librarian, LibrarianDto>().ReverseMap();
             CreateMap<Librarian, LibrarianCreateDto>().ReverseMap();
             CreateMap<Librarian, LibrarianUpdateDto>().ReverseMap();
+            CreateMap<LibraryManagingDirector, LibraryManagingDirectorDto>().ReverseMap();
+            CreateMap<LibraryManagingDirector, LibraryManagingDirectorCreateDto>().ReverseMap();
+            CreateMap<LibraryManagingDirector, LibraryManagingDirectorUpdateDto>().ReverseMap();
         }
     }
 }
