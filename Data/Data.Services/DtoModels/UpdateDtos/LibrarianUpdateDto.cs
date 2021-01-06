@@ -6,12 +6,11 @@ using System.Text;
 
 namespace Data.Services.DtoModels.UpdateDtos
 {
-    public class FineUpdateDto : BaseDtoModel
+    public class LibrarianUpdateDto : BaseDtoModel
     {
         [Required]
-        public string FineDescription { get; set; }
+        public string LibrarianFirstName { get; set; }
         [Required]
-        public decimal FineFee { get; set; }
-        public int LibrarianId { get; set; }
+        public string LibrarianLastName { get; set; }
     }
 }

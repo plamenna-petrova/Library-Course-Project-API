@@ -1,5 +1,9 @@
 ﻿using Data.DataConnection;
 using Data.Models.Models;
+using Data.Services.DtoModels.CreateDtos;
+using Data.Services.DtoModels.Dtos;
+using Data.Services.DtoModels.UpdateDtos;
+using Data.Services.Helpers;
 using Data.Services.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -17,24 +21,45 @@ namespace Data.Services.Repositories.Implementations
             _librarianContext = librarianContext;
         }
 
-        public ICollection<Librarian> GetLibrarians()
+        public ICollection<LibrarianDto> GetLibrarians()
         {
-            return _librarianContext.Librarians.OrderBy(l => l.LibrarianLastName).ToList();
+            var librarians = _librarianContext.Librarians.OrderBy(l => l.LibrarianLastName).ToList();
+            var mappedLibrarians = MapConfig.Mapper.Map<ICollection<LibrarianDto>>(librarians);
+            return mappedLibrarians;
         }
 
-        public Librarian GetLibrarianById(int librarianId)
+        public LibrarianDto GetLibrarianById(int librarianId)
         {
-            return _librarianContext.Librarians.Where(l => l.Id == librarianId).FirstOrDefault();
+            var singleLibrarian = _librarianContext.Librarians.Where(l => l.Id == librarianId).FirstOrDefault();
+            var mappedLibrarian = MapConfig.Mapper.Map<LibrarianDto>(singleLibrarian);
+            return mappedLibrarian;
         }
 
-        public ICollection<Book> GetBooksOfALibrarian(int librarianId)
+        public Librarian GetLibrarianByIdNotMapped(int librarianId)
         {
-            return _librarianContext.LibrariansBooks.Where(l => l.LibrarianId == librarianId).Select(b => b.Book).ToList();
+            var librarian = _librarianContext.Librarians.Where(l => l.Id == librarianId).FirstOrDefault();
+            return librarian;
         }
 
-        public ICollection<Librarian> GetLibrariansOfABook(int bookId)
+        public ICollection<BookDto> GetBooksOfALibrarian(int librarianId)
         {
-            return _librarianContext.LibrariansBooks.Where(b => b.BookId == bookId).Select(l => l.Librarian).ToList();
+            var booksOfALibrarian = _librarianContext.LibrariansBooks.Where(l => l.LibrarianId == librarianId).Select(b => b.Book).ToList();
+            var booksOfALibrarianMapped = MapConfig.Mapper.Map<ICollection<BookDto>>(booksOfALibrarian);
+            return booksOfALibrarianMapped;
+        }
+
+        public ICollection<LibrarianDto> GetLibrariansOfABook(int bookId)
+        {
+            var librariansOfABook = _librarianContext.LibrariansBooks.Where(b => b.BookId == bookId).Select(l => l.Librarian).ToList();
+            var librariansOfABookMapped = MapConfig.Mapper.Map<ICollection<LibrarianDto>>(librariansOfABook);
+            return librariansOfABookMapped;
+        }
+
+        public ICollection<FineDto> GetFinesOfALibrarian(int librarianId)
+        {
+            var fines = _librarianContext.Fines.Where(l => l.Librarian.Id == librarianId).ToList();
+            var mappedFines = MapConfig.Mapper.Map<ICollection<FineDto>>(fines);
+            return mappedFines;
         }
 
         public ICollection<Loan> GetLoansOfALibrarian(int librarianId)
@@ -63,15 +88,17 @@ namespace Data.Services.Repositories.Implementations
             return _librarianContext.Librarians.Any(l => l.Id == librarianId);
         }
 
-        public bool CreateLibrarian(Librarian librarian)
+        public bool CreateLibrarian(LibrarianCreateDto librarianToCreateDto)
         {
-            _librarianContext.Add(librarian);
+            var librarianToCreate = MapConfig.Mapper.Map<Librarian>(librarianToCreateDto);
+            _librarianContext.Add(librarianToCreate);
             return Save();
         }
 
-        public bool UpdateLibrarian(Librarian librarian)
+        public bool UpdateLibrarian(LibrarianUpdateDto librarianToUpdateDto)
         {
-            _librarianContext.Update(librarian);
+            var librarianToUpdate = MapConfig.Mapper.Map<Librarian>(librarianToUpdateDto);
+            _librarianContext.Update(librarianToUpdate);
             return Save();
         }
 

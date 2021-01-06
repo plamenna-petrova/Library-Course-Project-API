@@ -14,7 +14,7 @@ namespace Data.Services.Repositories.Interfaces
         FineDto GetFineById(int fineId);
         Fine GetFineByIdNotMapped(int fineId);
         Reader GetReaderWhoWasFined(int fineId);
-        Librarian GetLibrarianWhoIssuedFine(int fineId);
+        LibrarianDto GetLibrarianWhoIssuedFine(int fineId);
         bool FineExists(int fineId);
         bool CreateFine(FineCreateDto fineToCreateDto);
         bool UpdateFine(FineUpdateDto fineToUpdateDto);

@@ -13,6 +13,7 @@ namespace Data.Models.Models
         public string FineDescription { get; set; }
         public decimal FineFee { get; set; }
         public virtual Reader Reader { get; set; }
+        public virtual int? LibrarianId { get; set; }
         public virtual Librarian Librarian { get; set; }
     }
 }

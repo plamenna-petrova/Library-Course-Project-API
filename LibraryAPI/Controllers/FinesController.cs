@@ -48,6 +48,22 @@ namespace LibraryAPI.Controllers
             return Ok(singleFine);
         }
 
+        [Route("api/fines/librarians/fineId")]
+        [HttpGet("librarians/{fineId}")]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(200, Type = typeof(LibrarianDto))]
+        public IActionResult GetLibrarianWhoIssuedFine(int fineId)
+        {
+            if (!_unitOfWork.FineRepository.FineExists(fineId))
+            {
+                return NotFound();
+            }
+
+            var librarian = _unitOfWork.FineRepository.GetLibrarianWhoIssuedFine(fineId);
+
+            return Ok(librarian);
+        }
 
         [HttpPost]
         [ProducesResponseType(201, Type = typeof(FineDto))]

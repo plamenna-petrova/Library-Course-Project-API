@@ -382,25 +382,56 @@ namespace Data.DataConnection
                 }
             };
 
+            List<Librarian> librarians = new List<Librarian>()
+            {
+                new Librarian()
+                {
+                    Id = 1,
+                    LibrarianFirstName = "Mark",
+                    LibrarianLastName = "Watson",
+                    CreatedAt = new DateTime(2021, 1, 6)
+                },
+                new Librarian()
+                {
+                    Id = 2,
+                    LibrarianFirstName = "Jake",
+                    LibrarianLastName = "Miller",
+                    CreatedAt = new DateTime(2021, 1, 6)
+                },
+                new Librarian()
+                {
+                    Id = 3,
+                    LibrarianFirstName = "David",
+                    LibrarianLastName = "Bradford",
+                    CreatedAt = new DateTime(2021, 1, 6)
+                }
+            };
+
             List<Fine> fines = new List<Fine>()
             {
                 new Fine()
                 {
                     Id = 1,
                     FineDescription = "Prolonged return of the book",
-                    FineFee = 5.00M
+                    FineFee = 5.00M,
+                    CreatedAt = new DateTime(2021, 1, 6),
+                    LibrarianId = 1
                 },
                 new Fine()
                 {
                     Id = 2,
                     FineDescription = "Not payed library fee",
-                    FineFee = 5.25M
+                    FineFee = 5.25M,
+                    CreatedAt = new DateTime(2021, 1, 6),
+                    LibrarianId = 2
                 },
                 new Fine()
                 {
                     Id = 3,
                     FineDescription = "Stolen book from library",
-                    FineFee = 10.50M
+                    FineFee = 10.50M,
+                    CreatedAt = new DateTime(2021, 1, 6),
+                    LibrarianId = 3
                 }
             };
 
@@ -410,19 +441,22 @@ namespace Data.DataConnection
                 {
                     Id = 1,
                     GenreName = "Drama",
-                    GenreDescription = "Suitable for older audiences"
+                    GenreDescription = "Suitable for older audiences",
+                    CreatedAt = new DateTime(2021, 1, 6)
                 },
                 new Genre()
                 {
                     Id = 2,
                     GenreName = "Philosophical Novel",
-                    GenreDescription = "Suitable for deep thinkers and ponderers"
+                    GenreDescription = "Suitable for deep thinkers and ponderers",
+                    CreatedAt = new DateTime(2021, 1, 6)
                 },
                 new Genre()
                 {
                     Id = 3,
                     GenreName = "Historical Fiction",
-                    GenreDescription = "Suitable for those, willing to enrich their knowledge about history"
+                    GenreDescription = "Suitable for those, willing to enrich their knowledge about history",
+                    CreatedAt = new DateTime(2021, 1, 6)
                 }
             };
 
@@ -445,6 +479,35 @@ namespace Data.DataConnection
                 }
             };
 
+            List<LibrarianBook> librarianBooks = new List<LibrarianBook>()
+            {
+                new LibrarianBook()
+                {
+                    LibrarianId = 1,
+                    BookId = 1
+                },
+                new LibrarianBook()
+                {
+                    LibrarianId = 2,
+                    BookId = 2
+                },
+                new LibrarianBook()
+                {
+                    LibrarianId = 3,
+                    BookId = 3 
+                },
+                new LibrarianBook()
+                {
+                    LibrarianId = 1,
+                    BookId = 4
+                },
+                new LibrarianBook()
+                {
+                    LibrarianId = 1,
+                    BookId = 5
+                }
+            };
+
             modelBuilder.Entity<Country>().HasData(countries);
             modelBuilder.Entity<Author>().HasData(authors);
             modelBuilder.Entity<Book>().HasData(books);
@@ -455,6 +518,8 @@ namespace Data.DataConnection
             modelBuilder.Entity<Fine>().HasData(fines);
             modelBuilder.Entity<Genre>().HasData(genres);
             modelBuilder.Entity<BookGenre>().HasData(bookGenres);
+            modelBuilder.Entity<Librarian>().HasData(librarians);
+            modelBuilder.Entity<LibrarianBook>().HasData(librarianBooks);
             base.OnModelCreating(modelBuilder);
 
         }

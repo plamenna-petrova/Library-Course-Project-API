@@ -4,14 +4,16 @@ using Data.DataConnection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Data.DataConnection.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210106151702_addedCreatedAtColumnToMultipleTables")]
+    partial class addedCreatedAtColumnToMultipleTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -486,24 +488,21 @@ namespace Data.DataConnection.Migrations
                             Id = 1,
                             CreatedAt = new DateTime(2021, 1, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             FineDescription = "Prolonged return of the book",
-                            FineFee = 5.00m,
-                            LibrarianId = 1
+                            FineFee = 5.00m
                         },
                         new
                         {
                             Id = 2,
                             CreatedAt = new DateTime(2021, 1, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             FineDescription = "Not payed library fee",
-                            FineFee = 5.25m,
-                            LibrarianId = 2
+                            FineFee = 5.25m
                         },
                         new
                         {
                             Id = 3,
                             CreatedAt = new DateTime(2021, 1, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             FineDescription = "Stolen book from library",
-                            FineFee = 10.50m,
-                            LibrarianId = 3
+                            FineFee = 10.50m
                         });
                 });
 

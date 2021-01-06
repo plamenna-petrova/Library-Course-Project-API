@@ -35,6 +35,9 @@ namespace Data.Services.Helpers
             CreateMap<Genre, GenreDto>().ReverseMap();
             CreateMap<Genre, GenreCreateDto>().ReverseMap();
             CreateMap<Genre, GenreUpdateDto>().ReverseMap();
+            CreateMap<Librarian, LibrarianDto>().ReverseMap();
+            CreateMap<Librarian, LibrarianCreateDto>().ReverseMap();
+            CreateMap<Librarian, LibrarianUpdateDto>().ReverseMap();
         }
     }
 }

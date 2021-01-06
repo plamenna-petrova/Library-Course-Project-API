@@ -4,14 +4,16 @@ using Data.DataConnection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Data.DataConnection.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210106150416_seededLibrarian")]
+    partial class seededLibrarian
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -484,26 +486,23 @@ namespace Data.DataConnection.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2021, 1, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             FineDescription = "Prolonged return of the book",
-                            FineFee = 5.00m,
-                            LibrarianId = 1
+                            FineFee = 5.00m
                         },
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2021, 1, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             FineDescription = "Not payed library fee",
-                            FineFee = 5.25m,
-                            LibrarianId = 2
+                            FineFee = 5.25m
                         },
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2021, 1, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             FineDescription = "Stolen book from library",
-                            FineFee = 10.50m,
-                            LibrarianId = 3
+                            FineFee = 10.50m
                         });
                 });
 
@@ -540,21 +539,21 @@ namespace Data.DataConnection.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2021, 1, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             GenreDescription = "Suitable for older audiences",
                             GenreName = "Drama"
                         },
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2021, 1, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             GenreDescription = "Suitable for deep thinkers and ponderers",
                             GenreName = "Philosophical Novel"
                         },
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2021, 1, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             GenreDescription = "Suitable for those, willing to enrich their knowledge about history",
                             GenreName = "Historical Fiction"
                         });
@@ -599,21 +598,21 @@ namespace Data.DataConnection.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2021, 1, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LibrarianFirstName = "Mark",
                             LibrarianLastName = "Watson"
                         },
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2021, 1, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LibrarianFirstName = "Jake",
                             LibrarianLastName = "Miller"
                         },
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2021, 1, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LibrarianFirstName = "David",
                             LibrarianLastName = "Bradford"
                         });
@@ -632,33 +631,6 @@ namespace Data.DataConnection.Migrations
                     b.HasIndex("BookId");
 
                     b.ToTable("LibrariansBooks");
-
-                    b.HasData(
-                        new
-                        {
-                            LibrarianId = 1,
-                            BookId = 1
-                        },
-                        new
-                        {
-                            LibrarianId = 2,
-                            BookId = 2
-                        },
-                        new
-                        {
-                            LibrarianId = 3,
-                            BookId = 3
-                        },
-                        new
-                        {
-                            LibrarianId = 1,
-                            BookId = 4
-                        },
-                        new
-                        {
-                            LibrarianId = 1,
-                            BookId = 5
-                        });
                 });
 
             modelBuilder.Entity("Data.Models.Models.LibraryManagingDirector", b =>

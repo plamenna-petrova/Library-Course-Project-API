@@ -5,13 +5,12 @@ using System.Text;
 
 namespace Data.Services.DtoModels.CreateDtos
 {
-    public class FineCreateDto
+    public class LibrarianCreateDto
     {
         public int Id { get; set; }
         [Required]
-        public string FineDescription { get; set; }
+        public string LibrarianFirstName { get; set; }
         [Required]
-        public decimal FineFee { get; set; }
-        public int LibrarianId { get; set; }
+        public string LibrarianLastName { get; set; }
     }
 }

@@ -49,6 +49,40 @@ namespace LibraryAPI.Controllers
             return Ok(singleGenre);
         }
 
+        [Route("api/genres/books/bookId")]
+        [HttpGet("books/{bookId}")]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<GenreDto>))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        public IActionResult GetAllGenresForABook(int bookId)
+        {
+            if (!_unitOfWork.BookRepository.BookExistsById(bookId))
+            {
+                return NotFound();
+            }
+
+            var genresForABook = _unitOfWork.GenreRepository.GetAllGenresForABook(bookId);
+
+            return Ok(genresForABook);
+        }
+
+        [Route("api/genres/genreId/books")]
+        [Route("{genreId}/books")]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<BookDto>))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        public IActionResult GetAllBooksForGenre(int genreId)
+        {
+            if (!_unitOfWork.GenreRepository.GenreExists(genreId))
+            {
+                return NotFound();
+            }
+
+            var booksForGenre = _unitOfWork.GenreRepository.GetAllBooksForGenre(genreId);
+
+            return Ok(booksForGenre);
+        }
+
         [HttpPost]
         [ProducesResponseType(201, Type = typeof(GenreDto))]
         [ProducesResponseType(400)]

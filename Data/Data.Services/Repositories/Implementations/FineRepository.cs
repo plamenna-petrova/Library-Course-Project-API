@@ -47,10 +47,11 @@ namespace Data.Services.Repositories.Implementations
             return _fineContext.Readers.Where(read => read.Id == readerId).FirstOrDefault();
         }
 
-        public Librarian GetLibrarianWhoIssuedFine(int fineId)
+        public LibrarianDto GetLibrarianWhoIssuedFine(int fineId)
         {
-            var librarianId = _fineContext.Fines.Where(f => f.Id == fineId).Select(l => l.Librarian.Id).FirstOrDefault();
-            return _fineContext.Librarians.Where(l => l.Id == librarianId).FirstOrDefault();
+            var librarianWhoIssuedFine = _fineContext.Fines.Where(f => f.Id == fineId).Select(l => l.Librarian).FirstOrDefault();
+            var librarianWhoIssuedFineMapped = MapConfig.Mapper.Map<LibrarianDto>(librarianWhoIssuedFine);
+            return librarianWhoIssuedFineMapped;
         }
 
         public bool FineExists(int fineId)

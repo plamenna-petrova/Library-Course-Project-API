@@ -130,14 +130,18 @@ namespace Data.Services.Repositories.Implementations
             return mappedPublisher;
         }
 
-        public ICollection<Book> GetBooksOfALibrarian(int librarianId)
+        public ICollection<BookDto> GetBooksOfALibrarian(int librarianId)
         {
-            return _bookContext.LibrariansBooks.Where(l => l.LibrarianId == librarianId).Select(b => b.Book).ToList();
+            var booksOfALibrarian = _bookContext.LibrariansBooks.Where(l => l.LibrarianId == librarianId).Select(b => b.Book).ToList();
+            var booksOfALibrarianMapped = MapConfig.Mapper.Map<ICollection<BookDto>>(booksOfALibrarian);
+            return booksOfALibrarianMapped;
         }
 
-        public ICollection<Librarian> GetLibrariansOfABook(int bookId)
+        public ICollection<LibrarianDto> GetLibrariansOfABook(int bookId)
         {
-            return _bookContext.LibrariansBooks.Where(b => b.BookId == bookId).Select(l => l.Librarian).ToList();
+            var librariansOfABook = _bookContext.LibrariansBooks.Where(b => b.BookId == bookId).Select(l => l.Librarian).ToList();
+            var librariansOfABookMapped = MapConfig.Mapper.Map<ICollection<LibrarianDto>>(librariansOfABook);
+            return librariansOfABookMapped;
         }
 
         public ICollection<Loan> GetLoansOfABook(int bookId)

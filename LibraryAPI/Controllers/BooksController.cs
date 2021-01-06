@@ -100,6 +100,23 @@ namespace LibraryAPI.Controllers
             return Ok(genresForABook);
         }
 
+        [Route("api/books/librarians/bookId")]
+        [HttpGet("librarians/{bookId}")]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<LibrarianDto>))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        public IActionResult GetLibrariansOfABook(int bookId)
+        {
+            if (!_unitOfWork.BookRepository.BookExistsById(bookId))
+            {
+                return NotFound();
+            }
+
+            var librariansOfABook = _unitOfWork.BookRepository.GetLibrariansOfABook(bookId);
+
+            return Ok(librariansOfABook);
+        }
+
         [Route("api/books/authorId/authors")]
         [HttpGet("{authorId}/authors")]
         [ProducesResponseType(200, Type = typeof(IEnumerable<BookDto>))]
@@ -132,6 +149,23 @@ namespace LibraryAPI.Controllers
             var booksForGenre = _unitOfWork.BookRepository.GetAllBooksForGenre(genreId);
 
             return Ok(booksForGenre);
+        }
+
+        [Route("api/books/librarianId/librarians")]
+        [HttpGet("{librarianId}/librarians")]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<BookDto>))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        public IActionResult GetBooksOfALibrarian(int librarianId)
+        {
+            if (!_unitOfWork.LibrarianRepository.LibrarianExists(librarianId))
+            {
+                return NotFound();
+            }
+
+            var booksOfALibrarian = _unitOfWork.BookRepository.GetBooksOfALibrarian(librarianId);
+
+            return Ok(booksOfALibrarian);
         }
 
         [Route("api/books/publishers/bookId")]

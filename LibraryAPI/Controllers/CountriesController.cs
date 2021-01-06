@@ -71,7 +71,7 @@ namespace LibraryAPI.Controllers
         [HttpGet("{countryId}/authors")]
         [ProducesResponseType(200, Type = typeof (IEnumerable<AuthorDto>))]
         [ProducesResponseType(400)]
-        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
         public IActionResult GetAuthorsFromACountry(int countryId)
         {
             if (!_unitOfWork.CountryRepository.CountryExists(countryId))
