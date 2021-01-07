@@ -48,34 +48,46 @@ namespace Data.Services.Repositories.Implementations
             return reader == null ? false : true;
         }
 
-        public ICollection<Librarian> GetLibrariansWhoServedReader(int readerId)
+        public ICollection<LibrarianDto> GetLibrariansWhoServedReader(int readerId)
         {
-            return _readerContext.ReadersLibrarians.Where(read => read.ReaderId == readerId).Select(l => l.Librarian).ToList();
+            var librariansWhoServedReader = _readerContext.ReadersLibrarians.Where(read => read.ReaderId == readerId).Select(l => l.Librarian).ToList();
+            var librariansWhoServedReaderMapped = MapConfig.Mapper.Map<ICollection<LibrarianDto>>(librariansWhoServedReader);
+            return librariansWhoServedReaderMapped;
         }
 
-        public ICollection<Reader> GetReadersOfALibrarian(int librarianId)
+        public ICollection<ReaderDto> GetReadersOfALibrarian(int librarianId)
         {
-            return _readerContext.ReadersLibrarians.Where(l => l.LibrarianId == librarianId).Select(read => read.Reader).ToList();
+            var readersOfALibrarian = _readerContext.ReadersLibrarians.Where(l => l.LibrarianId == librarianId).Select(read => read.Reader).ToList();
+            var readersOfALibrarianMapped = MapConfig.Mapper.Map<ICollection<ReaderDto>>(readersOfALibrarian);
+            return readersOfALibrarianMapped;
         }
 
-        public ICollection<Loan> GetLoansOfAReader(int readerId)
+        public ICollection<LoanDto> GetLoansOfAReader(int readerId)
         {
-            return _readerContext.Loans.Where(read => read.Reader.Id == readerId).ToList();
+            var loansOfAReader = _readerContext.Loans.Where(read => read.Reader.Id == readerId).ToList();
+            var loansOfAReaderMapped = MapConfig.Mapper.Map<ICollection<LoanDto>>(loansOfAReader);
+            return loansOfAReaderMapped;
         }
 
-        public ICollection<Book> GetBooksOfAReader(int readerId)
+        public ICollection<BookDto> GetBooksOfAReader(int readerId)
         {
-            return _readerContext.ReadersBooks.Where(read => read.ReaderId == readerId).Select(b => b.Book).ToList();
+            var booksOfAReader = _readerContext.ReadersBooks.Where(read => read.ReaderId == readerId).Select(b => b.Book).ToList();
+            var booksOfAReaderMapped = MapConfig.Mapper.Map<ICollection<BookDto>>(booksOfAReader);
+            return booksOfAReaderMapped;
         }
 
-        public ICollection<Reader> GetReadersOfABook(int bookId)
+        public ICollection<ReaderDto> GetReadersOfABook(int bookId)
         {
-            return _readerContext.ReadersBooks.Where(b => b.BookId == bookId).Select(read => read.Reader).ToList();
+            var readersOfABook = _readerContext.ReadersBooks.Where(b => b.BookId == bookId).Select(read => read.Reader).ToList();
+            var readersOfABookMapped = MapConfig.Mapper.Map<ICollection<ReaderDto>>(readersOfABook);
+            return readersOfABookMapped;
         }
 
-        public ICollection<Fine> GetFinesOfAReader(int readerId)
+        public ICollection<FineDto> GetFinesOfAReader(int readerId)
         {
-            return _readerContext.Fines.Where(read => read.Reader.Id == readerId).ToList();
+            var finesOfAReader = _readerContext.Fines.Where(read => read.Reader.Id == readerId).ToList();
+            var finesOfAReaderMapped = MapConfig.Mapper.Map<ICollection<FineDto>>(finesOfAReader);
+            return finesOfAReaderMapped;
         }
 
         public bool ReaderExists(int readerId)

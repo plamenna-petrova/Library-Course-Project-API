@@ -49,6 +49,109 @@ namespace LibraryAPI.Controllers
             return Ok(singleReader);
         }
 
+
+        [Route("api/readers/librarians/readerId")]
+        [HttpGet("librarians/{readerId}")]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<LibrarianDto>))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        public IActionResult GetLibrariansWhoServedReader(int readerId)
+        {
+            if (!_unitOfWork.ReaderRepository.ReaderExists(readerId))
+            {
+                return NotFound();
+            }
+
+            var librariansWhoServedReader = _unitOfWork.ReaderRepository.GetLibrariansWhoServedReader(readerId);
+
+            return Ok(librariansWhoServedReader);
+        }
+
+        [Route("api/readers/librarianId/librarians")]
+        [HttpGet("{librarianId}/librarians")]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<ReaderDto>))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        public IActionResult GetReadersOfALibrarian(int librarianId)
+        {
+            if (!_unitOfWork.LibrarianRepository.LibrarianExists(librarianId))
+            {
+                return NotFound();
+            }
+
+            var readersOfALibrarian = _unitOfWork.ReaderRepository.GetReadersOfALibrarian(librarianId);
+
+            return Ok(readersOfALibrarian);
+        }
+
+        [Route("api/readers/readerId/loans")]
+        [HttpGet("{readerId}/loans")]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<LoanDto>))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        public IActionResult GetLoansOfAReader(int readerId)
+        {
+            if (!_unitOfWork.ReaderRepository.ReaderExists(readerId))
+            {
+                return NotFound();
+            }
+
+            var loans = _unitOfWork.ReaderRepository.GetLoansOfAReader(readerId);
+
+            return Ok(loans);
+        }
+
+        [Route("api/readers/readerId/books")]
+        [HttpGet("{readerId}/books")]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<BookDto>))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        public IActionResult GetBooksOfAReader(int readerId)
+        {
+            if (!_unitOfWork.ReaderRepository.ReaderExists(readerId))
+            {
+                return NotFound();
+            }
+
+            var booksOfAReader = _unitOfWork.ReaderRepository.GetBooksOfAReader(readerId);
+
+            return Ok(booksOfAReader);
+        }
+
+        [Route("api/readers/books/bookId")]
+        [HttpGet("books/{bookId}")]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<ReaderDto>))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        public IActionResult GetReadersOfABook(int bookId)
+        {
+            if (!_unitOfWork.BookRepository.BookExistsById(bookId))
+            {
+                return NotFound();
+            }
+
+            var readersOfABook = _unitOfWork.ReaderRepository.GetReadersOfABook(bookId);
+            .
+            return Ok(readersOfABook);
+        }
+
+        [Route("api/readers/readerId/fines")]
+        [HttpGet("{readerId}/fines")]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<FineDto>))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        public IActionResult GetFinesOfAReader(int readerId)
+        {
+            if (!_unitOfWork.ReaderRepository.ReaderExists(readerId))
+            {
+                return NotFound();
+            }
+
+            var fines = _unitOfWork.ReaderRepository.GetFinesOfAReader(readerId);
+
+            return Ok(fines);
+        }
+
         [HttpPost]
         [ProducesResponseType(201, Type = typeof(ReaderDto))]
         [ProducesResponseType(400)]

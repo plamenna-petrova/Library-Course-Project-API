@@ -635,6 +635,25 @@ namespace Data.DataConnection
                     LibrarianId = 1
                 }
             };
+
+            List<ReaderBook> readerBooks = new List<ReaderBook>()
+            {
+                new ReaderBook()
+                {
+                    ReaderId = 1,
+                    BookId = 1
+                },
+                new ReaderBook()
+                {
+                    ReaderId = 2,
+                    BookId = 2
+                },
+                new ReaderBook()
+                {
+                    ReaderId = 3,
+                    BookId = 3
+                }
+            };
            
             modelBuilder.Entity<Country>().HasData(countries);
             modelBuilder.Entity<Author>().HasData(authors);
@@ -652,6 +671,7 @@ namespace Data.DataConnection
             modelBuilder.Entity<Loan>().HasData(loans);
             modelBuilder.Entity<Reader>().HasData(readers);
             modelBuilder.Entity<ReaderLibrarian>().HasData(readerLibrarians);
+            modelBuilder.Entity<ReaderBook>().HasData(readerBooks);
             base.OnModelCreating(modelBuilder);
 
         }

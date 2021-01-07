@@ -14,12 +14,12 @@ namespace Data.Services.Repositories.Interfaces
         ReaderDto GetReaderById(int readerId);
         Reader GetReaderByIdNotMapped(int readerId);
         bool IsDuplicateReaderEmail(int readerId, string readerEmail);
-        ICollection<Librarian> GetLibrariansWhoServedReader(int readerId);
-        ICollection<Reader> GetReadersOfALibrarian(int librarianId);
-        ICollection<Loan> GetLoansOfAReader(int readerId);
-        ICollection<Book> GetBooksOfAReader(int readerId);
-        ICollection<Reader> GetReadersOfABook(int bookId);
-        ICollection<Fine> GetFinesOfAReader(int readerId);
+        ICollection<LibrarianDto> GetLibrariansWhoServedReader(int readerId);
+        ICollection<ReaderDto> GetReadersOfALibrarian(int librarianId);
+        ICollection<LoanDto> GetLoansOfAReader(int readerId);
+        ICollection<BookDto> GetBooksOfAReader(int readerId);
+        ICollection<ReaderDto> GetReadersOfABook(int bookId);
+        ICollection<FineDto> GetFinesOfAReader(int readerId);
         bool ReaderExists(int readerId);
         bool CreateReader(ReaderCreateDto readerToCreateDto);
         bool UpdateReader(ReaderUpdateDto readerToUpdateDto);

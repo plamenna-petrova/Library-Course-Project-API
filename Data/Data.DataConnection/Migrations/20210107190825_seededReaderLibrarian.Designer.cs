@@ -4,14 +4,16 @@ using Data.DataConnection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Data.DataConnection.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210107190825_seededReaderLibrarian")]
+    partial class seededReaderLibrarian
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -956,23 +958,6 @@ namespace Data.DataConnection.Migrations
                     b.HasIndex("BookId");
 
                     b.ToTable("ReadersBooks");
-
-                    b.HasData(
-                        new
-                        {
-                            ReaderId = 1,
-                            BookId = 1
-                        },
-                        new
-                        {
-                            ReaderId = 2,
-                            BookId = 2
-                        },
-                        new
-                        {
-                            ReaderId = 3,
-                            BookId = 3
-                        });
                 });
 
             modelBuilder.Entity("Data.Models.Models.ReaderLibrarian", b =>
