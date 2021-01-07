@@ -430,6 +430,52 @@ namespace Data.DataConnection
                 }
             };
 
+            List<Reader> readers = new List<Reader>()
+            {
+                new Reader()
+                {
+                    Id = 1,
+                    ReaderFirstName = "Elliot",
+                    ReaderLastName = "Parker",
+                    ReaderAge = 17,
+                    ReaderAddress = "Seagull Street 16, Downtown Manhattan",
+                    ReaderCity = "New York",
+                    ReaderEmail = "elpark@gmail.com",
+                    ReaderContactNumber = 120256778,
+                    LibraryFee = 5.00M,
+                    HasPayedTheLibraryFee = true,
+                    CreatedAt = new DateTime(2021, 1, 7)
+                },
+                new Reader()
+                {
+                    Id = 2,
+                    ReaderFirstName = "Jolyne",
+                    ReaderLastName = "Vernon",
+                    ReaderAge = 20,
+                    ReaderAddress = "Beacon Street 52, Lower East Side",
+                    ReaderCity = "New York",
+                    ReaderEmail = "jvern678@gmail.com",
+                    ReaderContactNumber = 123555676,
+                    LibraryFee = 7.50M,
+                    HasPayedTheLibraryFee = false,
+                    CreatedAt = new DateTime(2021, 1, 7)
+                },
+                new Reader()
+                {
+                    Id = 3,
+                    ReaderFirstName = "Frank",
+                    ReaderLastName = "Waters",
+                    ReaderAge = 63,
+                    ReaderAddress = "Canyon Street 84, Harlem",
+                    ReaderCity = "New York",
+                    ReaderEmail = "frank_waters36@gmail.com",
+                    ReaderContactNumber = 124567789,
+                    LibraryFee = 4.50M,
+                    HasPayedTheLibraryFee = true,
+                    CreatedAt = new DateTime(2021, 1, 7)
+                }
+            };
+
             List<Fine> fines = new List<Fine>()
             {
                 new Fine()
@@ -438,7 +484,8 @@ namespace Data.DataConnection
                     FineDescription = "Prolonged return of the book",
                     FineFee = 5.00M,
                     CreatedAt = new DateTime(2021, 1, 6),
-                    LibrarianId = 1
+                    LibrarianId = 1,
+                    ReaderId = 1
                 },
                 new Fine()
                 {
@@ -446,7 +493,8 @@ namespace Data.DataConnection
                     FineDescription = "Not payed library fee",
                     FineFee = 5.25M,
                     CreatedAt = new DateTime(2021, 1, 6),
-                    LibrarianId = 2
+                    LibrarianId = 2,
+                    ReaderId = 2
                 },
                 new Fine()
                 {
@@ -454,7 +502,8 @@ namespace Data.DataConnection
                     FineDescription = "Stolen book from library",
                     FineFee = 10.50M,
                     CreatedAt = new DateTime(2021, 1, 6),
-                    LibrarianId = 3
+                    LibrarianId = 3,
+                    ReaderId = 1
                 }
             };
 
@@ -541,7 +590,8 @@ namespace Data.DataConnection
                     IsActiveLoan = true,
                     CreatedAt = new DateTime(2021, 1, 7),
                     BookId = 1,
-                    LibrarianId = 1
+                    LibrarianId = 1,
+                    ReaderId = 1
                 },
                 new Loan()
                 {
@@ -551,7 +601,8 @@ namespace Data.DataConnection
                     IsActiveLoan = true,
                     CreatedAt = new DateTime(2021, 1, 7),
                     BookId = 2,
-                    LibrarianId = 1
+                    LibrarianId = 1,
+                    ReaderId = 2
                 },
                 new Loan()
                 {
@@ -561,10 +612,29 @@ namespace Data.DataConnection
                     IsActiveLoan = false,
                     CreatedAt = new DateTime(2021, 1, 7),
                     BookId = 3,
-                    LibrarianId = 2
+                    LibrarianId = 2,
+                    ReaderId = 3
                 }
             };
 
+            List<ReaderLibrarian> readerLibrarians = new List<ReaderLibrarian>()
+            {
+                new ReaderLibrarian()
+                {
+                    ReaderId = 1,
+                    LibrarianId = 1
+                },
+                new ReaderLibrarian()
+                {
+                    ReaderId = 2,
+                    LibrarianId = 2
+                },
+                new ReaderLibrarian()
+                {
+                    ReaderId = 3,
+                    LibrarianId = 1
+                }
+            };
            
             modelBuilder.Entity<Country>().HasData(countries);
             modelBuilder.Entity<Author>().HasData(authors);
@@ -580,6 +650,8 @@ namespace Data.DataConnection
             modelBuilder.Entity<LibrarianBook>().HasData(librarianBooks);
             modelBuilder.Entity<LibraryManagingDirector>().HasData(libraryManagingDirectors);
             modelBuilder.Entity<Loan>().HasData(loans);
+            modelBuilder.Entity<Reader>().HasData(readers);
+            modelBuilder.Entity<ReaderLibrarian>().HasData(readerLibrarians);
             base.OnModelCreating(modelBuilder);
 
         }

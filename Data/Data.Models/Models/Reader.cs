@@ -15,10 +15,11 @@ namespace Data.Models.Models
         [MaxLength(50, ErrorMessage = "The reader's last name mustn't be more than 50 characters long!")]
         public string ReaderLastName { get; set; }
         public int ReaderAge { get; set; }
-        public enum ReaderOccupation { GradeSchoolStudent, HighSchoolStudent, Employed, Unemployed, Retiree }
+        //public enum ReaderOccupation { GradeSchoolStudent, HighSchoolStudent, Employed, Unemployed, Retiree }
         public string ReaderAddress { get; set; }
         public string ReaderCity { get; set; }
         public string ReaderEmail { get; set; }
+        [MaxLength(10, ErrorMessage = "The reader's contact number mustn't be more than 10 digits in length")]
         public int ReaderContactNumber { get; set; }
         public decimal LibraryFee { get; set; }
         public bool HasPayedTheLibraryFee { get; set; }

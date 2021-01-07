@@ -18,6 +18,7 @@ namespace Data.Models.Models
         public virtual Book Book { get; set; }
         public virtual int? LibrarianId { get; set; }
         public virtual Librarian Librarian { get; set; }
+        public virtual int? ReaderId { get; set; }
         public virtual Reader Reader { get; set; }
     }
 }

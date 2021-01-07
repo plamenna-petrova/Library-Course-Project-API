@@ -1,4 +1,7 @@
 ﻿using Data.Models.Models;
+using Data.Services.DtoModels.CreateDtos;
+using Data.Services.DtoModels.Dtos;
+using Data.Services.DtoModels.UpdateDtos;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,8 +10,9 @@ namespace Data.Services.Repositories.Interfaces
 {
     public interface IReaderRepository
     {
-        ICollection<Reader> GetReaders();
-        Reader GetReaderById(int readerId);
+        ICollection<ReaderDto> GetReaders();
+        ReaderDto GetReaderById(int readerId);
+        Reader GetReaderByIdNotMapped(int readerId);
         bool IsDuplicateReaderEmail(int readerId, string readerEmail);
         ICollection<Librarian> GetLibrariansWhoServedReader(int readerId);
         ICollection<Reader> GetReadersOfALibrarian(int librarianId);
@@ -17,8 +21,8 @@ namespace Data.Services.Repositories.Interfaces
         ICollection<Reader> GetReadersOfABook(int bookId);
         ICollection<Fine> GetFinesOfAReader(int readerId);
         bool ReaderExists(int readerId);
-        bool CreateReader(Reader reader);
-        bool UpdateReader(Reader reader);
+        bool CreateReader(ReaderCreateDto readerToCreateDto);
+        bool UpdateReader(ReaderUpdateDto readerToUpdateDto);
         bool DeleteReader(Reader reader);
         bool Save();
     }

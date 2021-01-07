@@ -17,8 +17,8 @@ namespace Data.Services.Repositories.Interfaces
         ICollection<LibrarianDto> GetLibrariansOfABook(int bookId);
         ICollection<FineDto> GetFinesOfALibrarian(int librarianId);
         ICollection<LoanDto> GetLoansOfALibrarian(int librarianId);
-        ICollection<Librarian> GetLibrariansWhoServedReader(int readerId);
-        ICollection<Reader> GetReadersOfALibrarian(int librarianId);
+        ICollection<LibrarianDto> GetLibrariansWhoServedReader(int readerId);
+        ICollection<ReaderDto> GetReadersOfALibrarian(int librarianId);
         LibraryManagingDirectorDto GetLibraryManagingDirectorOfLibrarian(int librarian);
         bool LibrarianExists(int librarianId);
         bool CreateLibrarian(LibrarianCreateDto librarianToCreateDto);

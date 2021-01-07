@@ -1,5 +1,9 @@
 ﻿using Data.DataConnection;
 using Data.Models.Models;
+using Data.Services.DtoModels.CreateDtos;
+using Data.Services.DtoModels.Dtos;
+using Data.Services.DtoModels.UpdateDtos;
+using Data.Services.Helpers;
 using Data.Services.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -17,14 +21,24 @@ namespace Data.Services.Repositories.Implementations
             _readerContext = readerContext;
         }
 
-        public ICollection<Reader> GetReaders()
+        public ICollection<ReaderDto> GetReaders()
         {
-            return _readerContext.Readers.OrderBy(p => p.ReaderLastName).ToList();
+            var readers = _readerContext.Readers.OrderBy(read => read.ReaderLastName).ToList();
+            var mappedReaders = MapConfig.Mapper.Map<ICollection<ReaderDto>>(readers);
+            return mappedReaders;
         }
 
-        public Reader GetReaderById(int readerId)
+        public ReaderDto GetReaderById(int readerId)
         {
-            return _readerContext.Readers.Where(p => p.Id == readerId).FirstOrDefault();
+            var singleReader = _readerContext.Readers.Where(read => read.Id == readerId).FirstOrDefault();
+            var mappedReader = MapConfig.Mapper.Map<ReaderDto>(singleReader);
+            return mappedReader;
+        }
+
+        public Reader GetReaderByIdNotMapped(int readerId)
+        {
+            var reader = _readerContext.Readers.Where(read => read.Id == readerId).FirstOrDefault(); 
+            return reader;
         }
 
         public bool IsDuplicateReaderEmail(int readerId, string readerEmail)
@@ -69,15 +83,17 @@ namespace Data.Services.Repositories.Implementations
             return _readerContext.Readers.Any(read => read.Id == readerId);
         }
 
-        public bool CreateReader(Reader reader)
+        public bool CreateReader(ReaderCreateDto readerToCreateDto)
         {
-            _readerContext.Add(reader);
+            var readerToCreate = MapConfig.Mapper.Map<Reader>(readerToCreateDto);
+            _readerContext.Add(readerToCreate);
             return Save();
         }
 
-        public bool UpdateReader(Reader reader)
+        public bool UpdateReader(ReaderUpdateDto readerToUpdateDto)
         {
-            _readerContext.Update(reader);
+            var readerToUpdate = MapConfig.Mapper.Map<Reader>(readerToUpdateDto);
+            _readerContext.Update(readerToUpdate);
             return Save();
         }
 

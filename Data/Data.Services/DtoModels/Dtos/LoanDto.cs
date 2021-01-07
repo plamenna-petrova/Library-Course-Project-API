@@ -15,5 +15,7 @@ namespace Data.Services.DtoModels.Dtos
         public Book Book { get; set; }
         public int LibrarianId { get; set; }
         public Librarian Librarian { get; set; }
+        public int ReaderId { get; set; }
+        public Reader Reader { get; set; }
     }
 }

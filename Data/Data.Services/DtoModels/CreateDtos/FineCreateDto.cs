@@ -12,6 +12,7 @@ namespace Data.Services.DtoModels.CreateDtos
         public string FineDescription { get; set; }
         [Required]
         public decimal FineFee { get; set; }
+        public int ReaderId { get; set; }
         public int LibrarianId { get; set; }
     }
 }

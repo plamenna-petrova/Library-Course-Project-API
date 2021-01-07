@@ -4,14 +4,16 @@ using Data.DataConnection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Data.DataConnection.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210107182447_seededReader")]
+    partial class seededReader
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -902,7 +904,7 @@ namespace Data.DataConnection.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2021, 1, 7, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             HasPayedTheLibraryFee = true,
                             LibraryFee = 5.00m,
                             ReaderAddress = "Seagull Street 16, Downtown Manhattan",
@@ -916,7 +918,7 @@ namespace Data.DataConnection.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2021, 1, 7, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             HasPayedTheLibraryFee = false,
                             LibraryFee = 7.50m,
                             ReaderAddress = "Beacon Street 52, Lower East Side",
@@ -930,7 +932,7 @@ namespace Data.DataConnection.Migrations
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2021, 1, 7, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             HasPayedTheLibraryFee = true,
                             LibraryFee = 4.50m,
                             ReaderAddress = "Canyon Street 84, Harlem",

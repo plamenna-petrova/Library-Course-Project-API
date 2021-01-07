@@ -12,6 +12,7 @@ namespace Data.Models.Models
         [MaxLength(1000, ErrorMessage = "The description of the fine mustn't be longer than 1000 symbols!")]
         public string FineDescription { get; set; }
         public decimal FineFee { get; set; }
+        public virtual int? ReaderId { get; set; }
         public virtual Reader Reader { get; set; }
         public virtual int? LibrarianId { get; set; }
         public virtual Librarian Librarian { get; set; }

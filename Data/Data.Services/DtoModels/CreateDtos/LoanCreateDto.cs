@@ -16,5 +16,6 @@ namespace Data.Services.DtoModels.CreateDtos
         public bool IsActiveLoan { get; set; }
         public int BookId { get; set; }
         public int LibrarianId { get; set; }
+        public int ReaderId { get; set; }
     }
 }

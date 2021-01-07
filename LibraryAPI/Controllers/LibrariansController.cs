@@ -116,6 +116,42 @@ namespace LibraryAPI.Controllers
             return Ok(loans);
         }
 
+        //....
+
+        [Route("api/librarians/readers/readerId")]
+        [HttpGet("readers/{readerId}")]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<LibrarianDto>))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        public IActionResult GetLibrariansWhoServedReader(int readerId)
+        {
+            if (!_unitOfWork.ReaderRepository.ReaderExists(readerId))
+            {
+                return NotFound();
+            }
+
+            var librariansWhoServedReader = _unitOfWork.LibrarianRepository.GetLibrariansWhoServedReader(readerId);
+
+            return Ok(librariansWhoServedReader);
+        }
+
+        [Route("api/librarians/librarianId/readers")]
+        [HttpGet("{librarianId}/readers")]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<ReaderDto>))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        public IActionResult GetReadersOfALibrarian(int librarianId)
+        {
+            if (!_unitOfWork.LibrarianRepository.LibrarianExists(librarianId))
+            {
+                return NotFound();
+            }
+
+            var readersOfALibrarian = _unitOfWork.LibrarianRepository.GetReadersOfALibrarian(librarianId);
+
+            return Ok(readersOfALibrarian);
+        }
+
         [Route("api/librarians/librarymanagingdirectors/librarianId")]
         [HttpGet("librarymanagingdirectors/{librarianId}")]
         [ProducesResponseType(400)]

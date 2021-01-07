@@ -47,6 +47,9 @@ namespace Data.Services.Helpers
             CreateMap<Publisher, PublisherDto>().ReverseMap();
             CreateMap<Publisher, PublisherCreateDto>().ReverseMap();
             CreateMap<Publisher, PublisherUpdateDto>().ReverseMap();
+            CreateMap<Reader, ReaderDto>().ReverseMap();
+            CreateMap<Reader, ReaderCreateDto>().ReverseMap();
+            CreateMap<Reader, ReaderUpdateDto>().ReverseMap();
         }
     }
 }

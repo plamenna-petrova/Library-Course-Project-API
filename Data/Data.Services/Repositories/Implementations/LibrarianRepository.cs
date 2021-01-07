@@ -69,14 +69,18 @@ namespace Data.Services.Repositories.Implementations
             return mappedLoans;
         }
 
-        public ICollection<Librarian> GetLibrariansWhoServedReader(int readerId)
+        public ICollection<LibrarianDto> GetLibrariansWhoServedReader(int readerId)
         {
-            return _librarianContext.ReadersLibrarians.Where(read => read.ReaderId == readerId).Select(l => l.Librarian).ToList();
+            var librariansWhoServedReader = _librarianContext.ReadersLibrarians.Where(read => read.ReaderId == readerId).Select(l => l.Librarian).ToList();
+            var librariansWhoServedReaderMapped = MapConfig.Mapper.Map<ICollection<LibrarianDto>>(librariansWhoServedReader);
+            return librariansWhoServedReaderMapped;
         }
 
-        public ICollection<Reader> GetReadersOfALibrarian(int librarianId)
+        public ICollection<ReaderDto> GetReadersOfALibrarian(int librarianId)
         {
-            return _librarianContext.ReadersLibrarians.Where(l => l.LibrarianId == librarianId).Select(read => read.Reader).ToList();
+            var readersOfALibrarian = _librarianContext.ReadersLibrarians.Where(l => l.LibrarianId == librarianId).Select(read => read.Reader).ToList();
+            var readersOfALibrarianMapped = MapConfig.Mapper.Map<ICollection<ReaderDto>>(readersOfALibrarian);
+            return readersOfALibrarianMapped;
         }
 
         public LibraryManagingDirectorDto GetLibraryManagingDirectorOfLibrarian(int librarianId)

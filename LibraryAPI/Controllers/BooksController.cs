@@ -185,6 +185,23 @@ namespace LibraryAPI.Controllers
             return Ok(publisher);
         }
 
+        [Route("api/books/bookId/loans")]
+        [HttpGet("{bookId}/loans")]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<LoanDto>))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        public IActionResult GetLoansOfABook(int bookId)
+        {
+            if (!_unitOfWork.BookRepository.BookExistsById(bookId))
+            {
+                return NotFound();
+            }
+
+            var loans = _unitOfWork.BookRepository.GetLoansOfABook(bookId);
+
+            return Ok(loans);
+        }
+
         [Route("api/books/bookimages/bookId")]
         [HttpGet("bookimages/{bookId}")]
         [ProducesResponseType(400)]

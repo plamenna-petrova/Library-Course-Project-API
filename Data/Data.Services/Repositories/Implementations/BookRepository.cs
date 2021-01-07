@@ -144,9 +144,11 @@ namespace Data.Services.Repositories.Implementations
             return librariansOfABookMapped;
         }
 
-        public ICollection<Loan> GetLoansOfABook(int bookId)
+        public ICollection<LoanDto> GetLoansOfABook(int bookId)
         {
-            return _bookContext.Loans.Where(b => b.Book.Id == bookId).ToList();
+            var loansOfABook = _bookContext.Loans.Where(b => b.Book.Id == bookId).ToList();
+            var loansOfABookMapped = MapConfig.Mapper.Map<ICollection<LoanDto>>(loansOfABook);
+            return loansOfABookMapped;
         }
 
         public ICollection<Book> GetBooksOfAReader(int readerId)

@@ -28,7 +28,7 @@ namespace Data.Services.Repositories.Interfaces
         PublisherDto GetPublisherOfABook(int bookId);
         ICollection<BookDto> GetBooksOfALibrarian(int librarianId);
         ICollection<LibrarianDto> GetLibrariansOfABook(int bookId);
-        ICollection<Loan> GetLoansOfABook(int bookId);
+        ICollection<LoanDto> GetLoansOfABook(int bookId);
         ICollection<Book> GetBooksOfAReader(int readerId);
         ICollection<Reader> GetReadersOfABook(int bookId);
         BookImageDto GetImageOfABook(int bookId);
