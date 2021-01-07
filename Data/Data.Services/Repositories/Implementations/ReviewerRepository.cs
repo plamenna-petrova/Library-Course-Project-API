@@ -1,5 +1,9 @@
 ﻿using Data.DataConnection;
 using Data.Models.Models;
+using Data.Services.DtoModels.CreateDtos;
+using Data.Services.DtoModels.Dtos;
+using Data.Services.DtoModels.UpdateDtos;
+using Data.Services.Helpers;
 using Data.Services.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -17,14 +21,24 @@ namespace Data.Services.Repositories.Implementations
             _reviewerContext = reviewerContext;
         }
 
-        public ICollection<Reviewer> GetReviewers()
+        public ICollection<ReviewerDto> GetReviewers()
         {
-            return _reviewerContext.Reviewers.OrderBy(rev => rev.ReviewerLastName).ToList();
+            var reviewers = _reviewerContext.Reviewers.OrderBy(rev => rev.ReviewerLastName).ToList();
+            var mappedReviewers = MapConfig.Mapper.Map<ICollection<ReviewerDto>>(reviewers);
+            return mappedReviewers;
         }
 
-        public Reviewer GetReviewerById(int reviewerId)
+        public ReviewerDto GetReviewerById(int reviewerId)
         {
-            return _reviewerContext.Reviewers.Where(rev => rev.Id == reviewerId).FirstOrDefault();
+            var singleReviewer = _reviewerContext.Reviewers.Where(rev => rev.Id == reviewerId).FirstOrDefault();
+            var mappedReviewer = MapConfig.Mapper.Map<ReviewerDto>(singleReviewer);
+            return mappedReviewer;
+        }
+
+        public Reviewer GetReviewerByIdNotMapped(int reviewerId)
+        {
+            var reviewer = _reviewerContext.Reviewers.Where(rev => rev.Id == reviewerId).FirstOrDefault();
+            return reviewer;
         }
 
         public ICollection<Review> GetReviewsByReviewer(int reviewerId)
@@ -58,15 +72,17 @@ namespace Data.Services.Repositories.Implementations
             return _reviewerContext.Reviewers.Any(rev => rev.Id == reviewerId);
         }
 
-        public bool CreateReviewer(Reviewer reviewer)
+        public bool CreateReviewer(ReviewerCreateDto reviewerToCreateDto)
         {
-            _reviewerContext.Add(reviewer);
+            var reviewerToCreate = MapConfig.Mapper.Map<Reviewer>(reviewerToCreateDto);
+            _reviewerContext.Add(reviewerToCreate);
             return Save();
         }
 
-        public bool UpdateReviewer(Reviewer reviewer)
+        public bool UpdateReviewer(ReviewerUpdateDto reviewerToUpdateDto)
         {
-            _reviewerContext.Update(reviewer);
+            var reviewerToUpdate = MapConfig.Mapper.Map<Reviewer>(reviewerToUpdateDto);
+            _reviewerContext.Update(reviewerToUpdate);
             return Save();
         }
 

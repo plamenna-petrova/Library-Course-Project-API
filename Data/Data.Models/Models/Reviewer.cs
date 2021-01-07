@@ -16,6 +16,7 @@ namespace Data.Models.Models
         public string ReviewerLastName { get; set; }
         public virtual ICollection<Review> Reviews { get; set; }
         public virtual ICollection<BookReviewer> BooksReviewers { get; set; }
+        public virtual int? CountryId { get; set; }
         public virtual Country Country { get; set; }
     }
 }

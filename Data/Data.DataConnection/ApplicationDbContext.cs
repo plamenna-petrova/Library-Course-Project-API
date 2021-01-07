@@ -654,6 +654,53 @@ namespace Data.DataConnection
                     BookId = 3
                 }
             };
+
+            List<Reviewer> reviewers = new List<Reviewer>()
+            {
+                new Reviewer()
+                {
+                    Id = 1,
+                    ReviewerFirstName = "Seymour",
+                    ReviewerLastName = "Thompson",
+                    CountryId = 1,
+                    CreatedAt = new DateTime(2021, 1, 7)
+                },
+                new Reviewer()
+                {
+                    Id = 2,
+                    ReviewerFirstName = "Val",
+                    ReviewerLastName = "O'Connor",
+                    CountryId = 3,
+                    CreatedAt = new DateTime(2021, 1, 7)
+                },
+                new Reviewer()
+                {
+                    Id = 3,
+                    ReviewerFirstName = "Jerome",
+                    ReviewerLastName = "Scott Jr",
+                    CountryId = 2,
+                    CreatedAt = new DateTime(2021, 1, 7)
+                }
+            };
+
+            List<BookReviewer> bookReviewers = new List<BookReviewer>()
+            {
+                new BookReviewer()
+                {
+                    BookId = 1,
+                    ReviewerId = 2
+                },
+                new BookReviewer()
+                {
+                    BookId = 2,
+                    ReviewerId = 3
+                },
+                new BookReviewer()
+                {
+                    BookId = 3,
+                    ReviewerId = 1
+                }
+            };
            
             modelBuilder.Entity<Country>().HasData(countries);
             modelBuilder.Entity<Author>().HasData(authors);
@@ -672,6 +719,8 @@ namespace Data.DataConnection
             modelBuilder.Entity<Reader>().HasData(readers);
             modelBuilder.Entity<ReaderLibrarian>().HasData(readerLibrarians);
             modelBuilder.Entity<ReaderBook>().HasData(readerBooks);
+            modelBuilder.Entity<Reviewer>().HasData(reviewers);
+            modelBuilder.Entity<BookReviewer>().HasData(bookReviewers);
             base.OnModelCreating(modelBuilder);
 
         }

@@ -4,14 +4,16 @@ using Data.DataConnection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Data.DataConnection.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210107213533_seededReviewers")]
+    partial class seededReviewers
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -394,23 +396,6 @@ namespace Data.DataConnection.Migrations
                     b.HasIndex("ReviewerId");
 
                     b.ToTable("BooksReviewers");
-
-                    b.HasData(
-                        new
-                        {
-                            BookId = 1,
-                            ReviewerId = 2
-                        },
-                        new
-                        {
-                            BookId = 2,
-                            ReviewerId = 3
-                        },
-                        new
-                        {
-                            BookId = 3,
-                            ReviewerId = 1
-                        });
                 });
 
             modelBuilder.Entity("Data.Models.Models.Country", b =>

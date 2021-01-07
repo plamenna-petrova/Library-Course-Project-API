@@ -131,7 +131,7 @@ namespace LibraryAPI.Controllers
             }
 
             var readersOfABook = _unitOfWork.ReaderRepository.GetReadersOfABook(bookId);
-            .
+   
             return Ok(readersOfABook);
         }
 

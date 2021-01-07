@@ -111,14 +111,18 @@ namespace Data.Services.Repositories.Implementations
             return _bookContext.Reviews.Where(b => b.Book.Id == bookId).ToList();
         }
 
-        public ICollection<Reviewer> GetReviewersOfABook(int bookId)
+        public ICollection<ReviewerDto> GetReviewersOfABook(int bookId)
         {
-            return _bookContext.BooksReviewers.Where(b => b.BookId == bookId).Select(rev => rev.Reviewer).ToList();
+            var reviewersOfABook = _bookContext.BooksReviewers.Where(b => b.BookId == bookId).Select(rev => rev.Reviewer).ToList();
+            var reviewersOfABookMapped = MapConfig.Mapper.Map<ICollection<ReviewerDto>>(reviewersOfABook);
+            return reviewersOfABookMapped;
         }
 
-        public ICollection<Book> GetBooksOfAReviewer(int reviewerId)
+        public ICollection<BookDto> GetBooksOfAReviewer(int reviewerId)
         {
-            return _bookContext.BooksReviewers.Where(rev => rev.ReviewerId == reviewerId).Select(b => b.Book).ToList();
+            var booksOfAReviewer = _bookContext.BooksReviewers.Where(rev => rev.ReviewerId == reviewerId).Select(b => b.Book).ToList();
+            var booksOfAReviewerMapped = MapConfig.Mapper.Map<ICollection<BookDto>>(booksOfAReviewer);
+            return booksOfAReviewerMapped;
         }
 
         public PublisherDto GetPublisherOfABook(int bookId)
