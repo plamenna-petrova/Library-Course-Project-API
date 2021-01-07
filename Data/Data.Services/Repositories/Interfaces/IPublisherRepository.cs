@@ -1,4 +1,7 @@
 ﻿using Data.Models.Models;
+using Data.Services.DtoModels.CreateDtos;
+using Data.Services.DtoModels.Dtos;
+using Data.Services.DtoModels.UpdateDtos;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,15 +10,16 @@ namespace Data.Services.Repositories.Interfaces
 {
     public interface IPublisherRepository
     {
-        ICollection<Publisher> GetPublishers();
-        Publisher GetPublisherById(int publisherId);
-        ICollection<Book> GetBooksOfAPublisher(int publisherId);
-        ICollection<Publisher> GetPublishersByAuhtor(int authorId);
-        ICollection<Author> GetAuthorsByPublisher(int publisherId);
-        Country GetCountryOfAPublisher(int publisherId);
+        ICollection<PublisherDto> GetPublishers();
+        PublisherDto GetPublisherById(int publisherId);
+        Publisher GetPublisherByIdNotMapped(int publisherId);
+        ICollection<BookDto> GetBooksOfAPublisher(int publisherId);
+        ICollection<PublisherDto> GetPublishersByAuthor(int authorId);
+        ICollection<AuthorDto> GetAuthorsByPublisher(int publisherId);
+        CountryDto GetCountryOfAPublisher(int publisherId);
         bool PublisherExists(int oublisherId);
-        bool CreatePublisher(Publisher publisher);
-        bool UpdatePublisher(Publisher publisher);
+        bool CreatePublisher(PublisherCreateDto publisherToCreateDto);
+        bool UpdatePublisher(PublisherUpdateDto publisherToUpdateDto);
         bool DeletePublisher(Publisher publisher);
         bool Save();
     }

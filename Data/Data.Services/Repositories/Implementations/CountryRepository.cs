@@ -52,9 +52,11 @@ namespace Data.Services.Repositories.Implementations
             return _countryContext.Reviewers.Where(rev => rev.Id == reviewerId).Select(c => c.Country).FirstOrDefault();
         }
 
-        public Country GetCountryOfAPublisher(int publisherId)
+        public CountryDto GetCountryOfAPublisher(int publisherId)
         {
-            return _countryContext.Publishers.Where(p => p.Id == publisherId).Select(c => c.Country).FirstOrDefault();
+            var country = _countryContext.Publishers.Where(p => p.Id == publisherId).Select(c => c.Country).FirstOrDefault();
+            var mappedCountry = MapConfig.Mapper.Map<CountryDto>(country);
+            return mappedCountry;
         }
 
         public ICollection<AuthorDto> GetAuthorsFromACountry(int countryId)
@@ -69,9 +71,11 @@ namespace Data.Services.Repositories.Implementations
             return _countryContext.Reviewers.Where(c => c.Country.Id == countryId).ToList();
         }
 
-        public ICollection<Publisher> GetPublishersFromACountry(int countryId)
+        public ICollection<PublisherDto> GetPublishersFromACountry(int countryId)
         {
-            return _countryContext.Publishers.Where(c => c.Country.Id == countryId).ToList();
+            var publishers = _countryContext.Publishers.Where(c => c.Country.Id == countryId).ToList();
+            var mappedPublishers = MapConfig.Mapper.Map<ICollection<PublisherDto>>(publishers);
+            return mappedPublishers;
         }
 
         public bool CountryExists(int countryId)

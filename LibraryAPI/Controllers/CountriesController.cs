@@ -67,9 +67,26 @@ namespace LibraryAPI.Controllers
             return Ok(country);
         }
 
+        [Route("api/countries/publishers/publisherId")]
+        [HttpGet("publishers/{publisherId}")]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(200, Type = typeof(CountryDto))]
+        public IActionResult GetCountryOfAPublisher(int publisherId)
+        {
+            if (!_unitOfWork.PublisherRepository.PublisherExists(publisherId))
+            {
+                return NotFound();
+            }
+
+            var country = _unitOfWork.CountryRepository.GetCountryOfAPublisher(publisherId);
+
+            return Ok(country);
+        }
+
         [Route("api/countries/countryId/authors")]
         [HttpGet("{countryId}/authors")]
-        [ProducesResponseType(200, Type = typeof (IEnumerable<AuthorDto>))]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<AuthorDto>))]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
         public IActionResult GetAuthorsFromACountry(int countryId)
@@ -84,12 +101,28 @@ namespace LibraryAPI.Controllers
             return Ok(authors);
         }
 
+        [Route("api/countries/countryId/publishers")]
+        [HttpGet("{countryId}/publishers")]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<PublisherDto>))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        public IActionResult GetPublishersFromACountry(int countryId)
+        {
+            if (!_unitOfWork.CountryRepository.CountryExists(countryId))
+            {
+                return NotFound();
+            }
+
+            var publishers = _unitOfWork.CountryRepository.GetPublishersFromACountry(countryId);
+
+            return Ok(publishers);
+        }
+
         [HttpPost]
         [ProducesResponseType(201, Type = typeof(CountryDto))]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
         [ProducesResponseType(500)]
-
         public IActionResult CreateCountry([FromBody] CountryCreateDto newCountry)
         {
             if (newCountry == null)

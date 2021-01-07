@@ -531,6 +531,40 @@ namespace Data.DataConnection
                 }
             };
 
+            List<Loan> loans = new List<Loan>()
+            {
+                new Loan()
+                {
+                    Id = 1,
+                    IssueDate = new DateTime(2021, 1, 7),
+                    DateToReturn = new DateTime(2021, 1, 28),
+                    IsActiveLoan = true,
+                    CreatedAt = new DateTime(2021, 1, 7),
+                    BookId = 1,
+                    LibrarianId = 1
+                },
+                new Loan()
+                {
+                    Id = 2,
+                    IssueDate = new DateTime(2021, 1, 5),
+                    DateToReturn = new DateTime(2021, 1, 26),
+                    IsActiveLoan = true,
+                    CreatedAt = new DateTime(2021, 1, 7),
+                    BookId = 2,
+                    LibrarianId = 1
+                },
+                new Loan()
+                {
+                    Id = 3,
+                    IssueDate = new DateTime(2021, 12, 15),
+                    DateToReturn = new DateTime(2021, 1, 5),
+                    IsActiveLoan = false,
+                    CreatedAt = new DateTime(2021, 1, 7),
+                    BookId = 3,
+                    LibrarianId = 2
+                }
+            };
+
            
             modelBuilder.Entity<Country>().HasData(countries);
             modelBuilder.Entity<Author>().HasData(authors);
@@ -545,6 +579,7 @@ namespace Data.DataConnection
             modelBuilder.Entity<Librarian>().HasData(librarians);
             modelBuilder.Entity<LibrarianBook>().HasData(librarianBooks);
             modelBuilder.Entity<LibraryManagingDirector>().HasData(libraryManagingDirectors);
+            modelBuilder.Entity<Loan>().HasData(loans);
             base.OnModelCreating(modelBuilder);
 
         }

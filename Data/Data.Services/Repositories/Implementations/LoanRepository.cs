@@ -41,16 +41,18 @@ namespace Data.Services.Repositories.Implementations
             return loan;
         }
 
-        public Book GetBookOfALoan(int loanId)
+        public BookDto GetBookOfALoan(int loanId)
         {
-            var bookId = _loanContext.Loans.Where(lo => lo.Id == loanId).Select(b => b.Book.Id).FirstOrDefault();
-            return _loanContext.Books.Where(b => b.Id == bookId).FirstOrDefault();
+            var bookOfALoan = _loanContext.Loans.Where(lo => lo.Id == loanId).Select(b => b.Book).FirstOrDefault();
+            var bookOfALoanMapped = MapConfig.Mapper.Map<BookDto>(bookOfALoan);
+            return bookOfALoanMapped;
         }
 
-        public Librarian GetLibrarianWhoProcessedLoan(int loanId)
+        public LibrarianDto GetLibrarianWhoProcessedLoan(int loanId)
         {
-            var librarianId = _loanContext.Loans.Where(lo => lo.Id == loanId).Select(l => l.Librarian.Id).FirstOrDefault();
-            return _loanContext.Librarians.Where(l => l.Id == librarianId).FirstOrDefault();
+            var librarianWhoProcessedLoan = _loanContext.Loans.Where(lo => lo.Id == loanId).Select(l => l.Librarian).FirstOrDefault();
+            var librarianWhoProcessedLoanMapped = MapConfig.Mapper.Map<LibrarianDto>(librarianWhoProcessedLoan);
+            return librarianWhoProcessedLoanMapped;
         }
 
         public Reader GetReaderOfALoan(int loanId)

@@ -62,9 +62,11 @@ namespace Data.Services.Repositories.Implementations
             return mappedFines;
         }
 
-        public ICollection<Loan> GetLoansOfALibrarian(int librarianId)
+        public ICollection<LoanDto> GetLoansOfALibrarian(int librarianId)
         {
-            return _librarianContext.Loans.Where(l => l.Librarian.Id == librarianId).ToList();
+            var loans = _librarianContext.Loans.Where(l => l.Librarian.Id == librarianId).ToList();
+            var mappedLoans = MapConfig.Mapper.Map<ICollection<LoanDto>>(loans);
+            return mappedLoans;
         }
 
         public ICollection<Librarian> GetLibrariansWhoServedReader(int readerId)

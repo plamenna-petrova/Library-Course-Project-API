@@ -16,7 +16,7 @@ namespace Data.Services.Repositories.Interfaces
         ICollection<BookDto> GetBooksOfALibrarian(int librarianId);
         ICollection<LibrarianDto> GetLibrariansOfABook(int bookId);
         ICollection<FineDto> GetFinesOfALibrarian(int librarianId);
-        ICollection<Loan> GetLoansOfALibrarian(int librarianId);
+        ICollection<LoanDto> GetLoansOfALibrarian(int librarianId);
         ICollection<Librarian> GetLibrariansWhoServedReader(int readerId);
         ICollection<Reader> GetReadersOfALibrarian(int librarianId);
         LibraryManagingDirectorDto GetLibraryManagingDirectorOfLibrarian(int librarian);

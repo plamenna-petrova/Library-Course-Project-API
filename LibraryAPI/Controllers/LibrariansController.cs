@@ -99,6 +99,23 @@ namespace LibraryAPI.Controllers
             return Ok(fines);
         }
 
+        [Route("api/librarians/librarianId/loans")]
+        [HttpGet("{librarianId}/loans")]
+        [ProducesResponseType(200, Type = typeof (IEnumerable<LoanDto>))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        public IActionResult GetLoansOfALibrarian(int librarianId)
+        {
+            if (!_unitOfWork.LibrarianRepository.LibrarianExists(librarianId))
+            {
+                return NotFound();
+            }
+
+            var loans = _unitOfWork.LibrarianRepository.GetLoansOfALibrarian(librarianId);
+
+            return Ok(loans);
+        }
+
         [Route("api/librarians/librarymanagingdirectors/librarianId")]
         [HttpGet("librarymanagingdirectors/{librarianId}")]
         [ProducesResponseType(400)]

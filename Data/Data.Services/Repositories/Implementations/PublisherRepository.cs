@@ -1,5 +1,9 @@
 ﻿using Data.DataConnection;
 using Data.Models.Models;
+using Data.Services.DtoModels.CreateDtos;
+using Data.Services.DtoModels.Dtos;
+using Data.Services.DtoModels.UpdateDtos;
+using Data.Services.Helpers;
 using Data.Services.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -17,34 +21,52 @@ namespace Data.Services.Repositories.Implementations
             _publisherContext = publisherContext;
         }
 
-        public ICollection<Publisher> GetPublishers()
+        public ICollection<PublisherDto> GetPublishers()
         {
-            return _publisherContext.Publishers.OrderBy(p => p.PublisherName).ToList();
+            var publishers = _publisherContext.Publishers.OrderBy(p => p.PublisherName).ToList();
+            var mappedPublishers = MapConfig.Mapper.Map<ICollection<PublisherDto>>(publishers);
+            return mappedPublishers;
         }
 
-        public Publisher GetPublisherById(int publisherId)
+        public PublisherDto GetPublisherById(int publisherId)
         {
-            return _publisherContext.Publishers.Where(p => p.Id == publisherId).FirstOrDefault();
+            var singlePublisher = _publisherContext.Publishers.Where(p => p.Id == publisherId).FirstOrDefault();
+            var mappedPublisher = MapConfig.Mapper.Map<PublisherDto>(singlePublisher);
+            return mappedPublisher;
         }
 
-        public ICollection<Book> GetBooksOfAPublisher(int publisherId)
+        public Publisher GetPublisherByIdNotMapped(int publisherId) 
         {
-            return _publisherContext.Books.Where(p => p.Publisher.Id == publisherId).ToList();
+            var publisher = _publisherContext.Publishers.Where(p => p.Id == publisherId).FirstOrDefault();
+            return publisher;
         }
 
-        public ICollection<Publisher> GetPublishersByAuhtor(int authorId)
+        public ICollection<BookDto> GetBooksOfAPublisher(int publisherId)
         {
-            return _publisherContext.AuthorsPublishers.Where(a => a.AuthorId == authorId).Select(p => p.Publisher).ToList();
+            var booksOfAPublisher = _publisherContext.Books.Where(p => p.Publisher.Id == publisherId).ToList();
+            var booksOfAPublisherMapped = MapConfig.Mapper.Map<ICollection<BookDto>>(booksOfAPublisher);
+            return booksOfAPublisherMapped;
         }
 
-        public ICollection<Author> GetAuthorsByPublisher(int publisherId)
+        public ICollection<PublisherDto> GetPublishersByAuthor(int authorId)
         {
-            return _publisherContext.AuthorsPublishers.Where(p => p.PublisherId == publisherId).Select(a => a.Author).ToList();
+            var publishersByAuthor = _publisherContext.AuthorsPublishers.Where(a => a.AuthorId == authorId).Select(p => p.Publisher).ToList();
+            var publishersByAuthorMapped = MapConfig.Mapper.Map<ICollection<PublisherDto>>(publishersByAuthor);
+            return publishersByAuthorMapped;
         }
 
-        public Country GetCountryOfAPublisher(int publisherId)
+        public ICollection<AuthorDto> GetAuthorsByPublisher(int publisherId)
         {
-            return _publisherContext.Publishers.Where(p => p.Id == publisherId).Select(c => c.Country).FirstOrDefault();
+            var authorsByPublisher = _publisherContext.AuthorsPublishers.Where(p => p.PublisherId == publisherId).Select(a => a.Author).ToList();
+            var authorsByPublisherMapped = MapConfig.Mapper.Map<ICollection<AuthorDto>>(authorsByPublisher);
+            return authorsByPublisherMapped;
+        }
+
+        public CountryDto GetCountryOfAPublisher(int publisherId)
+        {
+            var countryOfAPublisher = _publisherContext.Publishers.Where(p => p.Id == publisherId).Select(c => c.Country).FirstOrDefault();
+            var countryOfAPublisherMapped = MapConfig.Mapper.Map<CountryDto>(countryOfAPublisher);
+            return countryOfAPublisherMapped;
         }
 
         public bool PublisherExists(int publisherId)
@@ -52,15 +74,17 @@ namespace Data.Services.Repositories.Implementations
             return _publisherContext.Publishers.Any(p => p.Id == publisherId);
         }
 
-        public bool CreatePublisher(Publisher publisher)
+        public bool CreatePublisher(PublisherCreateDto publisherToCreateDto)
         {
-            _publisherContext.Add(publisher);
+            var publisherToCreate = MapConfig.Mapper.Map<Publisher>(publisherToCreateDto);
+            _publisherContext.Add(publisherToCreate);
             return Save();
         }
 
-        public bool UpdatePublisher(Publisher publisher)
+        public bool UpdatePublisher(PublisherUpdateDto publisherToUpdateDto)
         {
-            _publisherContext.Update(publisher);
+            var publisherToUpdate = MapConfig.Mapper.Map<Publisher>(publisherToUpdateDto);
+            _publisherContext.Update(publisherToUpdate);
             return Save();
         }
 

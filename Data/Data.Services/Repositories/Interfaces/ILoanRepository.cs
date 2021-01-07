@@ -13,8 +13,8 @@ namespace Data.Services.Repositories.Interfaces
         ICollection<LoanDto> GetLoans();
         LoanDto GetLoanById(int loanId);
         Loan GetLoanByIdNotMapped(int loanId);
-        Book GetBookOfALoan(int loanId);
-        Librarian GetLibrarianWhoProcessedLoan(int loanId);
+        BookDto GetBookOfALoan(int loanId);
+        LibrarianDto GetLibrarianWhoProcessedLoan(int loanId);
         Reader GetReaderOfALoan(int loanId);
         bool LoanExists(int loanId);
         bool CreateLoan(LoanCreateDto loanToCreateDto);

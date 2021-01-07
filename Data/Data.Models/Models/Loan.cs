@@ -14,7 +14,9 @@ namespace Data.Models.Models
         public DateTime DateToReturn { get; set; }
         [Required]
         public bool IsActiveLoan { get; set; }
+        public virtual int? BookId { get; set; }
         public virtual Book Book { get; set; }
+        public virtual int? LibrarianId { get; set; }
         public virtual Librarian Librarian { get; set; }
         public virtual Reader Reader { get; set; }
     }
