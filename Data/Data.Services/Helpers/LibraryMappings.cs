@@ -53,6 +53,9 @@ namespace Data.Services.Helpers
             CreateMap<Reviewer, ReviewerDto>().ReverseMap();
             CreateMap<Reviewer, ReviewerCreateDto>().ReverseMap();
             CreateMap<Reviewer, ReviewerUpdateDto>().ReverseMap();
+            CreateMap<Review, ReviewDto>().ReverseMap();
+            CreateMap<Review, ReviewCreateDto>().ReverseMap();
+            CreateMap<Review, ReviewUpdateDto>().ReverseMap();
         }
     }
 }

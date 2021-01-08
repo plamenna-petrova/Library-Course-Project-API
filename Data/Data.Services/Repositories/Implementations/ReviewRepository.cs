@@ -1,5 +1,9 @@
 ﻿using Data.DataConnection;
 using Data.Models.Models;
+using Data.Services.DtoModels.CreateDtos;
+using Data.Services.DtoModels.Dtos;
+using Data.Services.DtoModels.UpdateDtos;
+using Data.Services.Helpers;
 using Data.Services.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -17,14 +21,24 @@ namespace Data.Services.Repositories.Implementations
             _reviewContext = reviewContext;
         }
 
-        public ICollection<Review> GetReviews()
+        public ICollection<ReviewDto> GetReviews()
         {
-            return _reviewContext.Reviews.OrderBy(re => re.Rating).ToList();
+            var reviews = _reviewContext.Reviews.OrderBy(re => re.Rating).ToList();
+            var mappedReviews = MapConfig.Mapper.Map<ICollection<ReviewDto>>(reviews);
+            return mappedReviews;
         }
 
-        public Review GetReviewById(int reviewId)
+        public ReviewDto GetReviewById(int reviewId)
         {
-            return _reviewContext.Reviews.Where(re => re.Id == reviewId).FirstOrDefault();
+            var singleReview = _reviewContext.Reviews.Where(re => re.Id == reviewId).FirstOrDefault();
+            var mappedReview = MapConfig.Mapper.Map<ReviewDto>(singleReview);
+            return mappedReview;
+        }
+
+        public Review GetReviewByIdNotMapped(int reviewId)
+        {
+            var review = _reviewContext.Reviews.Where(re => re.Id == reviewId).FirstOrDefault();
+            return review;
         }
 
         public ICollection<Review> GetReviewsOfABook(int bookId)
@@ -54,15 +68,17 @@ namespace Data.Services.Repositories.Implementations
             return _reviewContext.Reviews.Any(re => re.Id == reviewId);
         }
 
-        public bool CreateReview(Review review)
+        public bool CreateReview(ReviewCreateDto reviewToCreateDto)
         {
-            _reviewContext.Add(review);
+            var reviewToCreate = MapConfig.Mapper.Map<Review>(reviewToCreateDto);
+            _reviewContext.Add(reviewToCreate);
             return Save();
         }
 
-        public bool UpdateReview(Review review)
+        public bool UpdateReview(ReviewUpdateDto reviewToUpdateDto)
         {
-            _reviewContext.Update(review);
+            var reviewToUpdate = MapConfig.Mapper.Map<Review>(reviewToUpdateDto);
+            _reviewContext.Update(reviewToUpdate);
             return Save();
         }
 

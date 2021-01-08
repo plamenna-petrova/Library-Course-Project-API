@@ -14,10 +14,10 @@ namespace Data.Services.Repositories.Interfaces
         CountryDto GetCountryById(int countryId);
         Country GetCountryByIdNotMapped(int countryId);
         CountryDto GetCountryOfAnAuthor(int authorId);
-        Country GetCountryOfAReviewer(int reviewerId);
+        CountryDto GetCountryOfAReviewer(int reviewerId);
         CountryDto GetCountryOfAPublisher(int publisherId);
         ICollection<AuthorDto> GetAuthorsFromACountry(int countryId);
-        ICollection<Reviewer> GetReviewersFromACountry(int countryId);
+        ICollection<ReviewerDto> GetReviewersFromACountry(int countryId);
         ICollection<PublisherDto> GetPublishersFromACountry(int countryId);
         bool CountryExists(int countryId);
         bool IsDuplicateCountryName(int countryId, string countryName);

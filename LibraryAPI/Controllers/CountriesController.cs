@@ -67,6 +67,23 @@ namespace LibraryAPI.Controllers
             return Ok(country);
         }
 
+        [Route("api/countries/reviewers/reviewerId")]
+        [HttpGet("reviewers/{reviewerId}")]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(200, Type = typeof(CountryDto))]
+        public IActionResult GetCountryOfAReviewer(int reviewerId)
+        {
+            if (!_unitOfWork.ReviewerRepository.ReviewerExists(reviewerId))
+            {
+                return NotFound();
+            }
+
+            var country = _unitOfWork.CountryRepository.GetCountryOfAReviewer(reviewerId);
+
+            return Ok(country);
+        }
+
         [Route("api/countries/publishers/publisherId")]
         [HttpGet("publishers/{publisherId}")]
         [ProducesResponseType(400)]
@@ -99,6 +116,23 @@ namespace LibraryAPI.Controllers
             var authors = _unitOfWork.CountryRepository.GetAuthorsFromACountry(countryId);
 
             return Ok(authors);
+        }
+
+        [Route("api/countries/countryId/reviewers")]
+        [HttpGet("{countryId}/reviewers")]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<ReviewerDto>))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        public IActionResult GetReviewersFromACountry(int countryId)
+        {
+            if (!_unitOfWork.CountryRepository.CountryExists(countryId))
+            {
+                return NotFound();
+            }
+
+            var reviewers = _unitOfWork.CountryRepository.GetReviewersFromACountry(countryId);
+
+            return Ok(reviewers);
         }
 
         [Route("api/countries/countryId/publishers")]

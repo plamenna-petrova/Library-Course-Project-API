@@ -701,6 +701,40 @@ namespace Data.DataConnection
                     ReviewerId = 1
                 }
             };
+
+            List<Review> reviews = new List<Review>()
+            {
+                new Review()
+                {
+                    Id = 1,
+                    HeadLine = "The Queen's Gambit Book Review",
+                    ReviewText = "The Queen's Gambit'' is a novel about the game of chess - the best one that I know of to be written since Nabokov's ''Defense.'' Consider it as a psychological thriller, a contest pitting human rationality against the self's unconscious urge to wipe out thought.",
+                    Rating = 9,
+                    BookId = 1,
+                    ReviewerId = 2,
+                    CreatedAt = new DateTime(2021, 1, 8)
+                },
+                new Review()
+                {
+                    Id = 2,
+                    HeadLine = "The Castle Book Review",
+                    ReviewText = "Along with The Trial and Amerika, The Castle is one of the novels Franz Kafka left unfinished at his death. A tale of bureaucratic paralysis, invisible barriers and a labyrinth of obstacles that splinter into more obstacles, The Castle unnerves with its depiction of a pointless, frustrating existence.",
+                    Rating = 10,
+                    BookId = 2,
+                    ReviewerId = 1,
+                    CreatedAt = new DateTime(2021, 1, 8)
+                },
+                new Review()
+                {
+                    Id = 3,
+                    HeadLine = "The Amazing Adventures of Kavalier and Clay Review",
+                    ReviewText = "Comic books and magic tricks can mean more that just ballooning muscles and gag gifts - or so Michael Chabon thinks, as he brings us to a time and place where intellect and mystery find their way into these two often overlooked art forms. Jewish mysticism meets Americana in his novel The Amazing Adventures of Kavalier and Clay, and we find all this in the comic-book superhero, the Escapist, who is the creation of the wonderful pair of Joe Kavalier and Sam Clay.",
+                    Rating = 8,
+                    BookId = 3,
+                    ReviewerId = 3,
+                    CreatedAt = new DateTime(2021, 1, 8)
+                }
+            };
            
             modelBuilder.Entity<Country>().HasData(countries);
             modelBuilder.Entity<Author>().HasData(authors);
@@ -721,6 +755,7 @@ namespace Data.DataConnection
             modelBuilder.Entity<ReaderBook>().HasData(readerBooks);
             modelBuilder.Entity<Reviewer>().HasData(reviewers);
             modelBuilder.Entity<BookReviewer>().HasData(bookReviewers);
+            modelBuilder.Entity<Review>().HasData(reviews);
             base.OnModelCreating(modelBuilder);
 
         }

@@ -47,9 +47,11 @@ namespace Data.Services.Repositories.Implementations
             return mappedCountry;
         }
 
-        public Country GetCountryOfAReviewer(int reviewerId)
+        public CountryDto GetCountryOfAReviewer(int reviewerId)
         {
-            return _countryContext.Reviewers.Where(rev => rev.Id == reviewerId).Select(c => c.Country).FirstOrDefault();
+            var country = _countryContext.Reviewers.Where(rev => rev.Id == reviewerId).Select(c => c.Country).FirstOrDefault();
+            var mappedCountry = MapConfig.Mapper.Map<CountryDto>(country);
+            return mappedCountry;
         }
 
         public CountryDto GetCountryOfAPublisher(int publisherId)
@@ -66,9 +68,11 @@ namespace Data.Services.Repositories.Implementations
             return mappedAuthors;
         }
 
-        public ICollection<Reviewer> GetReviewersFromACountry(int countryId)
+        public ICollection<ReviewerDto> GetReviewersFromACountry(int countryId)
         {
-            return _countryContext.Reviewers.Where(c => c.Country.Id == countryId).ToList();
+            var reviewers = _countryContext.Reviewers.Where(c => c.CountryId == countryId).ToList();
+            var mappedReviewers = MapConfig.Mapper.Map<ICollection<ReviewerDto>>(reviewers);
+            return mappedReviewers;
         }
 
         public ICollection<PublisherDto> GetPublishersFromACountry(int countryId)

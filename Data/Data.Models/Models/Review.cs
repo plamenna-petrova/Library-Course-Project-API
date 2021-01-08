@@ -17,7 +17,9 @@ namespace Data.Models.Models
         [Required]
         [Range(1, 10, ErrorMessage = "The rating must be between 1 and 10 stars!")]
         public int Rating { get; set; }
+        public virtual int? BookId { get; set; }
         public virtual Book Book { get; set; }
+        public virtual int? ReviewerId { get; set; }
         public virtual Reviewer Reviewer { get; set; }
     }
 }
