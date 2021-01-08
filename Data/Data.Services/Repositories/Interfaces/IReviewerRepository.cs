@@ -13,8 +13,8 @@ namespace Data.Services.Repositories.Interfaces
         ICollection<ReviewerDto> GetReviewers();
         ReviewerDto GetReviewerById(int reviewerId);
         Reviewer GetReviewerByIdNotMapped(int reviewerId);
-        ICollection<Review> GetReviewsByReviewer(int reviewerId);
-        Reviewer GetReviewerOfAReview(int reviewId);
+        ICollection<ReviewDto> GetReviewsByReviewer(int reviewerId);
+        ReviewerDto GetReviewerOfAReview(int reviewId);
         ICollection<ReviewerDto> GetReviewersOfABook(int bookId);
         ICollection<BookDto> GetBooksOfAReviewer(int reviewerId);
         CountryDto GetCountryOfAReviewer(int reviewerId);

@@ -89,7 +89,7 @@ namespace LibraryAPI.Controllers
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
         [ProducesResponseType(200, Type = typeof(CountryDto))]
-        public IActionResult GetCountryOfAnAuthor(int reviewerId)
+        public IActionResult GetCountryOfAReviewer(int reviewerId)
         {
             if (!_unitOfWork.ReviewerRepository.ReviewerExists(reviewerId))
             {
@@ -101,6 +101,39 @@ namespace LibraryAPI.Controllers
             return Ok(country);
         }
 
+        [Route("api/reviewers/reviews/reviewId")]
+        [Route("reviews/{reviewId}")]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(200, Type = typeof(ReviewerDto))]
+        public IActionResult GetReviewerOfAReview(int reviewId)
+        {
+            if (!_unitOfWork.ReviewRepository.ReviewExists(reviewId))
+            {
+                return NotFound();
+            }
+
+            var reviewer = _unitOfWork.ReviewerRepository.GetReviewerOfAReview(reviewId);
+
+            return Ok(reviewer);
+        }
+
+        [Route("api/reviewers/reviewerId/reviews")]
+        [Route("{reviewerId}/reviews")]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<ReviewDto>))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        public IActionResult GetReviewsByReviewer(int reviewerId)
+        {
+            if (!_unitOfWork.ReviewerRepository.ReviewerExists(reviewerId))
+            {
+                return NotFound();
+            }
+
+            var reviews = _unitOfWork.ReviewerRepository.GetReviewsByReviewer(reviewerId);
+
+            return Ok(reviews);
+        }
 
         [HttpPost]
         [ProducesResponseType(201, Type = typeof(ReviewerDto))]

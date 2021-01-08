@@ -22,7 +22,7 @@ namespace Data.Services.Repositories.Interfaces
         ICollection<BookDto> GetBooksByAuthor(int authorId);
         ICollection<GenreDto> GetAllGenresForABook(int bookId);
         ICollection<BookDto> GetAllBooksForGenre(int genreId);
-        ICollection<Review> GetReviewsOfABook(int bookId);
+        ICollection<ReviewDto> GetReviewsOfABook(int bookId);
         ICollection<ReviewerDto> GetReviewersOfABook(int bookId);
         ICollection<BookDto> GetBooksOfAReviewer(int reviewerId);
         PublisherDto GetPublisherOfABook(int bookId);

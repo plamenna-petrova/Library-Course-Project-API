@@ -41,15 +41,18 @@ namespace Data.Services.Repositories.Implementations
             return reviewer;
         }
 
-        public ICollection<Review> GetReviewsByReviewer(int reviewerId)
+        public ICollection<ReviewDto> GetReviewsByReviewer(int reviewerId)
         {
-            return _reviewerContext.Reviews.Where(rev => rev.Reviewer.Id == reviewerId).ToList();
+            var reviewsByReviewer = _reviewerContext.Reviews.Where(rev => rev.Reviewer.Id == reviewerId).ToList();
+            var reviewsByReviewerMapped = MapConfig.Mapper.Map<ICollection<ReviewDto>>(reviewsByReviewer);
+            return reviewsByReviewerMapped;
         }
 
-        public Reviewer GetReviewerOfAReview(int reviewId)
+        public ReviewerDto GetReviewerOfAReview(int reviewId)
         {
-            var reviewerId = _reviewerContext.Reviews.Where(re => re.Id == reviewId).Select(rev => rev.Reviewer.Id).FirstOrDefault();
-            return _reviewerContext.Reviewers.Where(rev => rev.Id == reviewerId).FirstOrDefault();
+            var reviewerOfAReview = _reviewerContext.Reviews.Where(re => re.Id == reviewId).Select(rev => rev.Reviewer).FirstOrDefault();
+            var reviewerOfAReviewMapped = MapConfig.Mapper.Map<ReviewerDto>(reviewerOfAReview);
+            return reviewerOfAReviewMapped;
         }
 
         public ICollection<ReviewerDto> GetReviewersOfABook(int bookId)

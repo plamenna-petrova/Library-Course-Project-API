@@ -13,10 +13,10 @@ namespace Data.Services.Repositories.Interfaces
         ICollection<ReviewDto> GetReviews();
         ReviewDto GetReviewById(int reviewId);
         Review GetReviewByIdNotMapped(int reviewId);
-        ICollection<Review> GetReviewsOfABook(int bookId);
-        Book GetBookOfAReview(int reviewId);
-        ICollection<Review> GetReviewsByReviewer(int reviewerId);
-        Reviewer GetReviewerOfAReview(int reviewId);
+        ICollection<ReviewDto> GetReviewsOfABook(int bookId);
+        BookDto GetBookOfAReview(int reviewId);
+        ICollection<ReviewDto> GetReviewsByReviewer(int reviewerId);
+        ReviewerDto GetReviewerOfAReview(int reviewId);
         bool ReviewExists(int reviewId);
         bool CreateReview(ReviewCreateDto reviewToCreateDto);
         bool UpdateReview(ReviewUpdateDto reviewToUpdateDto);

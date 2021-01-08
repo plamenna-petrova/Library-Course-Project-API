@@ -49,6 +49,74 @@ namespace LibraryAPI.Controllers
             return Ok(singleReview);
         }
 
+
+        [Route("api/reviews/reviewers/reviewId")]
+        [Route("reviewers/{reviewId}")]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(200, Type = typeof(ReviewerDto))]
+        public IActionResult GetReviewerOfAReview(int reviewId)
+        {
+            if (!_unitOfWork.ReviewRepository.ReviewExists(reviewId))
+            {
+                return NotFound();
+            }
+
+            var reviewer = _unitOfWork.ReviewRepository.GetReviewerOfAReview(reviewId);
+
+            return Ok(reviewer);
+        }
+
+        [Route("api/reviews/books/reviewId")]
+        [Route("books/{reviewId}")]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(200, Type = typeof(BookDto))]
+        public IActionResult GetBookOfAReview(int reviewId)
+        {
+            if (!_unitOfWork.ReviewRepository.ReviewExists(reviewId))
+            {
+                return NotFound();
+            }
+
+            var book = _unitOfWork.ReviewRepository.GetBookOfAReview(reviewId);
+
+            return Ok(book);
+        }
+
+        [Route("api/reviews/reviewerId/reviewers")]
+        [Route("{reviewerId}/reviewers")]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<ReviewDto>))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        public IActionResult GetReviewsByReviewer(int reviewerId)
+        {
+            if (!_unitOfWork.ReviewerRepository.ReviewerExists(reviewerId))
+            {
+                return NotFound();
+            }
+
+            var reviews = _unitOfWork.ReviewRepository.GetReviewsByReviewer(reviewerId);
+
+            return Ok(reviews);
+        }
+
+        [Route("api/reviews/bookId/books")]
+        [Route("{bookId}/books")]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<ReviewDto>))]
+        [ProducesResponseType(404)]
+        public IActionResult GetReviewsOfABook(int bookId)
+        {
+            if (!_unitOfWork.BookRepository.BookExistsById(bookId))
+            {
+                return NotFound();
+            }
+
+            var reviews = _unitOfWork.ReviewRepository.GetReviewsOfABook(bookId);
+
+            return Ok(reviews);
+        }
+
         [HttpPost]
         [ProducesResponseType(201, Type = typeof(ReviewDto))]
         [ProducesResponseType(400)]

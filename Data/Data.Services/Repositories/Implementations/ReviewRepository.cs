@@ -41,26 +41,32 @@ namespace Data.Services.Repositories.Implementations
             return review;
         }
 
-        public ICollection<Review> GetReviewsOfABook(int bookId)
+        public ICollection<ReviewDto> GetReviewsOfABook(int bookId)
         {
-            return _reviewContext.Reviews.Where(b => b.Book.Id == bookId).ToList();
+            var reviewsOfABook = _reviewContext.Reviews.Where(b => b.Book.Id == bookId).ToList();
+            var reviewsOfABookMapped = MapConfig.Mapper.Map<ICollection<ReviewDto>>(reviewsOfABook);
+            return reviewsOfABookMapped;
         }
 
-        public Book GetBookOfAReview(int reviewId)
+        public BookDto GetBookOfAReview(int reviewId)
         {
-            var bookId = _reviewContext.Reviews.Where(re => re.Id == reviewId).Select(b => b.Book.Id).FirstOrDefault();
-            return _reviewContext.Books.Where(b => b.Id == bookId).FirstOrDefault();
+            var bookOfAReview = _reviewContext.Reviews.Where(re => re.Id == reviewId).Select(b => b.Book).FirstOrDefault();
+            var bookOfAReviewMapped = MapConfig.Mapper.Map<BookDto>(bookOfAReview);
+            return bookOfAReviewMapped;
         }
 
-        public ICollection<Review> GetReviewsByReviewer(int reviewerId)
+        public ICollection<ReviewDto> GetReviewsByReviewer(int reviewerId)
         {
-            return _reviewContext.Reviews.Where(rev => rev.Reviewer.Id == reviewerId).ToList();
+            var reviewsByReviewer = _reviewContext.Reviews.Where(rev => rev.Reviewer.Id == reviewerId).ToList();
+            var reviewsByReviewerMapped = MapConfig.Mapper.Map<ICollection<ReviewDto>>(reviewsByReviewer);
+            return reviewsByReviewerMapped;
         }
 
-        public Reviewer GetReviewerOfAReview(int reviewId)
+        public ReviewerDto GetReviewerOfAReview(int reviewId)
         {
-            var reviewerId = _reviewContext.Reviews.Where(re => re.Id == reviewId).Select(rev => rev.Reviewer.Id).FirstOrDefault();
-            return _reviewContext.Reviewers.Where(rev => rev.Id == reviewerId).FirstOrDefault();
+            var reviewerOfAReview = _reviewContext.Reviews.Where(re => re.Id == reviewId).Select(rev => rev.Reviewer).FirstOrDefault();
+            var reviewerOfAReviewMapped = MapConfig.Mapper.Map<ReviewerDto>(reviewerOfAReview);
+            return reviewerOfAReviewMapped;
         }
 
         public bool ReviewExists(int reviewId)

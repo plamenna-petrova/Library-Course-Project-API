@@ -106,9 +106,11 @@ namespace Data.Services.Repositories.Implementations
             return genresForABookMapped;
         }
 
-        public ICollection<Review> GetReviewsOfABook(int bookId)
+        public ICollection<ReviewDto> GetReviewsOfABook(int bookId)
         {
-            return _bookContext.Reviews.Where(b => b.Book.Id == bookId).ToList();
+            var reviewsOfABook = _bookContext.Reviews.Where(b => b.Book.Id == bookId).ToList();
+            var reviewsOfABookMapped = MapConfig.Mapper.Map<ICollection<ReviewDto>>(reviewsOfABook);
+            return reviewsOfABookMapped;
         }
 
         public ICollection<ReviewerDto> GetReviewersOfABook(int bookId)
