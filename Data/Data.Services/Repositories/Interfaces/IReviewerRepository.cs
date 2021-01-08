@@ -15,9 +15,9 @@ namespace Data.Services.Repositories.Interfaces
         Reviewer GetReviewerByIdNotMapped(int reviewerId);
         ICollection<Review> GetReviewsByReviewer(int reviewerId);
         Reviewer GetReviewerOfAReview(int reviewId);
-        ICollection<Reviewer> GetReviewersOfABook(int bookId);
-        ICollection<Book> GetBooksOfAReviewer(int reviewerId);
-        Country GetCountryOfAReviewer(int reviewerId);
+        ICollection<ReviewerDto> GetReviewersOfABook(int bookId);
+        ICollection<BookDto> GetBooksOfAReviewer(int reviewerId);
+        CountryDto GetCountryOfAReviewer(int reviewerId);
         bool ReviewerExists(int reviewerId);
         bool CreateReviewer(ReviewerCreateDto reviewerToCreateDto);
         bool UpdateReviewer(ReviewerUpdateDto reviewerToUpdateDto);

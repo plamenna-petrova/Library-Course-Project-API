@@ -49,6 +49,59 @@ namespace LibraryAPI.Controllers
             return Ok(singleReviewer);
         }
 
+        [Route("api/reviewers/books/bookId")]
+        [HttpGet("books/{bookId}")]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<ReviewerDto>))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        public IActionResult GetReviewersOfABook(int bookId)
+        {
+            if (!_unitOfWork.BookRepository.BookExistsById(bookId))
+            {
+                return NotFound();
+            }
+
+            var reviewersOfABook = _unitOfWork.ReviewerRepository.GetReviewersOfABook(bookId);
+
+            return Ok(reviewersOfABook);
+        }
+
+        [Route("api/reviewers/reviewerId/books")]
+        [HttpGet("{reviewerId}/books")]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<BookDto>))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        public IActionResult GetBooksOfAReviewer(int reviewerId)
+        {
+            if (!_unitOfWork.ReviewerRepository.ReviewerExists(reviewerId))
+            {
+                return NotFound();
+            }
+
+            var booksOfAReviewer = _unitOfWork.ReviewerRepository.GetBooksOfAReviewer(reviewerId);
+
+            return Ok(booksOfAReviewer);
+        }
+
+
+        [Route("api/reviewers/countries/reviewerId")]
+        [HttpGet("countries/{reviewerId}")]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(200, Type = typeof(CountryDto))]
+        public IActionResult GetCountryOfAnAuthor(int reviewerId)
+        {
+            if (!_unitOfWork.ReviewerRepository.ReviewerExists(reviewerId))
+            {
+                return NotFound();
+            }
+
+            var country = _unitOfWork.ReviewerRepository.GetCountryOfAReviewer(reviewerId);
+
+            return Ok(country);
+        }
+
+
         [HttpPost]
         [ProducesResponseType(201, Type = typeof(ReviewerDto))]
         [ProducesResponseType(400)]

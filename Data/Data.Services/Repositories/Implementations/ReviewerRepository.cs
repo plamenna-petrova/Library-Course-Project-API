@@ -52,19 +52,25 @@ namespace Data.Services.Repositories.Implementations
             return _reviewerContext.Reviewers.Where(rev => rev.Id == reviewerId).FirstOrDefault();
         }
 
-        public ICollection<Reviewer> GetReviewersOfABook(int bookId)
+        public ICollection<ReviewerDto> GetReviewersOfABook(int bookId)
         {
-            return _reviewerContext.BooksReviewers.Where(b => b.BookId == bookId).Select(rev => rev.Reviewer).ToList();
+            var reviewersOfABook = _reviewerContext.BooksReviewers.Where(b => b.BookId == bookId).Select(rev => rev.Reviewer).ToList();
+            var reviewersOfABookMapped = MapConfig.Mapper.Map<ICollection<ReviewerDto>>(reviewersOfABook);
+            return reviewersOfABookMapped;
         }
 
-        public ICollection<Book> GetBooksOfAReviewer(int reviewerId)
+        public ICollection<BookDto> GetBooksOfAReviewer(int reviewerId)
         {
-            return _reviewerContext.BooksReviewers.Where(rev => rev.ReviewerId == reviewerId).Select(b => b.Book).ToList();
+            var booksOfAReviewer = _reviewerContext.BooksReviewers.Where(rev => rev.ReviewerId == reviewerId).Select(b => b.Book).ToList();
+            var booksOfAReviewerMapped = MapConfig.Mapper.Map<ICollection<BookDto>>(booksOfAReviewer);
+            return booksOfAReviewerMapped;
         }
 
-        public Country GetCountryOfAReviewer(int reviewerId)
+        public CountryDto GetCountryOfAReviewer(int reviewerId)
         {
-            return _reviewerContext.Reviewers.Where(rev => rev.Id == reviewerId).Select(c => c.Country).FirstOrDefault();
+            var countryOfAReviewer = _reviewerContext.Reviewers.Where(rev => rev.Id == reviewerId).Select(c => c.Country).FirstOrDefault();
+            var countryOfAReviewerMapped = MapConfig.Mapper.Map<CountryDto>(countryOfAReviewer);
+            return countryOfAReviewerMapped;
         }
 
         public bool ReviewerExists(int reviewerId)
