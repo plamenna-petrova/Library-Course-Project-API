@@ -16,7 +16,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace LibraryAPI.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class UsersController : ControllerBase

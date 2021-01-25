@@ -7,12 +7,14 @@ using Data.Services.DtoModels.Dtos;
 using Data.Services.DtoModels.UpdateDtos;
 using Data.Services.Helpers;
 using Data.Services.Repositories.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LibraryAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class AuthorsController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;

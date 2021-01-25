@@ -6,6 +6,7 @@ using Data.Services.DtoModels.CreateDtos;
 using Data.Services.DtoModels.Dtos;
 using Data.Services.DtoModels.UpdateDtos;
 using Data.Services.Repositories.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,6 +14,7 @@ namespace LibraryAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class BooksController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -23,6 +25,7 @@ namespace LibraryAPI.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         [ProducesResponseType(200, Type = typeof(IEnumerable<BookDto>))]
         [ProducesResponseType(400)]
         public IActionResult GetBooks()
@@ -64,6 +67,23 @@ namespace LibraryAPI.Controllers
             var bookByISBN = _unitOfWork.BookRepository.GetBookByISBN(bookISBN);
 
             return Ok(bookByISBN);
+        }
+
+        [Route("api/books/bookId/rating")]
+        [HttpGet("{bookId}/rating")]
+        [ProducesResponseType(200, Type = typeof(decimal))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        public IActionResult GetBookRating(int bookId)
+        {
+            if (!_unitOfWork.BookRepository.BookExistsById(bookId))
+            {
+                return NotFound();
+            }
+
+            var rating = _unitOfWork.BookRepository.GetBookRating(bookId);
+
+            return Ok(rating);
         }
 
         [Route("api/books/authors/bookId")]

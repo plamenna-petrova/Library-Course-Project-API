@@ -6,6 +6,7 @@ using Data.Services.DtoModels.CreateDtos;
 using Data.Services.DtoModels.Dtos;
 using Data.Services.DtoModels.UpdateDtos;
 using Data.Services.Repositories.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,6 +14,7 @@ namespace LibraryAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class LoansController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;

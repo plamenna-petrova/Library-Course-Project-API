@@ -38,19 +38,6 @@ namespace Data.Services.Repositories.Implementations
             return mappedAuthors;
         }
 
-        //public IQueryable<AuthorDto> GetAuthors(Func<Author, bool> func = null)
-        //{
-        //    var mappedFunc = MapConfig.Mapper.Map<IQueryable<AuthorDto>>(func);
-        //    if (mappedFunc == null)
-        //    {
-        //        return _authorContext.Authors.AsQueryable<AuthorDto>();
-        //    }
-        //    else
-        //    {
-        //        return _authorContext.Authors.Where(mappedFunc).AsQueryable<AuthorDto>();
-        //    }
-        //}
-
         public ICollection<AuthorDto> GetAuthorsOfABook(int bookId)
         {
             var authorsOfABook = _authorContext.BooksAuthors.Where(b => b.BookId == bookId).Select(a => a.Author).ToList();
